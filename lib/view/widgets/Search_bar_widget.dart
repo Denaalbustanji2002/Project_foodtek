@@ -44,7 +44,12 @@ class SearchBarWidget extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.tune, color: Color(0xFF878787)),
-              onPressed: () {},
+              onPressed: () {
+                   Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FilterScreen()),
+        );
+              },
             ),
           ],
         ),
