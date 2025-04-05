@@ -408,7 +408,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ],
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+  Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
+    );            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
