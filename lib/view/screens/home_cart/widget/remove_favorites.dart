@@ -18,8 +18,8 @@ class RemoveFavoritesDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
-        height: 170, // Set height of the dialog
-        width: 440, // Set width of the dialog
+        height: 170,
+        width: 440,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,

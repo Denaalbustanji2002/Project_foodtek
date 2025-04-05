@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtec/states/language_state.dart';
 import 'package:foodtec/view/screens/home_cart/screen/home_screen.dart';
-import 'package:foodtec/view/screens/home_cart/widget/bottom_nav_screen.dart';
+import 'package:foodtec/view/screens/home_cart/widget/main_navbar.dart';
 import 'package:foodtec/view/screens/onboarding_screen/splash_screen.dart';
 import 'cubits/language_cubit.dart';
 import 'cubits/location_cubit.dart';
+import 'cubits/navigatiion_cubit.dart';
 import 'cubits/orders_cubit.dart';
 import 'cubits/user_cubit.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => OrderCubit()),
+        BlocProvider(create: (context) => NavigationCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
             ],
             supportedLocales: [Locale('en'), Locale('ar')],
             locale: Locale(languageCode),
-            home: BottomNavScreen(),
+            home: MainbarScreen(),
           );
         },
       ),

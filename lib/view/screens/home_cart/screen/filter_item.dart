@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:foodtec/view/screens/home_cart/widget/appbar2.dart';
 
-import '../widget/appbar2.dart';
-import '../widget/bottom_nav_screen2.dart';
+
+
 
 class FilterItem extends StatefulWidget {
   const FilterItem({super.key});
@@ -9,7 +11,7 @@ class FilterItem extends StatefulWidget {
   @override
   State<FilterItem> createState() => _FilterItemState();
 }
-BottomNavScreen2 bottomNavScreen2 = BottomNavScreen2();
+
 class _FilterItemState extends State<FilterItem> {
   RangeValues _priceRange = const RangeValues(0, 10000000000);
   RangeValues _discountRange = const RangeValues(0, 50);
@@ -27,48 +29,55 @@ class _FilterItemState extends State<FilterItem> {
     'Miso-Glazed Cod',
   ];
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: Appbar2(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Text(
-                  'Filter',
-                  style: TextStyle(
-                    color: const Color(0xFF391713),
-                    fontSize: 20,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: Appbar2(),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Filter',
+                      style: TextStyle(
+                        color: const Color(0xFF391713),
+                        fontSize: 20,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
-                ),
+                  const Divider(height: 18, thickness: 1, color: Color(0xFFF2F4F7)),
+                  _buildPriceRangeSection(),
+                  const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
+                  _buildDiscountSection(),
+                  const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
+                  _buildCategorySection(),
+                  const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
+                  _buildLocationSection(),
+                  const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
+                  _buildDishSection(),
+                  const SizedBox(height: 20),
+                ],
               ),
-              const Divider(height: 18, thickness: 1, color: Color(0xFFF2F4F7)),
-              _buildPriceRangeSection(),
-              const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
-              _buildDiscountSection(),
-              const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
-              _buildCategorySection(),
-              const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
-              _buildLocationSection(),
-              const Divider(height: 20, thickness: 1, color: Color(0xFFF2F4F7)),
-              _buildDishSection(),
-              const SizedBox(height: 20),
-              _buildApplyButton(),
-            ],
+            ),
           ),
-        ),
-      );
-    }
 
+          const SizedBox(height: 16),
+        ],
+      ),
 
-    Widget _buildPriceRangeSection() {
+    );
+  }
+
+  Widget _buildPriceRangeSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,11 +99,10 @@ class _FilterItemState extends State<FilterItem> {
         ),
         const SizedBox(height: 12),
         const Row(
-          //mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(width: 15),
+            SizedBox(width: 15),
             Text('\$0', style: TextStyle(color: Color(0xFF25AE4B))),
-            const SizedBox(width: 290),
+            SizedBox(width: 290),
             Text('\$10B', style: TextStyle(color: Color(0xFF25AE4B))),
           ],
         ),
@@ -140,13 +148,12 @@ class _FilterItemState extends State<FilterItem> {
             _buildRangeField('Max'),
           ],
         ),
-
         const SizedBox(height: 12),
         const Row(
           children: [
-            const SizedBox(width: 15),
+            SizedBox(width: 15),
             Text('0%', style: TextStyle(color: Color(0xFF25AE4B))),
-            const SizedBox(width: 290),
+            SizedBox(width: 290),
             Text('50%', style: TextStyle(color: Color(0xFF25AE4B))),
           ],
         ),
@@ -155,7 +162,7 @@ class _FilterItemState extends State<FilterItem> {
           values: _discountRange,
           min: 0,
           max: 50,
-          divisions: 5,
+          divisions:5,
           labels: RangeLabels(
             '${_discountRange.start.toInt()}%',
             '${_discountRange.end.toInt()}%',
@@ -212,23 +219,22 @@ class _FilterItemState extends State<FilterItem> {
         Wrap(
           spacing: 12,
           runSpacing: 12,
-          children:
-              _categories.map((category) {
-                final isSelected = _selectedCategories.contains(category);
-                return _buildFilterChip(
-                  category,
-                  isSelected: isSelected,
-                  onTap: () {
-                    setState(() {
-                      if (isSelected) {
-                        _selectedCategories.remove(category);
-                      } else {
-                        _selectedCategories.add(category);
-                      }
-                    });
-                  },
-                );
-              }).toList(),
+          children: _categories.map((category) {
+            final isSelected = _selectedCategories.contains(category);
+            return _buildFilterChip(
+              category,
+              isSelected: isSelected,
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    _selectedCategories.remove(category);
+                  } else {
+                    _selectedCategories.add(category);
+                  }
+                });
+              },
+            );
+          }).toList(),
         ),
       ],
     );
@@ -250,19 +256,18 @@ class _FilterItemState extends State<FilterItem> {
         Wrap(
           spacing: 12,
           runSpacing: 12,
-          children:
-              _locations.map((location) {
-                final isSelected = _selectedLocation == location;
-                return _buildFilterChip(
-                  location,
-                  isSelected: isSelected,
-                  onTap: () {
-                    setState(() {
-                      _selectedLocation = isSelected ? null : location;
-                    });
-                  },
-                );
-              }).toList(),
+          children: _locations.map((location) {
+            final isSelected = _selectedLocation == location;
+            return _buildFilterChip(
+              location,
+              isSelected: isSelected,
+              onTap: () {
+                setState(() {
+                  _selectedLocation = isSelected ? null : location;
+                });
+              },
+            );
+          }).toList(),
         ),
       ],
     );
@@ -284,33 +289,32 @@ class _FilterItemState extends State<FilterItem> {
         Wrap(
           spacing: 12,
           runSpacing: 12,
-          children:
-              _dishes.map((dish) {
-                final isSelected = _selectedDishes.contains(dish);
-                return _buildFilterChip(
-                  dish,
-                  isSelected: isSelected,
-                  onTap: () {
-                    setState(() {
-                      if (isSelected) {
-                        _selectedDishes.remove(dish);
-                      } else {
-                        _selectedDishes.add(dish);
-                      }
-                    });
-                  },
-                );
-              }).toList(),
+          children: _dishes.map((dish) {
+            final isSelected = _selectedDishes.contains(dish);
+            return _buildFilterChip(
+              dish,
+              isSelected: isSelected,
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    _selectedDishes.remove(dish);
+                  } else {
+                    _selectedDishes.add(dish);
+                  }
+                });
+              },
+            );
+          }).toList(),
         ),
       ],
     );
   }
 
   Widget _buildFilterChip(
-    String label, {
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
+      String label, {
+        required bool isSelected,
+        required VoidCallback onTap,
+      }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -330,35 +334,15 @@ class _FilterItemState extends State<FilterItem> {
     );
   }
 
-  Widget _buildApplyButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pop(context, {
-            'priceRange': _priceRange,
-            'discountRange': _discountRange,
-            'categories': _selectedCategories.toList(),
-            'location': _selectedLocation,
-            'dishes': _selectedDishes.toList(),
-          });
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF25AE4B),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-        child: const Text(
-          'Apply',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    );
+
+
+  void _resetFilters() {
+    setState(() {
+      _priceRange = const RangeValues(0, 10000000000);
+      _discountRange = const RangeValues(0, 50);
+      _selectedCategories.clear();
+      _selectedLocation = null;
+      _selectedDishes.clear();
+    });
   }
-
-
 }

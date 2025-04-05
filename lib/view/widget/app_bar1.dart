@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import '../screens/home_cart/screen/filter_items.dart';
+import '../../core/screen_index.dart';
+import '../../cubits/navigatiion_cubit.dart' show NavigationCubit;
+import '../screens/home_cart/screen/filter_item.dart';
 
 
 // إنشاء الـ CustomAppBar
@@ -11,13 +14,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
 
   CustomAppBar({Key? key})
-      : preferredSize = Size.fromHeight(150.0),
-        super(key: key);
+    : preferredSize = Size.fromHeight(150.0),
+      super(key: key);
 
   final List<Notification> notifications = [
-    Notification(title: 'New Order', message: 'You have a new order', timestamp: DateTime.now()),
-    Notification(title: 'New Order', message: 'You have a new order', isRead: true, timestamp: DateTime.now()),
-    Notification(title: 'New Order', message: 'You have a new order', timestamp: DateTime.now()),
+    Notification(
+      title: 'New Order',
+      message: 'You have a new order',
+      timestamp: DateTime.now(),
+    ),
+    Notification(
+      title: 'New Order',
+      message: 'You have a new order',
+      isRead: true,
+      timestamp: DateTime.now(),
+    ),
+    Notification(
+      title: 'New Order',
+      message: 'You have a new order',
+      timestamp: DateTime.now(),
+    ),
   ];
 
   @override
@@ -29,12 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         flexibleSpace: Padding(
-
-          padding: EdgeInsets.only(
-            top: 25.0,
-            right: 16.0,
-            left: 16.0,
-          ),
+          padding: EdgeInsets.only(top: 25.0, right: 16.0, left: 16.0),
           child: Column(
             children: [
               Container(
@@ -43,7 +54,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // الصورة في الـ AppBar
                     Container(
                       width: 50.0,
                       height: 60.0,
@@ -56,7 +66,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                     SizedBox(width: 10),
-                    // النص والعناصر الأخرى في الـ AppBar
+
                     Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,9 +113,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           context: context,
                           isScrollControlled: true,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(15),
+                            ),
                           ),
-                          builder: (context) => NotificationDialog(notifications: notifications),
+                          builder:
+                              (context) => NotificationDialog(
+                                notifications: notifications,
+                              ),
                         );
                       },
                     ),
@@ -128,57 +143,50 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     borderRadius: BorderRadius.circular(40),
                   ),
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search_outlined,
-                          size: 18,
-                          color: Color(0xFF878787),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: TextFormField(
-                            style: TextStyle(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search_outlined,
+                        size: 18,
+                        color: Color(0xFF878787),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: TextFormField(
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF878787),
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Search menu, restaurant, or etc',
+                            hintStyle: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: Color(0xFF878787),
                             ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Search menu, restaurant, or etc',
-                              hintStyle: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF878787),
-                              ),
-                            ),
                           ),
                         ),
-                    IconButton(
-                      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-                      icon: FaIcon(
-                        FontAwesomeIcons.sliders,  // استخدم FaIcon لعرض أيقونة FontAwesome
-                        size: 18,
-                        color: Color(0xFF878787),
                       ),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-                          ),
-                          builder: (context) => FilterItem(),
-                        );
-                      },
-                    )
-                      ],
-                    ),
+                      IconButton(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 1,
+                          horizontal: 1,
+                        ),
+                        icon: FaIcon(
+                          FontAwesomeIcons.sliders,
+                          size: 18,
+                          color: Color(0xFF878787),
+                        ),
+                        onPressed: () async {
+                          context.read<NavigationCubit>().goTo(ScreenIndex.FilterItem);
+                        },
+                      ),
+                    ],
                   ),
-
                 ),
-
-
+              ),
             ],
           ),
         ),
@@ -210,7 +218,8 @@ class NotificationDialog extends StatefulWidget {
   _NotificationDialogState createState() => _NotificationDialogState();
 }
 
-class _NotificationDialogState extends State<NotificationDialog> with SingleTickerProviderStateMixin {
+class _NotificationDialogState extends State<NotificationDialog>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -277,11 +286,7 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
             indicatorSize: TabBarIndicatorSize.label,
             labelPadding: EdgeInsets.symmetric(horizontal: 0),
             padding: EdgeInsets.symmetric(horizontal: 100),
-            tabs: [
-              Tab(text: 'All'),
-              Tab(text: 'Unread'),
-              Tab(text: 'Read'),
-            ],
+            tabs: [Tab(text: 'All'), Tab(text: 'Unread'), Tab(text: 'Read')],
           ),
           Expanded(
             child: TabBarView(
@@ -322,14 +327,22 @@ class NotificationItem extends StatelessWidget {
   final Notification notification;
   final VoidCallback onTap;
 
-  const NotificationItem({super.key, required this.notification, required this.onTap});
+  const NotificationItem({
+    super.key,
+    required this.notification,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: notification.isRead ? Colors.white : Color(0xFFF1F6FC), // خلفية رمادية لغير المقروءة
+      color: notification.isRead ? Colors.white : Color(0xFFF1F6FC),
+      // خلفية رمادية لغير المقروءة
       child: ListTile(
-        title: Text(notification.title, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          notification.title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -340,12 +353,12 @@ class NotificationItem extends StatelessWidget {
             ),
           ],
         ),
-        trailing: notification.isRead
-            ? Icon(Icons.done, color: Colors.green)
-            : Icon(Icons.circle, color: Colors.blue, size: 12),
+        trailing:
+            notification.isRead
+                ? Icon(Icons.done, color: Colors.green)
+                : Icon(Icons.circle, color: Colors.blue, size: 12),
         onTap: onTap,
       ),
     );
   }
-
 }

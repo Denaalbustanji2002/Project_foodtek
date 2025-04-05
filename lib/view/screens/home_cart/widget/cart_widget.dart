@@ -15,7 +15,7 @@ class Section3{
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.5),
             BlendMode.darken,
-          ), // Applies a dark filter to the image
+          ),
         ),
       ),
     );

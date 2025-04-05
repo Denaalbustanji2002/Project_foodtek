@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double topPadding = 0; // يبدأ بدون إزاحة
   late TabController _tabController;
 
+
   @override
   void initState() {
     super.initState();
@@ -114,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // gap بين العناصر
                       child: Stack(
                         children: [
-                          // الخلفية مع BoxShadow و BorderRadius
+
                           Container(
                             width: 155,
                             height: 180,
@@ -150,14 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   RatingBar.builder(
                                     initialRating: rating,
-                                    // التقييم الافتراضي
+
                                     minRating: 1,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
                                     itemCount: 1,
-                                    // عدد النجوم
+
                                     itemSize: 40,
-                                    // حجم النجمة
+
                                     itemPadding: EdgeInsets.symmetric(
                                       horizontal: 4.0,
                                     ),
@@ -173,14 +174,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Container(
                                                 width: 16.0,
-                                                // عرض النجمة
+
                                                 height: 16.0,
-                                                // ارتفاع النجمة
+
                                                 child: Icon(
                                                   Icons.star,
                                                   color: Colors.amber,
-                                                  // اللون داخل النجمة
-                                                  size: 16, // حجم النجمة
+
+                                                  size: 16,
                                                 ),
                                               ),
 
@@ -194,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onRatingUpdate: (newRating) {
                                       setState(() {
                                         rating =
-                                            newRating; // تحديث التقييم بناءً على التفاعل
+                                            newRating;
                                       });
                                       print("Updated rating: $rating");
                                     },
@@ -221,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Text(
                                       namefoodItems,
-                                      // النص الذي ترغب في عرضه
+
                                       style: GoogleFonts.openSans(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,

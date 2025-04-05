@@ -3,6 +3,8 @@ import 'package:flutter/material.dart' show Colors, InkWell, MaterialPageRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/screen_index.dart';
+import '../../../../cubits/navigatiion_cubit.dart';
 import '../../../../cubits/orders_cubit.dart';
 import '../../../../states/orders_state.dart';
 import '../screen/food_details.dart';
@@ -31,8 +33,6 @@ class CategoriesWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               final category = categories[index];
               final categoryName = '${category['icon'] ?? ''} ${category['name'] ?? ''}';
-// Safely access category name
-              // Safely access category icon
 
 
               return Padding(
@@ -42,10 +42,9 @@ class CategoriesWidget extends StatelessWidget {
                   onTap: () {
                     // When a category is tapped, update the selected index and navigate to FoodDetails
                     context.read<OrderCubit>().selectCategory(index);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FoodDetails()),
-                    );
+                    context.read<NavigationCubit>().goTo(ScreenIndex.FoodInCateg);
+
+
                   },
                   child: buildCategoryCard(
                     categoryName,

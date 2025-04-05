@@ -15,49 +15,21 @@ class Notification {
   });
 }
 
-class NotificationsScreen extends StatelessWidget {
+class NotificationWidget extends StatefulWidget {
+  const NotificationWidget({Key? key}) : super(key: key);
+
+  @override
+  _NotificationWidgetState createState() => _NotificationWidgetState();
+}
+
+class _NotificationWidgetState extends State<NotificationWidget> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
   final List<Notification> notifications = [
     Notification(title: 'New Order', message: 'You have a new order', timestamp: DateTime.now()),
-    Notification(title: 'New Order', message: 'You have a new order', isRead: true, timestamp: DateTime.now()),
-    Notification(title: 'New Order', message: 'You have a new order', timestamp: DateTime.now()),
+    Notification(title: 'Update', message: 'System update available', isRead: true, timestamp: DateTime.now().subtract(Duration(hours: 2))),
+    Notification(title: 'Reminder', message: 'Meeting at 5PM', timestamp: DateTime.now().subtract(Duration(days: 1))),
   ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_outlined),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-                ),
-                builder: (context) => NotificationDialog(notifications: notifications),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class NotificationDialog extends StatefulWidget {
-  final List<Notification> notifications;
-
-  const NotificationDialog({super.key, required this.notifications});
-
-  @override
-  _NotificationDialogState createState() => _NotificationDialogState();
-}
-
-class _NotificationDialogState extends State<NotificationDialog> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
 
   @override
   void initState() {
@@ -74,22 +46,21 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
   List<Notification> _filterNotifications(int tabIndex) {
     switch (tabIndex) {
       case 1:
-        return widget.notifications.where((n) => !n.isRead).toList();
+        return notifications.where((n) => !n.isRead).toList();
       case 2:
-        return widget.notifications.where((n) => n.isRead).toList();
+        return notifications.where((n) => n.isRead).toList();
       default:
-        return widget.notifications;
+        return notifications;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
-      padding: EdgeInsets.symmetric(vertical: 10),
+      height: 500,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
@@ -98,33 +69,20 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_outlined),
-                  onPressed: () => Navigator.pop(context),
-                ),
                 Text(
                   'Notifications',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                IconButton(
-                  icon: Icon(Icons.more_vert_outlined),
-                  onPressed: () {},
-                ),
+                Icon(Icons.notifications_active_outlined),
               ],
             ),
           ),
-
           TabBar(
             controller: _tabController,
             labelColor: Color(0xFF2CDA5E),
             unselectedLabelColor: Colors.grey,
-           indicatorColor: Color(0xFF2CDA5E),
-            isScrollable: false,  // يزيل المسافة الزائدة بين التابات
+            indicatorColor: Color(0xFF2CDA5E),
             indicatorWeight: 1.0,
-            indicatorSize: TabBarIndicatorSize.label,
-            labelPadding: EdgeInsets.symmetric(horizontal: 0),
-              padding: EdgeInsets.symmetric(horizontal: 100),
-
             tabs: [
               Tab(text: 'All'),
               Tab(text: 'Unread'),
@@ -149,7 +107,6 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
   Widget _buildNotificationList(int tabIndex) {
     final filteredNotifications = _filterNotifications(tabIndex);
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 7),
       itemCount: filteredNotifications.length,
       itemBuilder: (context, index) {
         final notification = filteredNotifications[index];
@@ -170,12 +127,12 @@ class NotificationItem extends StatelessWidget {
   final Notification notification;
   final VoidCallback onTap;
 
-  const NotificationItem({super.key, required this.notification, required this.onTap});
+  const NotificationItem({Key? key, required this.notification, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: notification.isRead ? Colors.white : Color(0xFFF1F6FC), // خلفية رمادية لغير المقروءة
+      color: notification.isRead ? Colors.white : Color(0xFFF1F6FC),
       child: ListTile(
         title: Text(notification.title, style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Column(
@@ -196,4 +153,3 @@ class NotificationItem extends StatelessWidget {
     );
   }
 }
-

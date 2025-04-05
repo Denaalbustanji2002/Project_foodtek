@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodtec/view/widget/app_bar1.dart';
+import '../../../../core/screen_index.dart';
+import '../../../../cubits/navigatiion_cubit.dart';
 import '../../../widget/custom_primary_button.dart';
-import '../widget/bottom_nav_screen.dart';
+
 
 class OrderHome extends StatefulWidget {
   const OrderHome({super.key});
@@ -173,6 +176,8 @@ class _OrderHomeState extends State<OrderHome> {
                 child: CustomPrimaryButton(
                   text: 'Add to Cart',
                   onTap: () {
+                    context.read<NavigationCubit>().goTo(ScreenIndex.CheckoutScreen);
+
                     // Add to cart logic here
                   },
                 ),

@@ -48,7 +48,7 @@ void getBannersData() async {
   }
 
   void selectCategory(int index) {
-    emit(OrderCategorySelected(index)); // إرسال الحالة الجديدة
+    emit(OrderCategorySelected(index));
   }
 
 }

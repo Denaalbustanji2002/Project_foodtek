@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/screen_index.dart';
+import '../../../../cubits/navigatiion_cubit.dart';
 import '../../../widget/app_bar1.dart';
 import 'favorites_screen.dart';
 import 'order_home.dart';
 
-class FoodDetails extends StatefulWidget {
-  const FoodDetails({super.key});
+class FoodInCateg extends StatefulWidget {
+  const FoodInCateg({super.key});
 
   @override
-  State<FoodDetails> createState() => _FoodDetailsState();
+  State<FoodInCateg> createState() => _FoodInCategState();
 }
 
-class _FoodDetailsState extends State<FoodDetails> {
+class _FoodInCategState extends State<FoodInCateg> {
   int selectedCategoryIndex = 0;
   List<bool> isFavoriteList = List.generate(10, (index) => false);
   List<Map<String, dynamic>> favoriteItems = [];
@@ -155,10 +158,8 @@ class _FoodDetailsState extends State<FoodDetails> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => OrderHome()),
-                        );
+                        context.read<NavigationCubit>().goTo(ScreenIndex.OrderHome);
+
 
                       },
                       child: Text(
@@ -207,7 +208,7 @@ class _FoodDetailsState extends State<FoodDetails> {
                         }
                       });
 
-                      // Navigate to the FavoritesScreen and pass the updated favoriteItem,
+
 
                     },
                   ),

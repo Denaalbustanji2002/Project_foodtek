@@ -13,7 +13,7 @@ class Banners extends StatelessWidget {
     required this.adController,
   }) : super(key: key);
 
-  // دالة لبناء كل Slide مع تطبيق التصميم المطلوب
+
   Widget buildSlide(String url) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
