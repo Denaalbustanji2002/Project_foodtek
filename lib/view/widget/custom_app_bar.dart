@@ -45,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         flexibleSpace: Padding(
-          padding: EdgeInsets.only(top: 25.0, right: 16.0, left: 16.0),
+          padding: EdgeInsets.only(top: 25.0, right: 16.0, left: 32.0),
           child: Column(
             children: [
               Container(
@@ -105,7 +105,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                     Spacer(),
-                    // زر الإشعارات
                     IconButton(
                       icon: Icon(Icons.notifications_outlined),
                       onPressed: () {
@@ -127,11 +126,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
               ),
-              // مربع البحث في الـ AppBar
+
               Container(
                 padding: const EdgeInsets.only(
                   top: 16,
-                  left: 16.0,
+                  left: 0.0,
                   right: 16.0,
                 ),
                 child: Container(

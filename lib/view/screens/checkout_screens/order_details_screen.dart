@@ -10,31 +10,19 @@ import '../home_cart/screen/home_screen.dart';
 import '../location_screen/delivery_tracking_screen.dart';
 import '../profile_screens/profile_screen.dart';
 
-
 class OrderDetailsScreen extends StatefulWidget {
-
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: _buildAppBar(context),
-      body: _buildBody(context),
-    );
+    return Scaffold(appBar: _buildAppBar(context), body: _buildBody(context));
   }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-
       leading: Padding(
         padding: const EdgeInsets.all(10.0),
         child: IconButton(
@@ -42,7 +30,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           color: Color(0xFF391713),
           iconSize: responsiveHeight(context, 20),
           onPressed: () {
-
             context.read<NavigationCubit>().pop();
           },
         ),
@@ -163,11 +150,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   Widget _buildTrackingStep(
-      String text,
-      IconData icon,
-      bool isCompleted,
-      bool isLast,
-      ) {
+    String text,
+    IconData icon,
+    bool isCompleted,
+    bool isLast,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -211,7 +198,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: AssetImage('assets/images/photo.png'), radius: 30),
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/images/photo.png'),
+            radius: 30,
+          ),
           SizedBox(width: 15),
           Expanded(
             child: Column(
@@ -338,7 +328,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               ),
             ],
           ),
-
 
           child: ElevatedButton(
             onPressed: () {},

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtec/view/screens/home_cart/widget/appbar2.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../core/screen_index.dart';
+import '../../../../cubits/navigatiion_cubit.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -341,7 +345,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
 
-            // عناصر التحكم في الكمية
+
             Row(
               children: [
                 Container(
@@ -601,7 +605,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           SizedBox(height: 16),
 
-          // زر الدفع
+
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -614,6 +618,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
               onPressed: () {
                 _placeOrder();
+                context.read<NavigationCubit>().goTo(ScreenIndex.CheckoutScreen);
               },
               child: Text(
                 'Place Order',

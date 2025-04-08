@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtec/view/screens/home_cart/widget/appbar2.dart';
+import 'package:foodtec/view/screens/home_cart/widget/notification_widget.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
@@ -30,14 +31,14 @@ class _OrderDoneSuccessfullyScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: Appbar2(),
+      appBar: NotificationWidget(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(14.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: responsiveHeight(context, 14)),
+            //  SizedBox(height: responsiveHeight(context, 14)),
               Text(
                 "Checkout",
                 style: GoogleFonts.inter(

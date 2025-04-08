@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:foodtec/view/widget/app_bar1.dart';
+import 'package:foodtec/view/widget/custom_app_bar.dart';
 import '../../../../core/screen_index.dart';
 import '../../../../cubits/navigatiion_cubit.dart';
 import '../../../widget/custom_primary_button.dart';

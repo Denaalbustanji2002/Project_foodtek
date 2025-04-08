@@ -18,7 +18,7 @@ class CategoriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height:40, // You can adjust the height as needed
+      height: 40,
       child: BlocBuilder<OrderCubit, OrderState>(
         builder: (context, state) {
           int selectedIndex = 0;
@@ -28,23 +28,19 @@ class CategoriesWidget extends StatelessWidget {
 
           return ListView.builder(
             scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.only(left: 22),
             itemCount: categories.length,
             itemBuilder: (context, index) {
               final category = categories[index];
               final categoryName = '${category['icon'] ?? ''} ${category['name'] ?? ''}';
 
-
               return Padding(
-
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: GestureDetector(
                   onTap: () {
-                    // When a category is tapped, update the selected index and navigate to FoodDetails
                     context.read<OrderCubit>().selectCategory(index);
                     context.read<NavigationCubit>().goTo(ScreenIndex.FoodInCateg);
-
-
                   },
                   child: buildCategoryCard(
                     categoryName,
@@ -61,26 +57,19 @@ class CategoriesWidget extends StatelessWidget {
   }
 
   Widget buildCategoryCard(String text, String icon, bool isSelected) {
-    return GestureDetector(
-
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.green : Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0XFF85DE9E)),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+    decoration: BoxDecoration(
+    color: isSelected ? Colors.green : Colors.white,
+    borderRadius: BorderRadius.circular(8),
+    border: Border.all(color: const Color(0XFF85DE9E)),),
+    child: Text(
+    text,
+    style: TextStyle(
+    color: isSelected ? Colors.white : Colors.black,
+    fontWeight: FontWeight.bold,
+    ),
+    ),
     );
-
   }
-
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../core/screen_index.dart';
 import '../../../cubits/navigatiion_cubit.dart';
@@ -18,34 +20,106 @@ class _LocationScreenState extends State<LocationScreen> {
   String selectedAddress = "Select a location";
   TextEditingController searchTextEditingController = TextEditingController();
   int selectedIndex = 2;
+  Position? _currentPosition;
 
+  static const CameraPosition _kInitialPosition = CameraPosition(
+    target: LatLng(37.7749, -122.4194),
+    zoom: 15,
+  );
 
+  @override
+  void initState() {
+    super.initState();
+    _checkLocationPermission();
+  }
+
+  @override
+  void dispose() {
+    _mapController?.dispose();
+    searchTextEditingController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _checkLocationPermission() async {
+    final status = await Permission.location.request();
+    if (status.isGranted) {
+      _getCurrentLocation();
+    }
+  }
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      setState(() {
+        _currentPosition = position;
+      });
+      _goToCurrentLocation();
+    } catch (e) {
+      print("Error getting location: $e");
+    }
+  }
+
+  void _goToCurrentLocation() {
+    if (_mapController != null && _currentPosition != null) {
+      _mapController!.animateCamera(
+        CameraUpdate.newLatLng(
+          LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+        ),
+      );
+      setState(() {
+        selectedLocation = LatLng(_currentPosition!.latitude, _currentPosition!.longitude);
+        selectedAddress = "Current location (${_currentPosition!.latitude.toStringAsFixed(4)}, ${_currentPosition!.longitude.toStringAsFixed(4)})";
+      });
+    }
+  }
+
+  Future<void> _performLocationSearch(String searchQuery) async {
+    if (searchQuery.isEmpty) return;
+
+    print('Searching for location: $searchQuery');
+    setState(() {
+      selectedAddress = "Searching for '$searchQuery'...";
+    });
+
+    await Future.delayed(Duration(seconds: 1));
+
+    // Simulated search results - replace with actual API call in production
+    setState(() {
+      selectedLocation = LatLng(
+        37.7749 + (searchQuery.length * 0.001),
+        -122.4194 + (searchQuery.length * 0.001),
+      );
+      selectedAddress = "Found: $searchQuery (${selectedLocation!.latitude.toStringAsFixed(4)}, ${selectedLocation!.longitude.toStringAsFixed(4)})";
+      _mapController?.animateCamera(
+        CameraUpdate.newLatLng(selectedLocation!),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: true,
-      left: true,
       child: Scaffold(
         body: Stack(
           clipBehavior: Clip.none,
           children: [
             SizedBox(
-              width: responsiveWidth(context, 430),
-              height: responsiveHeight(context, 846),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(37.7749, -122.4194),
-                  zoom: 15,
-                ),
+                initialCameraPosition: _kInitialPosition,
                 onMapCreated: (controller) {
-                  _mapController = controller;
+                  setState(() {
+                    _mapController = controller;
+                  });
                 },
                 onTap: (LatLng position) {
                   setState(() {
                     selectedLocation = position;
                     selectedAddress =
-                        "Selected location (${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)})";
+                    "Selected location (${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)})";
                   });
                 },
                 markers: {
@@ -53,14 +127,18 @@ class _LocationScreenState extends State<LocationScreen> {
                     Marker(
                       markerId: const MarkerId("selectedLocation"),
                       position: selectedLocation!,
-                      infoWindow: const InfoWindow(title: "Selected Location"),
+                      infoWindow: InfoWindow(title: selectedAddress),
                     ),
                 },
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
               ),
             ),
+
             Positioned(
               top: responsiveHeight(context, 58),
-              left: responsiveWidth(context, 16),
+              left: responsiveWidth(context, 10),
               child: IconButton(
                 icon: Icon(
                   Icons.arrow_back,
@@ -72,6 +150,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 },
               ),
             ),
+
             Positioned(
               top: responsiveHeight(context, 63),
               left: responsiveWidth(context, 52),
@@ -127,7 +206,7 @@ class _LocationScreenState extends State<LocationScreen> {
             ),
 
             Positioned(
-              top: responsiveHeight(context, 567),
+              bottom: responsiveHeight(context, 100),
               left: responsiveWidth(context, 46),
               child: Container(
                 width: responsiveWidth(context, 343),
@@ -136,6 +215,13 @@ class _LocationScreenState extends State<LocationScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    )
+                  ],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -155,15 +241,10 @@ class _LocationScreenState extends State<LocationScreen> {
                     SizedBox(height: responsiveHeight(context, 12)),
                     Row(
                       children: [
-                        Container(
-                          width: responsiveWidth(context, 15),
-                          height: responsiveHeight(context, 18.46),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.location_on_outlined,
-                            color: const Color(0xFF4CAF50),
-                            size: responsiveHeight(context, 18.46),
-                          ),
+                        Icon(
+                          Icons.location_on_outlined,
+                          color: const Color(0xFF4CAF50),
+                          size: responsiveHeight(context, 18.46),
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Expanded(
@@ -181,37 +262,35 @@ class _LocationScreenState extends State<LocationScreen> {
                       ],
                     ),
                     SizedBox(height: responsiveHeight(context, 16)),
-                    Transform.translate(
-                      offset: const Offset(0, -4.6),
-                      child: SizedBox(
-                        height: responsiveHeight(context, 42),
-                        width: responsiveWidth(context, 295),
-                        child: ElevatedButton(
-                          onPressed: () {
+                    SizedBox(
+                      height: responsiveHeight(context, 42),
+                      width: responsiveWidth(context, 295),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (selectedLocation != null) {
                             context.read<NavigationCubit>().goTo(ScreenIndex.DeliveryTrackingScreen);
-
-                          },
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor: MaterialStateProperty.all(
-                              const Color(0xFF25AE4B),
-                            ),
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Please select a location first")),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Text(
-                            "Set Location",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: responsiveHeight(context, 12),
-                              height: 1.4,
-                              letterSpacing: -0.01,
-                              color: Colors.white,
-                            ),
+                          elevation: 0,
+                          backgroundColor: const Color(0xFF25AE4B),
+                        ),
+                        child: Text(
+                          "Set Location",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w500,
+                            fontSize: responsiveHeight(context, 12),
+                            height: 1.4,
+                            letterSpacing: -0.01,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -220,12 +299,24 @@ class _LocationScreenState extends State<LocationScreen> {
                 ),
               ),
             ),
+
+            Positioned(
+              bottom: responsiveHeight(context, 180),
+              right: responsiveWidth(context, 20),
+              child: FloatingActionButton(
+                mini: true,
+                backgroundColor: Colors.white,
+                onPressed: _goToCurrentLocation,
+                child: Icon(
+                  Icons.my_location,
+                  color: Color(0xFF25AE4B),
+                  size: responsiveHeight(context, 20),
+                ),
+              ),
+            ),
           ],
-        ),));
-  }}
-
-  void _performLocationSearch(String searchQuery) {
-    print('Searching for location: $searchQuery');
+        ),
+      ),
+    );
   }
-
-
+}

@@ -94,7 +94,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                 size: responsiveHeight(context, 24),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                context.read<NavigationCubit>().pop();
               },
             ),
           ),

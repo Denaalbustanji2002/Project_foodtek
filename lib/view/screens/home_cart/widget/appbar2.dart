@@ -29,7 +29,7 @@ Appbar2({Key? key, })
         flexibleSpace: Padding(
 
           padding: EdgeInsets.only(
-            top: 40.0,
+            top: 20.0,
             right: 16.0,
             left: 16.0,
           ),
