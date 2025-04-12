@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'name': 'Pepperoni pizza',
       'description':
-          'Pepperoni pizza, Margarita Pizza Margherita Italian cuisine Tomato',
+      'Pepperoni pizza, Margarita Pizza Margherita Italian cuisine Tomato',
       'price': '29.00',
       'image': 'assets/images/Photo Pizza.png',
       'rating': '4.5',
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'name': 'Pizza Cheese',
       'description':
-          'Food pizza dish cuisine junk food, Fast Food, Flatbread, Ingredient',
+      'Food pizza dish cuisine junk food, Fast Food, Flatbread, Ingredient',
       'price': '23.00',
       'image': 'assets/images/Photo Pizza.png',
       'rating': '4.2',
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'name': 'Mexican Green Wave',
       'description':
-          'A pizza loaded with crunchy onions, crisp capsicum, juicy tomatoes',
+      'A pizza loaded with crunchy onions, crisp capsicum, juicy tomatoes',
       'price': '23.00',
       'image': 'assets/images/Photo Pizza.png',
       'rating': '4.3',
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'name': 'Club Sandwich',
       'description':
-          'Triple decker sandwich with chicken, bacon, and fresh vegetables',
+      'Triple decker sandwich with chicken, bacon, and fresh vegetables',
       'price': '18.00',
       'image': 'assets/images/chicken_burger.png',
       'rating': '4.2',
@@ -93,25 +93,25 @@ class _HomeScreenState extends State<HomeScreen> {
       'name': 'Sushi',
       'price': '103.0',
       'image':
-          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsushi.jpg?alt=media&token=4bfc5003-88a5-4a0d-b465-e5638393d32e',
+      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsushi.jpg?alt=media&token=4bfc5003-88a5-4a0d-b465-e5638393d32e',
     },
     {
       'name': 'Salad',
       'price': '50.0',
       'image':
-          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsalad.jpg?alt=media&token=f8dc0bf7-e3e9-45f3-b318-334d9dc5b56b',
+      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsalad.jpg?alt=media&token=f8dc0bf7-e3e9-45f3-b318-334d9dc5b56b',
     },
     {
       'name': 'Pasta',
       'price': '12.99',
       'image':
-          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fpasta.jpg?alt=media&token=9a62c18a-37a9-453c-abb1-a4c97c539096',
+      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fpasta.jpg?alt=media&token=9a62c18a-37a9-453c-abb1-a4c97c539096',
     },
     {
       'name': 'Cupcake',
       'price': '8.20',
       'image':
-          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fcupcake.jpg?alt=media&token=55aa73f4-323b-4fb5-9871-51bca371c617',
+      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fcupcake.jpg?alt=media&token=55aa73f4-323b-4fb5-9871-51bca371c617',
     },
   ];
 
@@ -209,18 +209,23 @@ class _HomeScreenState extends State<HomeScreen> {
               style: ElevatedButton.styleFrom(
                 foregroundColor: isSelected ? Colors.white : Colors.black,
                 backgroundColor:
-                    isSelected ? const Color(0xFF25AE4B) : Colors.white,
+                isSelected ? const Color(0xFF25AE4B) : Colors.white,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7),
                   side:
+                  (categories[index]['name'] == 'All' && isSelected) ||
                       isSelected
-                          ? BorderSide.none
-                          : const BorderSide(color: Color(0xFFDBF4D1)),
+                      ? BorderSide.none
+                      : const BorderSide(color: Color(0xFFDBF4D1)),
                 ),
                 minimumSize:
-                    isSelected ? const Size(49, 43) : const Size(126, 43),
+                categories[index]['name'] == 'All'
+                    ? const Size(49, 43)
+                    : (isSelected
+                    ? const Size(49, 43)
+                    : const Size(126, 43)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -477,41 +482,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(19.12),
                   color: Colors.black,
                 ),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(19.12),
-                      child: Image.network(item['image']!, fit: BoxFit.cover),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        height: 11,
-                        width: 34,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF25AE4B),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            bottomLeft: Radius.circular(30),
-                          ),
+                child:Stack(
+                fit: StackFit.expand,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(19.12),
+                    child:Image.asset(
+                      'assets/images/recommend.png',
+                      fit: BoxFit.cover,
+                    )
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 11,
+                      width: 34,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF25AE4B),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
                         ),
-                        child: Center(
-                          child: Text(
-                            '\$${item['price']}',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 8,
-                              letterSpacing: -0.03,
-                              height: 1.0,
-                            ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '\$${item['price']}',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 8,
+                            letterSpacing: -0.03,
+                            height: 1.0,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
               );
             },
           ),
@@ -520,26 +528,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFoodItem(
-      String name,
+  Widget _buildFoodItem(String name,
       String description,
       String rating,
       String price,
-      String imagePath,
-      ) {
+      String imagePath,) {
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             settings: RouteSettings(name: '/foodDetails'),
-            builder: (_) => FoodDetailScreen(
-              name: name,
-              description: description,
-              rating: rating,
-              price: price,
-              imagePath: imagePath,
-            ),
+            builder:
+                (_) =>
+                FoodDetailScreen(
+                  name: name,
+                  description: description,
+                  rating: rating,
+                  price: price,
+                  imagePath: imagePath,
+                ),
           ),
         );
       },
@@ -623,7 +631,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   Widget _buildFoodItemCard({
     required String name,
@@ -755,9 +762,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? Icons.favorite
                     : Icons.favorite_border_rounded,
                 color:
-                    favoriteItems.any((item) => item['name'] == name)
-                        ? Colors.red
-                        : Color(0xFF222628),
+                favoriteItems.any((item) => item['name'] == name)
+                    ? Colors.red
+                    : Color(0xFF222628),
                 size: responsiveHeight(context, 13),
               ),
             ),
