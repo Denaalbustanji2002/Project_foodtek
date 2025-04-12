@@ -357,12 +357,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     height: responsiveHeight(context, 57),
                     child: ElevatedButton(
                       onPressed: () async {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OrderDoneSuccessfullyScreen(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, '/orderDone');
+
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF25AE4B),

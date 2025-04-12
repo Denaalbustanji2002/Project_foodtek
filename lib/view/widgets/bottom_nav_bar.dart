@@ -1,51 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodtek_project/helper/responsive.dart';
 import '../../cubits/navigation_cubit.dart';
 import 'app_tab.dart';
 
 class BottomNavBar extends StatelessWidget {
   final AppTab currentTab;
-  final GlobalKey<NavigatorState> navigatorKey; // المفتاح الذي يتم تمريره من MainScreen
+  final GlobalKey<NavigatorState> navigatorKey;
+  final ValueNotifier<String> currentRouteNotifier;
 
   const BottomNavBar({
     super.key,
     required this.currentTab,
     required this.navigatorKey,
+    required this.currentRouteNotifier,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 6,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildIcon(context, Icons.home, "Home", AppTab.home),
-          _buildIcon(context, Icons.favorite, "Favorites", AppTab.favorites),
-          const SizedBox(width: 40),
-          _buildIcon(
-            context,
-            Icons.history,
-            _getHistoryLabel(context),
-            AppTab.history,
+    return ValueListenableBuilder<String>(
+      valueListenable: currentRouteNotifier,
+      builder: (context, currentRoute, child) {
+        return BottomAppBar(
+          color: Color(0xFFDBF4D1),
+          notchMargin: 0,
+          elevation: 5,
+          shadowColor: Color(0xFFDBF4D1),
+          shape: const CircularNotchedRectangle(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildIcon(
+                context,
+                Icons.home_outlined,
+                "Home",
+                AppTab.home,
+                currentRoute,
+              ),
+              _buildIcon(
+                context,
+                Icons.favorite_border_rounded,
+                "Favorites",
+                AppTab.favorites,
+                currentRoute,
+              ),
+              SizedBox(width: responsiveWidth(context, 40)),
+              _buildIcon(
+                context,
+                Icons.history,
+                _getHistoryLabel(currentRoute),
+                AppTab.history,
+                currentRoute,
+              ),
+              _buildIcon(
+                context,
+                Icons.person_2_outlined,
+                "Profile",
+                AppTab.profile,
+                currentRoute,
+              ),
+            ],
           ),
-          _buildIcon(context, Icons.person, "Profile", AppTab.profile),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildIcon(
-      BuildContext context, IconData icon, String label, AppTab tab) {
-    final bool isSelected = currentTab == tab;
+  String _getHistoryLabel(String currentRoute) {
+    final List<String> trackingPages = [
+      '/foodDetails',
+      '/checkout',
+      '/addCard',
+      '/orderDone',
+      '/deliveryTracking',
+      '/chat',
+      '/orderDetails',
+      '/profileDetails',
+      '/profile',
+    ];
+    return trackingPages.contains(currentRoute) ? "Track" : "History";
+  }
 
+  Widget _buildIcon(
+    BuildContext context,
+    IconData icon,
+    String label,
+    AppTab tab,
+    String currentRoute,
+  ) {
+    final bool isSelected = currentTab == tab;
     return InkWell(
       onTap: () {
-        // فقط إذا كان التاب مختلف عن الحالي ننفذ التنقل
         if (currentTab != tab) {
           context.read<NavigationCubit>().changeTab(tab);
-          // تحديد الريوت المناسب لكل تاب:
           String targetRoute;
           switch (tab) {
             case AppTab.home:
@@ -58,7 +105,22 @@ class BottomNavBar extends StatelessWidget {
               targetRoute = '/cartHistory';
               break;
             case AppTab.history:
-              targetRoute = '/history';
+              final List<String> trackingPages = [
+                '/foodDetails',
+                '/checkout',
+                '/addCard',
+                '/orderDone',
+                '/deliveryTracking',
+                '/chat',
+                '/orderDetails',
+                '/profileDetails',
+                '/profile',
+              ];
+              if (trackingPages.contains(currentRoute)) {
+                targetRoute = '/deliveryTracking';
+              } else {
+                targetRoute = '/history';
+              }
               break;
             case AppTab.profile:
               targetRoute = '/profile';
@@ -66,39 +128,41 @@ class BottomNavBar extends StatelessWidget {
             default:
               targetRoute = '/';
           }
-          // الانتقال للريوت الجديد وإزالة باقي التراكات
-          navigatorKey.currentState!
-              .pushNamedAndRemoveUntil(targetRoute, (route) => false);
+          navigatorKey.currentState!.pushNamedAndRemoveUntil(
+            targetRoute,
+            (route) => false,
+          );
         } else {
-          // إذا كان التاب هو الحالي يمكنك مثلاً عمل pop حتى الصفحة الجذرية لذلك التاب
           navigatorKey.currentState!.popUntil((route) => route.isFirst);
         }
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon,
-              color: isSelected ? const Color(0xFF25AE4B) : Colors.grey),
-          Text(label,
-              style: TextStyle(
-                  color: isSelected ? const Color(0xFF25AE4B) : Colors.grey)),
-        ],
+      child: SizedBox(
+        width: responsiveWidth(context, 81.2),
+        height: responsiveHeight(context, 100),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: responsiveHeight(context, 19)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? const Color(0xFF25AE4B) : Color(0xFF484C52),
+              ),
+              SizedBox(height: responsiveHeight(context, 6)),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: responsiveHeight(context, 12),
+                  fontWeight: FontWeight.w500,
+                  height: 12 / 16,
+                  color:
+                      isSelected ? const Color(0xFF25AE4B) : Color(0xFF484C52),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
-  }
-
-  String _getHistoryLabel(BuildContext context) {
-    final currentRoute = ModalRoute.of(context)?.settings.name;
-    final List<String> trackingPages = [
-      '/profile',
-      '/profileDetails',
-      '/orderDetails',
-      '/chat',
-      '/deliveryTracking',
-      '/orderDone',
-      '/checkout',
-      '/addCard',
-    ];
-    return trackingPages.contains(currentRoute) ? "Track" : "History";
   }
 }

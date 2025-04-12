@@ -179,10 +179,8 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => OrderDetailsScreen()),
-                          );
+                          Navigator.pushNamed(context, '/orderDetails');
+
                         },
                         child: Text(
                           'All Details',
@@ -347,10 +345,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                           SizedBox(width: responsiveWidth(context, 8)),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ChatScreen()),
-                              );
+                              Navigator.pushNamed(context, '/chat');
                             },
                             child: Container(
                               padding: EdgeInsets.all(8),

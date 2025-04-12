@@ -68,13 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icons.person_outline,
                     title: 'Personal information',
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfileScreenDetails(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/profileDetails');
                     },
+
                   ),
                   _buildProfileMenuItem(
                     context: context,

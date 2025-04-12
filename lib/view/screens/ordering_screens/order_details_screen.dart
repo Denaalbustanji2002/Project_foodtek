@@ -326,11 +326,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ],
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
-              // لأننا أضفنا الظل في BoxDecoration
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

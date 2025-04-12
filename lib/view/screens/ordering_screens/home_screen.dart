@@ -532,12 +532,13 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => FoodDetailScreen(
+            settings: RouteSettings(name: '/foodDetails'),
+            builder: (_) => FoodDetailScreen(
               name: name,
               description: description,
               rating: rating,
               price: price,
-              imagePath: imagePath, // لازم تكوني معرفة هذا الباراميتر بصفحة التفاصيل
+              imagePath: imagePath,
             ),
           ),
         );

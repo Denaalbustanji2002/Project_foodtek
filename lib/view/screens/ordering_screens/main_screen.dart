@@ -4,6 +4,7 @@ import 'package:foodtek_project/view/screens/ordering_screens/Cart_history_scree
 import 'package:foodtek_project/view/screens/ordering_screens/favorites_screen.dart';
 import 'package:foodtek_project/view/screens/ordering_screens/home_screen.dart';
 import '../../../cubits/navigation_cubit.dart';
+import '../../../my_navigator_observer.dart';
 import '../../widgets/app_tab.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../chat_screen/chat_screen.dart';
@@ -15,14 +16,15 @@ import '../location_screen/location_screen.dart';
 import '../profile_screens/profile_screen.dart';
 import '../profile_screens/profile_screen_details.dart';
 import 'filter_screen.dart';
+import 'food_details_screen.dart';
 import 'history_screen.dart';
 import 'order_details_screen.dart';
-
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final ValueNotifier<String> currentRouteNotifier = ValueNotifier<String>('/');
 
   final Map<AppTab, Widget> navbarPages = {
     AppTab.home: HomeScreen(),
@@ -35,35 +37,50 @@ class MainScreen extends StatelessWidget {
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => HomeScreen());
+      case '/foodDetails':
+        final args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => FoodDetailScreen(
+            name: args['name'],
+            description: args['description'],
+            rating: args['rating'],
+            price: args['price'],
+            imagePath: args['imagePath'],
+          ),
+        );
+
       case '/favorites':
-        return MaterialPageRoute(builder: (_) => FavoritesScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => FavoritesScreen());
       case '/cartHistory':
-        return MaterialPageRoute(builder: (_) => CartHistoryScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => CartHistoryScreen());
       case '/history':
-        return MaterialPageRoute(builder: (_) => HistoryScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => HistoryScreen());
       case '/profile':
-        return MaterialPageRoute(builder: (_) => ProfileScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen());
       case '/location':
-        return MaterialPageRoute(builder: (_) => LocationScreen());
-        case '/chat':
-        return MaterialPageRoute(builder: (_) => ChatScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => LocationScreen());
+      case '/chat':
+        return MaterialPageRoute(settings: settings, builder: (_) => ChatScreen());
       case '/orderDetails':
-        return MaterialPageRoute(builder: (_) => OrderDetailsScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => OrderDetailsScreen());
       case '/checkout':
-        return MaterialPageRoute(builder: (_) => CheckoutScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => CheckoutScreen());
       case '/filterScreen':
-        return MaterialPageRoute(builder: (_) => FilterScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => FilterScreen());
       case '/addCard':
-        return MaterialPageRoute(builder: (_) => AddCardScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => AddCardScreen());
       case '/deliveryTracking':
-        return MaterialPageRoute(builder: (_) => DeliveryTrackingScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => DeliveryTrackingScreen());
       case '/orderDone':
-        return MaterialPageRoute(builder: (_) => OrderDoneSuccessfullyScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => OrderDoneSuccessfullyScreen());
+        case '/foodDetails':
+        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen());
       case '/profileDetails':
-        return MaterialPageRoute(builder: (_) => ProfileScreenDetails());
+        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreenDetails());
       default:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => HomeScreen());
     }
   }
 
@@ -78,26 +95,32 @@ class MainScreen extends StatelessWidget {
               key: navigatorKey,
               initialRoute: '/',
               onGenerateRoute: _onGenerateRoute,
+              observers: [MyNavigatorObserver(currentRouteNotifier)],
             ),
             bottomNavigationBar: BottomNavBar(
               currentTab: currentTab,
-              navigatorKey: navigatorKey, // تمرير المفتاح هنا
+              navigatorKey: navigatorKey,
+              currentRouteNotifier: currentRouteNotifier,
             ),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: const Color(0xFF25AE4B),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
+            floatingActionButton: SizedBox(
+              height: 53,
+              width: 52,
+              child: FloatingActionButton(
+                backgroundColor: const Color(0xFF25AE4B),
+                shape: const CircleBorder(),
+                onPressed: () {
+                  context.read<NavigationCubit>().changeTab(AppTab.cartHistory);
+                  navigatorKey.currentState!
+                      .pushNamedAndRemoveUntil('/cartHistory', (route) => false);
+                },
+                child: const Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.white,
+                  size: 25,
+                ),
               ),
-              onPressed: () {
-                // كمثال، نقوم بتغيير التاب لعرض عربة التسوق
-                context.read<NavigationCubit>().changeTab(AppTab.cartHistory);
-                navigatorKey.currentState!
-                    .pushNamedAndRemoveUntil('/cartHistory', (route) => false);
-              },
-              child: const Icon(Icons.shopping_cart_outlined),
             ),
-            floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerDocked,
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           );
         },
       ),

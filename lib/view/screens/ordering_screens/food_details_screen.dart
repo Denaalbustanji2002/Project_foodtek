@@ -78,36 +78,7 @@ class FoodDetailScreen extends StatefulWidget {
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int _quantity = 3;
   double _spicyValue = 0.3;
-  int currentIndex = 2;
 
-  void onItemTapped(int index) {
-    Widget? nextScreen;
-
-    switch (index) {
-      case 0:
-        nextScreen = HomeScreen();
-        break;
-      case 1:
-        nextScreen = FavoritesScreen();
-        break;
-      case 3:
-        nextScreen = DeliveryTrackingScreen();
-        break;
-      case 4:
-        nextScreen = ProfileScreen();
-        break;
-    }
-
-    if (nextScreen != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => nextScreen!),
-      );
-      setState(() {
-        currentIndex = index;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

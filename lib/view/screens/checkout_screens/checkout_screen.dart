@@ -606,12 +606,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddCardScreen(),
-                                ),
-                              );
+                              Navigator.pushNamed(context, '/addCard');
+
                             },
                             child: Text(
                               'Place My Order',

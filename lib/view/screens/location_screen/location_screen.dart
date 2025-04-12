@@ -185,12 +185,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         width: responsiveWidth(context, 295),
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CheckoutScreen(),
-                              ),
-                            );
+                            Navigator.pushNamed(context, '/checkout');
                           },
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all(
