@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:foodtek_project/helper/responsive.dart';
-import '../checkout_screens/checkout_screen.dart';
-import '../ordering_screens/cart_history_screen.dart';
-import '../ordering_screens/favorites_screen.dart';
-import '../ordering_screens/home_screen.dart';
-import '../profile_screens/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -50,7 +46,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     Marker(
                       markerId: const MarkerId("selectedLocation"),
                       position: selectedLocation!,
-                      infoWindow: const InfoWindow(title: "Selected Location"),
+                      infoWindow: InfoWindow(title: AppLocalizations.of(context)!.selectedLocationTitle),
                     ),
                 },
               ),
@@ -60,12 +56,14 @@ class _LocationScreenState extends State<LocationScreen> {
               left: responsiveWidth(context, 16),
               child: IconButton(
                 icon: Icon(
-                  Icons.arrow_back,
+                  Directionality.of(context) == TextDirection.rtl
+                      ? Icons.arrow_forward
+                      : Icons.arrow_back,
                   color: Colors.black,
                   size: responsiveHeight(context, 24),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+
                 },
               ),
             ),
@@ -83,7 +81,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: TextField(
                   controller: searchTextEditingController,
                   decoration: InputDecoration(
-                    hintText: 'Find your location',
+                    hintText: AppLocalizations.of(context)!.findYourLocation,
                     hintStyle: GoogleFonts.inter(
                       fontSize: responsiveHeight(context, 12),
                       fontWeight: FontWeight.w400,
@@ -139,7 +137,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "your location",
+                      AppLocalizations.of(context)!.yourLocation,
                       style: GoogleFonts.inter(
                         fontSize: responsiveHeight(context, 12),
                         fontWeight: FontWeight.w500,
@@ -165,7 +163,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         SizedBox(width: responsiveWidth(context, 8)),
                         Expanded(
                           child: Text(
-                            selectedAddress,
+                            AppLocalizations.of(context)!.addressLine,
                             style: GoogleFonts.inter(
                               fontSize: responsiveHeight(context, 12),
                               fontWeight: FontWeight.w600,
@@ -177,7 +175,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: responsiveHeight(context, 16)),
+                    SizedBox(height: responsiveHeight(context, 15)),
                     Transform.translate(
                       offset: const Offset(0, -4.6),
                       child: SizedBox(
@@ -199,7 +197,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
                           ),
                           child: Text(
-                            "Set Location",
+                           AppLocalizations.of(context)!.setLocation,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,

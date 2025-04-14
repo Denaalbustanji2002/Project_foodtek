@@ -9,6 +9,7 @@ import '../ordering_screens/cart_history_screen.dart';
 import '../ordering_screens/favorites_screen.dart';
 import '../ordering_screens/home_screen.dart';
 import '../profile_screens/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDoneSuccessfullyScreen extends StatefulWidget {
   @override
@@ -25,6 +26,7 @@ class _OrderDoneSuccessfullyScreenState
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -44,7 +46,7 @@ class _OrderDoneSuccessfullyScreenState
             children: [
               SizedBox(height: responsiveHeight(context, 14)),
               Text(
-                "Checkout",
+                AppLocalizations.of(context)!.checkout,
                 style: GoogleFonts.inter(
                   color: const Color(0xFF391713),
                   fontSize: responsiveHeight(context, 20),
@@ -67,7 +69,7 @@ class _OrderDoneSuccessfullyScreenState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Your Order Done Successfully",
+                      AppLocalizations.of(context)!.yourOrderDoneSuccessfully,
                       style: GoogleFonts.inter(
                         fontSize: responsiveWidth(context, 24),
                         fontWeight: FontWeight.w700,
@@ -80,8 +82,7 @@ class _OrderDoneSuccessfullyScreenState
                     SizedBox(height: responsiveHeight(context, 12)),
 
                     Text(
-                      "You will get your order within 12min.\n thanks for using our services.",
-                      style: GoogleFonts.inter(
+                      AppLocalizations.of(context)!.youWillGetYourOrder,                      style: GoogleFonts.inter(
                         fontSize: responsiveWidth(context, 20),
                         color: Color(0XFF263238),
                         letterSpacing: -0.01,
@@ -117,7 +118,7 @@ class _OrderDoneSuccessfullyScreenState
                       ),
                     ),
                     child: Text(
-                      "Track Your Order",
+                      AppLocalizations.of(context)!.trackYourOrder,
                       style: GoogleFonts.inter(
                         fontSize: responsiveHeight(context, 18),
                         fontWeight: FontWeight.w600,

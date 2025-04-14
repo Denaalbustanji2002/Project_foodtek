@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../screens/location_screen/location_screen.dart';
 import 'notifications_bottom_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({super.key});
@@ -31,7 +31,7 @@ class HeaderWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Current location',
+                    AppLocalizations.of(context)!.currentLocation,
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -39,7 +39,7 @@ class HeaderWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Jl. Soekarno Hatta 15A...',
+                   AppLocalizations.of(context)!.locationHeader,
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,

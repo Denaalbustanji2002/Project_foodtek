@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../helper/responsive.dart';
-import '../chat_screen/chat_screen.dart';
-import '../ordering_screens/cart_history_screen.dart';
-import '../ordering_screens/favorites_screen.dart';
-import '../ordering_screens/home_screen.dart';
-import '../ordering_screens/order_details_screen.dart';
-import '../profile_screens/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeliveryTrackingScreen extends StatefulWidget {
   @override
@@ -91,12 +85,14 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
             left: responsiveWidth(context, 16),
             child: IconButton(
               icon: Icon(
-                Icons.arrow_back,
+                Directionality.of(context) == TextDirection.rtl
+                    ? Icons.arrow_forward
+                    : Icons.arrow_back,
                 color: Colors.black,
                 size: responsiveHeight(context, 24),
               ),
               onPressed: () {
-                Navigator.pop(context);
+
               },
             ),
           ),
@@ -114,7 +110,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
               child: TextField(
                 controller: searchTextEditingController,
                 decoration: InputDecoration(
-                  hintText: 'Find your location',
+                  hintText: AppLocalizations.of(context)!.findYourLocation,
                   hintStyle: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 12),
                     fontWeight: FontWeight.w400,
@@ -169,7 +165,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'On The Way',
+                        AppLocalizations.of(context)!.onTheWay,
                         style: GoogleFonts.inter(
                           fontSize: responsiveHeight(context, 16),
                           fontWeight: FontWeight.w700,
@@ -183,7 +179,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
 
                         },
                         child: Text(
-                          'All Details',
+                          AppLocalizations.of(context)!.allDetails,
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 16),
                             fontWeight: FontWeight.w700,
@@ -202,7 +198,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                         child: Column(
                           children: [
                             Text(
-                              'Order Placed',
+                              AppLocalizations.of(context)!.orderPlaced,
                               style: GoogleFonts.inter(
                                 fontSize: responsiveHeight(context, 12),
                                 fontWeight: FontWeight.w600,
@@ -225,7 +221,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                         child: Column(
                           children: [
                             Text(
-                              'On The Way',
+                              AppLocalizations.of(context)!.onTheWay,
                               style: GoogleFonts.inter(
                                 fontSize: responsiveHeight(context, 12),
                                 fontWeight: FontWeight.w600,
@@ -248,7 +244,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                         child: Column(
                           children: [
                             Text(
-                              'Delivered',
+                             AppLocalizations.of(context)!.delivered,
                               style: GoogleFonts.inter(
                                 fontSize: responsiveHeight(context, 12),
                                 fontWeight: FontWeight.w600,
@@ -281,7 +277,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Your Delivery Hero',
+                            AppLocalizations.of(context)!.yourDeliveryHero,
                             style: GoogleFonts.inter(
                               color: Color(0xFF878787),
                               fontSize: responsiveHeight(context, 12),
@@ -294,7 +290,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                           Row(
                             children: [
                               Text(
-                                'Aleksandr V.',
+                                AppLocalizations.of(context)!.aleksandrV,
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w400,
                                   fontSize: responsiveHeight(context, 14),
@@ -365,7 +361,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                   ),
                   SizedBox(height: responsiveHeight(context, 16)),
                   Text(
-                    "your location",
+                    AppLocalizations.of(context)!.yourLocation,
                     style: GoogleFonts.inter(
                       fontSize: responsiveHeight(context, 12),
                       fontWeight: FontWeight.w500,
@@ -383,7 +379,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                       SizedBox(width: 4),
                       Expanded(
                         child: Text(
-                          '123 Al-Madina Street, Abdali, Amman, Jordan',
+                          AppLocalizations.of(context)!.addressLine,
                           style: GoogleFonts.inter(
                             color: Color(0XFF878787),
                             fontSize: responsiveHeight(context, 14),

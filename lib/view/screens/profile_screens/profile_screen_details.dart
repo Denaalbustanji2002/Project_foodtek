@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodtek_project/view/screens/profile_screens/profile_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
 import '../../../helper/validation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../location_screen/delivery_tracking_screen.dart';
-import '../ordering_screens/cart_history_screen.dart';
-import '../ordering_screens/favorites_screen.dart';
-import '../ordering_screens/home_screen.dart';
 
 class ProfileScreenDetails extends StatefulWidget {
   @override
@@ -49,12 +43,12 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           color: Color(0xFF391713),
           iconSize: responsiveHeight(context, 20),
           onPressed: () {
-Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
         toolbarHeight: 50,
         title: Text(
-          'Profile',
+          AppLocalizations.of(context)!.profile,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
@@ -92,19 +86,29 @@ Navigator.pop(context);
                 ),
                 child: Column(
                   children: [
-                    _buildInputField('Username', userNameTextEditingController),
-                    SizedBox(height: responsiveHeight(context, 9)),
-                    _buildInputField('Email', emailTextEditingController),
+                    _buildInputField(
+                      AppLocalizations.of(context)!.username,
+                      userNameTextEditingController,
+                    ),
                     SizedBox(height: responsiveHeight(context, 9)),
                     _buildInputField(
-                      'Phone Number',
+                      AppLocalizations.of(context)!.email,
+                      emailTextEditingController,
+                    ),
+                    SizedBox(height: responsiveHeight(context, 9)),
+                    _buildInputField(
+                      AppLocalizations.of(context)!.phoneNumber,
                       phoneTextEditingController,
                     ),
                     SizedBox(height: responsiveHeight(context, 9)),
-                    passwordInputField('Password', '*', obscureText: true),
+                    passwordInputField(
+                      AppLocalizations.of(context)!.password,
+                      '*',
+                      obscureText: true,
+                    ),
                     SizedBox(height: responsiveHeight(context, 9)),
                     _buildInputField(
-                      'Address',
+                      AppLocalizations.of(context)!.address,
                       addressTextEditingController,
                       maxLines: 2,
                     ),
@@ -116,13 +120,12 @@ Navigator.pop(context);
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                // Remove default button styling
                 backgroundColor: Colors.transparent,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                elevation: 0, // Remove default elevation
+                elevation: 0,
               ),
               child: Container(
                 width: responsiveWidth(context, 295),
@@ -131,10 +134,7 @@ Navigator.pop(context);
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF25AE4B),
-                      Color(0xFF25AE4B),
-                    ],
+                    colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
                   ),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
@@ -149,7 +149,7 @@ Navigator.pop(context);
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Update',
+                    AppLocalizations.of(context)!.update,
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w500,
@@ -243,7 +243,7 @@ Navigator.pop(context);
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "password",
+          AppLocalizations.of(context)!.password,
           style: GoogleFonts.plusJakartaSans(
             color: const Color(0xFF6C7278),
             fontSize: responsiveHeight(context, 12),
@@ -320,10 +320,9 @@ Navigator.pop(context);
         CircleAvatar(
           radius: 36,
           backgroundColor: Colors.grey.shade200,
-          child: Icon(
-            Icons.person,
-            size: responsiveHeight(context, 60),
-            color: Colors.grey.shade600,
+          child: Image.asset(
+            "assets/images/profile_picture.png",
+            fit: BoxFit.cover,
           ),
         ),
         SizedBox(height: 8),

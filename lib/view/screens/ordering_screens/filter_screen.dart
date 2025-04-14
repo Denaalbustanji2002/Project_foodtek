@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../widgets/header_widget.dart';
-import '../profile_screens/profile_screen.dart';
-import 'Cart_history_screen.dart';
-import 'favorites_screen.dart';
-import 'home_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilterScreen extends StatefulWidget {
   @override
@@ -45,7 +41,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: responsiveHeight(context, 15)),
-                    _buildSectionTitle('Filter'),
+                    _buildSectionTitle(AppLocalizations.of(context)!.filter),
                     SizedBox(height: responsiveHeight(context, 32)),
                     _buildPriceRange(),
                     SizedBox(height: responsiveHeight(context, 32)),
@@ -99,7 +95,7 @@ class _FilterScreenState extends State<FilterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeading('Price range'),
+        _buildSectionHeading(AppLocalizations.of(context)!.priceRange),
         Row(
           children: [
             Expanded(
@@ -113,7 +109,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Min',
+                 AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -136,7 +132,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Max',
+                  AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -162,9 +158,8 @@ class _FilterScreenState extends State<FilterScreen> {
                   children: [
                     Text(
                       '\$0',
-                      style: const TextStyle(
+                      style:  GoogleFonts.inter(
                         color: Color(0xFF25AE4B),
-                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -223,7 +218,7 @@ class _FilterScreenState extends State<FilterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeading('Discount'),
+        _buildSectionHeading(AppLocalizations.of(context)!.discount),
         Row(
           children: [
             Expanded(
@@ -237,7 +232,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Min',
+                 AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -260,7 +255,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Max',
+                 AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -346,14 +341,14 @@ class _FilterScreenState extends State<FilterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeading('Category'),
+        _buildSectionHeading(AppLocalizations.of(context)!.category),
         Row(
           children: [
-            _buildCategoryChip('Fast Food', 'Fast Food' == _selectedCategory),
+            _buildCategoryChip(AppLocalizations.of(context)!.fastFood, 'Fast Food' == _selectedCategory),
             const SizedBox(width: 10),
-            _buildCategoryChip('Sea Food', 'Sea Food' == _selectedCategory),
+            _buildCategoryChip(AppLocalizations.of(context)!.seafood, 'Sea Food' == _selectedCategory),
             const SizedBox(width: 10),
-            _buildCategoryChip('Dessert', 'Dessert' == _selectedCategory),
+            _buildCategoryChip(AppLocalizations.of(context)!.dessert, 'Dessert' == _selectedCategory),
           ],
         ),
       ],
@@ -392,11 +387,11 @@ class _FilterScreenState extends State<FilterScreen> {
         _buildSectionHeading('Location'),
         Row(
           children: [
-            _buildDistanceChip('1 KM', '1 KM' == _selectedDistance),
+            _buildDistanceChip(AppLocalizations.of(context)!.km, '1 KM' == _selectedDistance),
             const SizedBox(width: 10),
-            _buildDistanceChip('5 KM', '5 KM' == _selectedDistance),
+            _buildDistanceChip(AppLocalizations.of(context)!.km5, '5 KM' == _selectedDistance),
             const SizedBox(width: 10),
-            _buildDistanceChip('10 KM', '10 KM' == _selectedDistance),
+            _buildDistanceChip(AppLocalizations.of(context)!.km10, '10 KM' == _selectedDistance),
           ],
         ),
       ],
@@ -432,34 +427,34 @@ class _FilterScreenState extends State<FilterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeading('Dish'),
+        _buildSectionHeading(AppLocalizations.of(context)!.dish),
         Wrap(
           spacing: 10,
           runSpacing: 10,
           children: [
             _buildDishChip(
-              'Tuna Tartare',
-              _selectedDishes.contains('Tuna Tartare'),
+              AppLocalizations.of(context)!.tunaTartare,
+              _selectedDishes.contains(AppLocalizations.of(context)!.tunaTartare),
             ),
             _buildDishChip(
-              'Spicy Crab Cakes',
-              _selectedDishes.contains('Spicy Crab Cakes'),
+              AppLocalizations.of(context)!.spicyCrabCakes,
+              _selectedDishes.contains( AppLocalizations.of(context)!.spicyCrabCakes),
             ),
             _buildDishChip(
-              'Seafood Paella',
-              _selectedDishes.contains('Seafood Paella'),
+              AppLocalizations.of(context)!.seaFoodPaella,
+              _selectedDishes.contains(AppLocalizations.of(context)!.seaFoodPaella),
             ),
             _buildDishChip(
-              'Clam Chowder',
-              _selectedDishes.contains('Clam Chowder'),
+              AppLocalizations.of(context)!.clamChowder,
+              _selectedDishes.contains(AppLocalizations.of(context)!.clamChowder),
             ),
             _buildDishChip(
-              'Miso-Glazed Cod',
-              _selectedDishes.contains('Miso-Glazed Cod'),
+            AppLocalizations.of(context)!.misoGlazedCod,
+              _selectedDishes.contains(AppLocalizations.of(context)!.misoGlazedCod),
             ),
             _buildDishChip(
-              'Lobster Thermidor',
-              _selectedDishes.contains('Lobster Thermidor'),
+              AppLocalizations.of(context)!.lobsterThermidor,
+              _selectedDishes.contains(AppLocalizations.of(context)!.lobsterThermidor),
             ),
           ],
         ),

@@ -3,10 +3,8 @@ import 'package:foodtek_project/helper/responsive.dart';
 import 'package:foodtek_project/view/widgets/Search_bar_widget.dart';
 import 'package:foodtek_project/view/widgets/header_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../profile_screens/profile_screen.dart';
-import 'Cart_history_screen.dart';
-import 'favorites_screen.dart';
 import 'food_details_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,106 +15,111 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isFavorite = false;
   String selectedCategory = 'All';
 
-  final List<Map<String, dynamic>> foodItems = [
-    {
-      'name': 'Pepperoni pizza',
-      'description':
-      'Pepperoni pizza, Margarita Pizza Margherita Italian cuisine Tomato',
-      'price': '29.00',
-      'image': 'assets/images/Photo Pizza.png',
-      'rating': '4.5',
-      'category': 'Pizza',
-    },
-    {
-      'name': 'Pizza Cheese',
-      'description':
-      'Food pizza dish cuisine junk food, Fast Food, Flatbread, Ingredient',
-      'price': '23.00',
-      'image': 'assets/images/Photo Pizza.png',
-      'rating': '4.2',
-      'category': 'Pizza',
-    },
-    {
-      'name': 'Peppy Paneer',
-      'description': 'Chunky paneer with crisp capsicum and spicy red pepper',
-      'price': '13.00',
-      'image': 'assets/images/Photo Pizza.png',
-      'rating': '4.0',
-      'category': 'Pizza',
-    },
-    {
-      'name': 'Mexican Green Wave',
-      'description':
-      'A pizza loaded with crunchy onions, crisp capsicum, juicy tomatoes',
-      'price': '23.00',
-      'image': 'assets/images/Photo Pizza.png',
-      'rating': '4.3',
-      'category': 'Pizza',
-    },
-    {
-      'name': 'Chicken burger',
-      'description': '100 gr chicken + tomato +cheese Lettuce',
-      'price': '20.00',
-      'image': 'assets/images/chicken_burger.png',
-      'rating': '3.8',
-      'category': 'Burger',
-    },
-    {
-      'name': 'Cheese burger',
-      'description': '100 gr meat+ onion+ tomato+ lettuce cheese',
-      'price': '15.00',
-      'image': 'assets/images/cheese_burger.png',
-      'rating': '4.5',
-      'category': 'Burger',
-    },
-    {
-      'name': 'Ham Sandwich',
-      'description': 'Fresh bread with ham, lettuce, and cheese',
-      'price': '12.00',
-      'image': 'assets/images/chicken_burger.png',
-      'rating': '4.0',
-      'category': 'Sandwich',
-    },
-    {
-      'name': 'Club Sandwich',
-      'description':
-      'Triple decker sandwich with chicken, bacon, and fresh vegetables',
-      'price': '18.00',
-      'image': 'assets/images/chicken_burger.png',
-      'rating': '4.2',
-      'category': 'Sandwich',
-    },
-  ];
+  List<Map<String, dynamic>> foodItems = [];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    foodItems = [
+      {
+        'name': AppLocalizations.of(context)!.pepperoniPizza,
+        'description': AppLocalizations.of(context)!.pepperoniPizzaDescription,
+        'price': '29.00',
+        'image': 'assets/images/Photo Pizza.png',
+        'rating': '4.5',
+        'category': AppLocalizations.of(context)!.pizza,
+      },
+      {
+        'name': AppLocalizations.of(context)!.pizzaCheese,
+        'description': AppLocalizations.of(context)!.pizzaCheeseDescription,
+        'price': '23.00',
+        'image': 'assets/images/Photo Pizza.png',
+        'rating': '4.2',
+        'category': AppLocalizations.of(context)!.pizza,
+      },
+      {
+        'name': AppLocalizations.of(context)!.peppyPaneer,
+        'description': AppLocalizations.of(context)!.peppyPaneerDescription,
+        'price': '13.00',
+        'image': 'assets/images/Photo Pizza.png',
+        'rating': '4.0',
+        'category': AppLocalizations.of(context)!.pizza,
+      },
+      {
+        'name': AppLocalizations.of(context)!.mexicanGreenWave,
+        'description':
+            AppLocalizations.of(context)!.mexicanGreenWaveDescription,
+        'price': '23.00',
+        'image': 'assets/images/Photo Pizza.png',
+        'rating': '4.3',
+        'category': AppLocalizations.of(context)!.pizza,
+      },
+      {
+        'name': AppLocalizations.of(context)!.chickenBurger,
+        'description': AppLocalizations.of(context)!.chickenBurgerDescription,
+        'price': '20.00',
+        'image': 'assets/images/chicken_burger.png',
+        'rating': '3.8',
+        'category': AppLocalizations.of(context)!.burger,
+      },
+      {
+        'name': AppLocalizations.of(context)!.cheeseBurger,
+        'description': AppLocalizations.of(context)!.cheeseBurgerDescription,
+        'price': '15.00',
+        'image': 'assets/images/cheese_burger.png',
+        'rating': '4.5',
+        'category': AppLocalizations.of(context)!.burger,
+      },
+      {
+        'name': AppLocalizations.of(context)!.hamSandwich,
+        'description': AppLocalizations.of(context)!.hamSandwichDescription,
+        'price': '12.00',
+        'image': 'assets/images/chicken_burger.png',
+        'rating': '4.0',
+        'category': AppLocalizations.of(context)!.sandwich,
+      },
+      {
+        'name': AppLocalizations.of(context)!.clubSandwich,
+        'description': AppLocalizations.of(context)!.clubSandwichDescription,
+        'price': '18.00',
+        'image': 'assets/images/chicken_burger.png',
+        'rating': '4.2',
+        'category': AppLocalizations.of(context)!.sandwich,
+      },
+    ];
+
+    setState(() {});
+  }
 
   final List<Map<String, dynamic>> recommendedItems = [
     {
       'name': 'Sushi',
       'price': '103.0',
       'image':
-      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsushi.jpg?alt=media&token=4bfc5003-88a5-4a0d-b465-e5638393d32e',
+          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsushi.jpg?alt=media&token=4bfc5003-88a5-4a0d-b465-e5638393d32e',
     },
     {
       'name': 'Salad',
       'price': '50.0',
       'image':
-      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsalad.jpg?alt=media&token=f8dc0bf7-e3e9-45f3-b318-334d9dc5b56b',
+          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fsalad.jpg?alt=media&token=f8dc0bf7-e3e9-45f3-b318-334d9dc5b56b',
     },
     {
       'name': 'Pasta',
       'price': '12.99',
       'image':
-      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fpasta.jpg?alt=media&token=9a62c18a-37a9-453c-abb1-a4c97c539096',
+          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fpasta.jpg?alt=media&token=9a62c18a-37a9-453c-abb1-a4c97c539096',
     },
     {
       'name': 'Cupcake',
       'price': '8.20',
       'image':
-      'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fcupcake.jpg?alt=media&token=55aa73f4-323b-4fb5-9871-51bca371c617',
+          'https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/food%2Fcupcake.jpg?alt=media&token=55aa73f4-323b-4fb5-9871-51bca371c617',
     },
   ];
 
   List<Map<String, dynamic>> get filteredItems {
-    if (selectedCategory == 'All') {
+    if (selectedCategory == AppLocalizations.of(context)!.all) {
       return foodItems;
     } else {
       return foodItems
@@ -162,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (selectedCategory == 'All')
+                    if (selectedCategory == AppLocalizations.of(context)!.all)
                       Column(
                         children: [
                           _buildPromoBanner(),
@@ -184,10 +187,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategoryList() {
     final categories = [
-      {'name': 'All', 'icon': null},
-      {'name': 'Burger', 'icon': "🍔"},
-      {'name': 'Pizza', 'icon': "🍕"},
-      {'name': 'Sandwich', 'icon': "🌭"},
+      {'key': 'all', 'name': AppLocalizations.of(context)!.all, 'icon': null},
+      {
+        'key': 'burger',
+        'name': AppLocalizations.of(context)!.burger,
+        'icon': "🍔",
+      },
+      {
+        'key': 'pizza',
+        'name': AppLocalizations.of(context)!.pizza,
+        'icon': "🍕",
+      },
+      {
+        'key': 'sandwich',
+        'name': AppLocalizations.of(context)!.sandwich,
+        'icon': "🌭",
+      },
     ];
 
     return SizedBox(
@@ -209,23 +224,26 @@ class _HomeScreenState extends State<HomeScreen> {
               style: ElevatedButton.styleFrom(
                 foregroundColor: isSelected ? Colors.white : Colors.black,
                 backgroundColor:
-                isSelected ? const Color(0xFF25AE4B) : Colors.white,
+                    isSelected ? const Color(0xFF25AE4B) : Colors.white,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7),
                   side:
-                  (categories[index]['name'] == 'All' && isSelected) ||
-                      isSelected
-                      ? BorderSide.none
-                      : const BorderSide(color: Color(0xFFDBF4D1)),
+                      (categories[index]['name'] ==
+                                      AppLocalizations.of(context)!.all &&
+                                  isSelected) ||
+                              isSelected
+                          ? BorderSide.none
+                          : const BorderSide(color: Color(0xFFDBF4D1)),
                 ),
                 minimumSize:
-                categories[index]['name'] == 'All'
-                    ? const Size(49, 43)
-                    : (isSelected
-                    ? const Size(49, 43)
-                    : const Size(126, 43)),
+                    categories[index]['name'] ==
+                            AppLocalizations.of(context)!.all
+                        ? const Size(49, 43)
+                        : (isSelected
+                            ? const Size(49, 43)
+                            : const Size(126, 43)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -279,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Experience our\n delicious new dish',
+                    AppLocalizations.of(context)!.experienceOurDeliciousNewDish,
                     style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 16,
@@ -290,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 5),
                   Align(
                     child: Text(
-                      '30% OFF',
+                      AppLocalizations.of(context)!.percentOff,
                       style: GoogleFonts.leagueSpartan(
                         color: Colors.white,
                         fontSize: 32,
@@ -329,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            'No items found in this category',
+            AppLocalizations.of(context)!.noItemsFound,
             style: GoogleFonts.inter(
               fontSize: responsiveHeight(context, 16),
               fontWeight: FontWeight.w500,
@@ -381,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
           child: Text(
-            'Top Rated',
+            AppLocalizations.of(context)!.topRated,
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -396,22 +414,22 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             children: [
               _buildFoodItem(
-                'Chicken burger',
-                '100 gr chicken + tomato\n+cheese Lettuce',
+                AppLocalizations.of(context)!.chickenBurger,
+                AppLocalizations.of(context)!.chickenBurgerDescription,
                 '3.8',
                 '20.00',
                 'assets/images/chicken_burger.png',
               ),
               _buildFoodItem(
-                'Cheese burger',
-                '100 gr meat+ onion+ tomato+ lettuce cheese',
+                AppLocalizations.of(context)!.cheeseBurger,
+                AppLocalizations.of(context)!.cheeseBurgerDescription,
                 '4.5',
                 '15.00',
                 'assets/images/cheese_burger.png',
               ),
               _buildFoodItem(
-                'Chicken burger',
-                '100 gr meat +onion +tomato +lettuce cheese',
+                AppLocalizations.of(context)!.chickenBurger,
+                AppLocalizations.of(context)!.chickenBurgerDescription,
                 '3.8',
                 '20.00',
                 'assets/images/chicken_burger.png',
@@ -433,7 +451,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Recommend',
+                AppLocalizations.of(context)!.recommend,
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -445,9 +463,9 @@ class _HomeScreenState extends State<HomeScreen> {
               TextButton(
                 onPressed: () {},
                 child: Row(
-                  children: const [
+                  children: [
                     Text(
-                      'View All',
+                      AppLocalizations.of(context)!.viewAll,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -482,44 +500,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(19.12),
                   color: Colors.black,
                 ),
-                child:Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(19.12),
-                    child:Image.asset(
-                      'assets/images/recommend.png',
-                      fit: BoxFit.cover,
-                    )
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      height: 11,
-                      width: 34,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF25AE4B),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          bottomLeft: Radius.circular(30),
-                        ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(19.12),
+                      child: Image.asset(
+                        'assets/images/recommend.png',
+                        fit: BoxFit.cover,
                       ),
-                      child: Center(
-                        child: Text(
-                          '\$${item['price']}',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 8,
-                            letterSpacing: -0.03,
-                            height: 1.0,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        height: 11,
+                        width: 34,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF25AE4B),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            bottomLeft: Radius.circular(30),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '\$${item['price']}',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8,
+                              letterSpacing: -0.03,
+                              height: 1.0,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               );
             },
           ),
@@ -528,11 +546,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFoodItem(String name,
-      String description,
-      String rating,
-      String price,
-      String imagePath,) {
+  Widget _buildFoodItem(
+    String name,
+    String description,
+    String rating,
+    String price,
+    String imagePath,
+  ) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -540,8 +560,7 @@ class _HomeScreenState extends State<HomeScreen> {
           MaterialPageRoute(
             settings: RouteSettings(name: '/foodDetails'),
             builder:
-                (_) =>
-                FoodDetailScreen(
+                (_) => FoodDetailScreen(
                   name: name,
                   description: description,
                   rating: rating,
@@ -723,7 +742,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.zero,
                 ),
                 child: Text(
-                  'Order Now',
+                  AppLocalizations.of(context)!.orderNow,
                   style: GoogleFonts.sora(
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 10),
@@ -762,9 +781,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? Icons.favorite
                     : Icons.favorite_border_rounded,
                 color:
-                favoriteItems.any((item) => item['name'] == name)
-                    ? Colors.red
-                    : Color(0xFF222628),
+                    favoriteItems.any((item) => item['name'] == name)
+                        ? Colors.red
+                        : Color(0xFF222628),
                 size: responsiveHeight(context, 13),
               ),
             ),

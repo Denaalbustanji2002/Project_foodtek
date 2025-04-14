@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:foodtek_project/view/screens/location_screen/delivery_tracking_screen.dart';
 import '../../../cubits/cart_cubit.dart';
 import '../../../models/cart_model.dart';
-import '../profile_screens/profile_screen.dart';
 import 'cart_history_screen.dart';
-import 'favorites_screen.dart';
-import 'home_screen.dart';
 import '../../widgets/search_bar_widget.dart';
 import '../../widgets/header_widget.dart';
 import '../../../helper/responsive.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RectSliderThumbShape extends SliderComponentShape {
   final double thumbWidth;
@@ -161,7 +158,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             context.read<CartCubit>().addToCart(item);
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('${item.title} has been added to the cart')),
+                              SnackBar(content: Text('${item.title} ${AppLocalizations.of(context)!.hasBeenAddedToTheCart}')),
                             );
 
                             Navigator.pushReplacement(
@@ -178,7 +175,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             ),
                           ),
                           child:  Text(
-                            'Add To Cart',
+                            AppLocalizations.of(context)!.addToCart,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               color: Colors.white,
@@ -312,7 +309,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Spicy',
+               AppLocalizations.of(context)!.spicy,
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
@@ -343,7 +340,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Mild',
+                        AppLocalizations.of(context)!.mild,
                         style: GoogleFonts.poppins(
                           fontSize: responsiveHeight(context, 12),
                           fontWeight: FontWeight.w500,
@@ -353,7 +350,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         ),
                       ),
                       Text(
-                        'Hot',
+                        AppLocalizations.of(context)!.hot,
                         style: GoogleFonts.poppins(
                           fontSize: responsiveHeight(context, 12),
                           fontWeight: FontWeight.w500,
@@ -373,7 +370,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Quantity',
+              AppLocalizations.of(context)!.quantity,
               style: GoogleFonts.inter(
                 fontSize: responsiveHeight(context, 12),
                 fontWeight: FontWeight.w500,

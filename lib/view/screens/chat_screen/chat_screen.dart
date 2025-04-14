@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../helper/responsive.dart';
 import '../location_screen/delivery_tracking_screen.dart';
-import '../ordering_screens/cart_history_screen.dart';
-import '../ordering_screens/favorites_screen.dart';
-import '../ordering_screens/home_screen.dart';
-import '../profile_screens/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -14,29 +10,22 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _textController = TextEditingController();
 
-
-  final List<ChatMessage> _messages = [
-    ChatMessage(text: 'Hello chatGPT, how are you today?', isUserMessage: true),
+  List<ChatMessage> _getMessages(BuildContext context) => [
+    ChatMessage(text: AppLocalizations.of(context)!.helloChat, isUserMessage: true),
+    ChatMessage(text: AppLocalizations.of(context)!.helloIm, isUserMessage: false),
+    ChatMessage(text:AppLocalizations.of(context)!.whatIsTheBest, isUserMessage: true),
     ChatMessage(
-      text: 'Hello, I\'m fine. How can I help you?',
-      isUserMessage: false,
-    ),
-    ChatMessage(
-      text: 'What is the best programming language?',
-      isUserMessage: true,
-    ),
-    ChatMessage(
-      text:
-          'There are many programming languages in the market that are used in designing and building websites, various applications and other tasks. All these languages are popular in their place and in the way they are used, and many programmers learn and use them.',
+      text: AppLocalizations.of(context)!.programmingLanguagesExplanation,
       isUserMessage: false,
     ),
   ];
 
-  final TextEditingController _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    final messages = _getMessages(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -51,7 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
           },
         ),
         title: Text(
-          'Chat',
+          AppLocalizations.of(context)!.chat,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
@@ -69,9 +58,9 @@ class _ChatScreenState extends State<ChatScreen> {
           Divider(color: Color(0xFFECECEC), thickness: 1),
           Expanded(
             child: ListView.builder(
-              itemCount: _messages.length,
+              itemCount: messages.length,
               itemBuilder: (context, index) {
-                return _buildMessageItem(_messages[index]);
+                return _buildMessageItem(messages[index], context);
               },
             ),
           ),
@@ -81,11 +70,10 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
-
-  Widget _buildMessageItem(ChatMessage message) {
+  Widget _buildMessageItem(ChatMessage message, BuildContext context) {
     return Align(
       alignment:
-          message.isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+      message.isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         padding: EdgeInsets.all(12),
@@ -95,13 +83,13 @@ class _ChatScreenState extends State<ChatScreen> {
             topLeft: Radius.circular(25),
             topRight: Radius.circular(25),
             bottomLeft:
-                message.isUserMessage
-                    ? Radius.circular(25)
-                    : Radius.circular(0),
+            message.isUserMessage
+                ? Radius.circular(25)
+                : Radius.circular(0),
             bottomRight:
-                message.isUserMessage
-                    ? Radius.circular(0)
-                    : Radius.circular(25),
+            message.isUserMessage
+                ? Radius.circular(0)
+                : Radius.circular(25),
           ),
         ),
         child: Text(
@@ -112,11 +100,9 @@ class _ChatScreenState extends State<ChatScreen> {
             height: 1.3,
             letterSpacing: 0.0,
             color:
-                message.isUserMessage
-                    ? Color(0xFFFFFFFF)
-                    : Color(
-                      0xFF505050,
-                    ),
+            message.isUserMessage
+                ? Color(0xFFFFFFFF)
+                : Color(0xFF505050),
           ),
         ),
       ),
@@ -144,7 +130,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: TextField(
               controller: _textController,
               decoration: InputDecoration(
-                hintText: 'Write your message',
+                hintText: AppLocalizations.of(context)!.writeYourMessage,
                 hintStyle: GoogleFonts.nunito(
                   fontWeight: FontWeight.w700,
                   fontSize: 13,
@@ -165,6 +151,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: IconButton(
               icon: Icon(Icons.send, color: Color(0xFF25AE4B)),
               onPressed: () {
+
               },
             ),
           ),

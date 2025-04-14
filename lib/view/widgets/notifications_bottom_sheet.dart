@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationModel {
   final String title;
@@ -27,50 +28,65 @@ class NotificationsBottomSheet extends StatefulWidget {
 }
 
 class _NotificationsBottomSheetState extends State<NotificationsBottomSheet> {
-  String selectedTab = "All";
+  String selectedTab = '';
 
-  List<NotificationModel> notifications = [
-    NotificationModel(
-      title: "Delayed Order",
-      message: "We're sorry! Your order is running late. New ETA: 10:30\n\nPM. Thanks for your patience!",
-      time: "Last Wednesday at 9:42 AM",
-      isRead: false,
-    ),
-    NotificationModel(
-      title: "Promotional Offer",
-      message: "Craving something delicious? 🍔 Get 20% off on your next\n\norder. Use code: YUMMY20.",
-      time: "Last Wednesday at 9:42 AM",
-      isRead: true,
-    ),
-    NotificationModel(
-      title: "Out for Delivery",
-      message: "Your order is on the way! 🚗 Estimated arrival: 15 mins.\n\nStay hungry!",
-      time: "Last Wednesday at 9:42 AM",
-      isRead: false,
-    ),
-    NotificationModel(
-      title: "Order Confirmation",
-      message: "Your order has been placed! 🍔 We're preparing it now.\n\nTrack your order live!",
-      time: "Last Wednesday at 9:42 AM",
-      isRead: true,
-    ),
-    NotificationModel(
-      title: "Delivered",
-      message: "Enjoy your meal! 🍕 Your order has been delivered.",
-      time: "Last Wednesday at 9:42 AM",
-      isRead: false,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        selectedTab = AppLocalizations.of(context)!.tabAll;
+      });
+    });
+  }
+  List<NotificationModel> notifications = [];
 
   List<NotificationModel> getFilteredNotifications() {
-    if (selectedTab == "Unread") {
+    if (selectedTab == AppLocalizations.of(context)!.tabUnread) {
       return notifications.where((notif) => !notif.isRead).toList();
-    } else if (selectedTab == "Read") {
+    } else if (selectedTab == AppLocalizations.of(context)!.tabRead) {
       return notifications.where((notif) => notif.isRead).toList();
     }
     return notifications;
   }
-
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    notifications = [
+      NotificationModel(
+        title: AppLocalizations.of(context)!.notifDelayedOrderTitle,
+        message:
+AppLocalizations.of(context)!.notifDelayedOrderMsg ,
+        time: AppLocalizations.of(context)!.notifTime1,
+        isRead: false,
+      ),
+      NotificationModel(
+        title: AppLocalizations.of(context)!.notifPromoTitle,
+        message:
+AppLocalizations.of(context)!.notifPromoMsg ,
+        time: AppLocalizations.of(context)!.notifTime1,
+        isRead: true,
+      ),
+      NotificationModel(
+        title:AppLocalizations.of(context)!.notifOutForDeliveryTitle,
+        message: AppLocalizations.of(context)!.notifOutForDeliveryMsg ,time: AppLocalizations.of(context)!.notifTime1,
+        isRead: false,
+      ),
+      NotificationModel(
+        title: AppLocalizations.of(context)!.notifConfirmedTitle,
+        message:AppLocalizations.of(context)!.notifConfirmedMsg ,
+        time: AppLocalizations.of(context)!.notifTime1,
+        isRead: true,
+      ),
+      NotificationModel(
+        title: AppLocalizations.of(context)!.notifDeliveredTitle,
+        message: AppLocalizations.of(context)!.notifDeliveredMsg,
+        time: AppLocalizations.of(context)!.notifTime1,
+        isRead: false,
+      ),
+    ];
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -106,7 +122,7 @@ class _NotificationsBottomSheetState extends State<NotificationsBottomSheet> {
                 icon: Icon(Icons.arrow_back_outlined),
               ),
               Text(
-                "Notifications",
+               AppLocalizations.of(context)!.notifications,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
@@ -120,11 +136,11 @@ class _NotificationsBottomSheetState extends State<NotificationsBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildTab("All", isSelected: selectedTab == "All"),
+              buildTab(AppLocalizations.of(context)!.tabAll, isSelected: selectedTab == AppLocalizations.of(context)!.tabAll),
               SizedBox(width: 20),
-              buildTab("Unread", isSelected: selectedTab == "Unread"),
+              buildTab(AppLocalizations.of(context)!.tabUnread, isSelected: selectedTab == AppLocalizations.of(context)!.tabUnread),
               SizedBox(width: 20),
-              buildTab("Read", isSelected: selectedTab == "Read"),
+              buildTab(AppLocalizations.of(context)!.tabRead, isSelected: selectedTab == AppLocalizations.of(context)!.tabRead),
             ],
           ),
           SizedBox(height: responsiveHeight(context, 16)),

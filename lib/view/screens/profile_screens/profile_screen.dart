@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:foodtek_project/view/screens/ordering_screens/order_details_screen.dart';
-import 'package:foodtek_project/view/screens/profile_screens/profile_screen_details.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../location_screen/delivery_tracking_screen.dart';
-import '../ordering_screens/cart_history_screen.dart';
-import '../ordering_screens/favorites_screen.dart';
-import '../ordering_screens/home_screen.dart';
+import '../../../cubits/language_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -15,7 +12,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +24,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           color: Color(0xFF391713),
           iconSize: responsiveHeight(context, 20),
           onPressed: () {
-            Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => OrderDetailsScreen()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => OrderDetailsScreen()),
+            );
           },
         ),
         toolbarHeight: 50,
         title: Text(
-          'Profile',
+          AppLocalizations.of(context)!.profile,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
@@ -61,21 +59,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
-                    child: _buildSectionTitle('My Account', context),
+                    child: _buildSectionTitle(
+                      AppLocalizations.of(context)!.myAccount,
+                      context,
+                    ),
                   ),
                   _buildProfileMenuItem(
                     context: context,
                     icon: Icons.person_outline,
-                    title: 'Personal information',
+                    title: AppLocalizations.of(context)!.personalInformation,
                     onTap: () {
                       Navigator.pushNamed(context, '/profileDetails');
                     },
-
                   ),
                   _buildProfileMenuItem(
                     context: context,
                     icon: Icons.language,
-                    title: 'Language',
+                    title: AppLocalizations.of(context)!.language,
                     trailing: Text(
                       'عربية',
                       style: GoogleFonts.cairo(
@@ -84,18 +84,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      _showLanguageDialog(context);
+                    },
                   ),
                   _buildProfileMenuItem(
                     context: context,
                     icon: Icons.privacy_tip_outlined,
-                    title: 'Privacy Policy',
+                    title: AppLocalizations.of(context)!.privacyPolicy,
                     onTap: () {},
                   ),
                   _buildProfileMenuItem(
                     context: context,
                     icon: Icons.settings_outlined,
-                    title: 'Setting',
+                    title: AppLocalizations.of(context)!.setting,
                     onTap: () {},
                   ),
                 ],
@@ -109,15 +111,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildSectionTitle('Notifications', context),
+                  _buildSectionTitle(
+                    AppLocalizations.of(context)!.notifications,
+                    context,
+                  ),
                   _buildSwitchMenuItem(
                     icon: Icons.notifications_outlined,
-                    title: 'Push Notifications',
+                    title: AppLocalizations.of(context)!.pushNotifications,
                     value: true,
                   ),
                   _buildSwitchMenuItem(
                     icon: Icons.notifications_outlined,
-                    title: 'Promotional Notifications',
+                    title:
+                        AppLocalizations.of(context)!.promotionalNotifications,
                     value: false,
                   ),
                 ],
@@ -132,11 +138,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildSectionTitle('More', context),
+                  _buildSectionTitle(
+                    AppLocalizations.of(context)!.more,
+                    context,
+                  ),
                   _buildProfileMenuItem(
                     context: context,
                     icon: Icons.help_outline,
-                    title: 'Help Center',
+                    title: AppLocalizations.of(context)!.helpCenter,
                     onTap: () {},
                   ),
                   _buildLogoutButton(),
@@ -158,10 +167,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           CircleAvatar(
             radius: 36,
             backgroundColor: Colors.grey.shade200,
-            child: Icon(
-              Icons.person,
-              size: responsiveHeight(context, 60),
-              color: Colors.grey.shade600,
+            child: Image.asset(
+              "assets/images/profile_picture.png",
+              fit: BoxFit.cover,
             ),
           ),
           SizedBox(height: 8),
@@ -198,12 +206,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildSectionTitle(String title, BuildContext context) {
+    bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
       child: Align(
-        alignment: Alignment.centerLeft,
+        alignment: isArabic ? Alignment.centerRight : Alignment.centerLeft,
         child: Text(
           title,
+          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           style: GoogleFonts.inter(
             color: Color(0xFF1B1B1B),
             fontWeight: FontWeight.w500,
@@ -259,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       trailing: Transform.scale(
-        scale: 0.7, // تقليل الحجم إلى 70%
+        scale: 0.7,
         child: Switch(
           activeColor: Color(0XFFFFFFFF),
           activeTrackColor: Color(0XFF09CA67),
@@ -279,8 +290,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       contentPadding: EdgeInsets.symmetric(horizontal: 16),
       minLeadingWidth: 24,
       leading: Icon(Icons.logout, color: Colors.red, size: 20),
-      title: Text('Log Out', style: TextStyle(color: Colors.red)),
+      title: Text(
+        AppLocalizations.of(context)!.logOut,
+        style: TextStyle(color: Colors.red),
+      ),
       onTap: () {},
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.chooseLanguage),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text(AppLocalizations.of(context)!.arabic),
+                onTap: () {
+                  context.read<LanguageCubit>().changeLang(langCode: 'ar');
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text(AppLocalizations.of(context)!.english),
+                onTap: () {
+                  context.read<LanguageCubit>().changeLang(langCode: 'en');
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

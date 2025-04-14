@@ -3,13 +3,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import '../../cubits/navigation_cubit.dart';
 import 'app_tab.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomNavBar extends StatelessWidget {
   final AppTab currentTab;
   final GlobalKey<NavigatorState> navigatorKey;
   final ValueNotifier<String> currentRouteNotifier;
 
-  const BottomNavBar({
+  final List<String> trackingPages = [
+    '/foodDetails',
+    '/checkout',
+    '/addCard',
+    '/orderDone',
+    '/deliveryTracking',
+    '/chat',
+    '/orderDetails',
+    '/profileDetails',
+    '/profile',
+  ];
+
+   BottomNavBar({
     super.key,
     required this.currentTab,
     required this.navigatorKey,
@@ -22,10 +35,10 @@ class BottomNavBar extends StatelessWidget {
       valueListenable: currentRouteNotifier,
       builder: (context, currentRoute, child) {
         return BottomAppBar(
-          color: Color(0xFFDBF4D1),
+          color: const Color(0xFFDBF4D1),
           notchMargin: 0,
           elevation: 5,
-          shadowColor: Color(0xFFDBF4D1),
+          shadowColor: const Color(0xFFDBF4D1),
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -33,29 +46,31 @@ class BottomNavBar extends StatelessWidget {
               _buildIcon(
                 context,
                 Icons.home_outlined,
-                "Home",
+                AppLocalizations.of(context)!.home,
                 AppTab.home,
                 currentRoute,
               ),
               _buildIcon(
                 context,
                 Icons.favorite_border_rounded,
-                "Favorites",
+                AppLocalizations.of(context)!.favoriteNav,
                 AppTab.favorites,
                 currentRoute,
               ),
-              SizedBox(width: responsiveWidth(context, 40)),
+              SizedBox(width: responsiveWidth(context, 24)),
               _buildIcon(
                 context,
-                Icons.history,
-                _getHistoryLabel(currentRoute),
+                trackingPages.contains(currentRoute)
+                    ? Icons.track_changes_outlined
+                    : Icons.history,
+                _getHistoryLabel(currentRoute, context),
                 AppTab.history,
                 currentRoute,
               ),
               _buildIcon(
                 context,
                 Icons.person_2_outlined,
-                "Profile",
+                AppLocalizations.of(context)!.profile,
                 AppTab.profile,
                 currentRoute,
               ),
@@ -66,28 +81,18 @@ class BottomNavBar extends StatelessWidget {
     );
   }
 
-  String _getHistoryLabel(String currentRoute) {
-    final List<String> trackingPages = [
-      '/foodDetails',
-      '/checkout',
-      '/addCard',
-      '/orderDone',
-      '/deliveryTracking',
-      '/chat',
-      '/orderDetails',
-      '/profileDetails',
-      '/profile',
-    ];
-    return trackingPages.contains(currentRoute) ? "Track" : "History";
+  String _getHistoryLabel(String currentRoute, BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+    return trackingPages.contains(currentRoute) ? local.track : local.history;
   }
 
   Widget _buildIcon(
-    BuildContext context,
-    IconData icon,
-    String label,
-    AppTab tab,
-    String currentRoute,
-  ) {
+      BuildContext context,
+      IconData icon,
+      String label,
+      AppTab tab,
+      String currentRoute,
+      ) {
     final bool isSelected = currentTab == tab;
     return InkWell(
       onTap: () {
@@ -105,17 +110,6 @@ class BottomNavBar extends StatelessWidget {
               targetRoute = '/cartHistory';
               break;
             case AppTab.history:
-              final List<String> trackingPages = [
-                '/foodDetails',
-                '/checkout',
-                '/addCard',
-                '/orderDone',
-                '/deliveryTracking',
-                '/chat',
-                '/orderDetails',
-                '/profileDetails',
-                '/profile',
-              ];
               if (trackingPages.contains(currentRoute)) {
                 targetRoute = '/deliveryTracking';
               } else {
@@ -130,7 +124,7 @@ class BottomNavBar extends StatelessWidget {
           }
           navigatorKey.currentState!.pushNamedAndRemoveUntil(
             targetRoute,
-            (route) => false,
+                (route) => false,
           );
         } else {
           navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -146,7 +140,9 @@ class BottomNavBar extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected ? const Color(0xFF25AE4B) : Color(0xFF484C52),
+                color: isSelected
+                    ? const Color(0xFF25AE4B)
+                    : const Color(0xFF484C52),
               ),
               SizedBox(height: responsiveHeight(context, 6)),
               Text(
@@ -155,8 +151,9 @@ class BottomNavBar extends StatelessWidget {
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
                   height: 12 / 16,
-                  color:
-                      isSelected ? const Color(0xFF25AE4B) : Color(0xFF484C52),
+                  color: isSelected
+                      ? const Color(0xFF25AE4B)
+                      : const Color(0xFF484C52),
                 ),
               ),
             ],

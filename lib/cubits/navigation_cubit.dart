@@ -5,4 +5,5 @@ class NavigationCubit extends Cubit<AppTab> {
   NavigationCubit() : super(AppTab.home);
 
   void changeTab(AppTab tab) => emit(tab);
+
 }

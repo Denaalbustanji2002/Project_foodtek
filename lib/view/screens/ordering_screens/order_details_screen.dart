@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
+import '../chat_screen/chat_screen.dart';
 import '../location_screen/delivery_tracking_screen.dart';
-import '../profile_screens/profile_screen.dart';
-import 'cart_history_screen.dart';
-import 'favorites_screen.dart';
-import 'home_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
 
@@ -27,26 +25,31 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        color: Color(0xFF391713),
-        iconSize: responsiveHeight(context, 20),
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
-          );
-        },
+      leading: SizedBox(
+        width: 30,
+        child: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Color(0xFF391713),
+          iconSize: responsiveHeight(context, 20),
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
+            );
+          },
+        ),
       ),
+      leadingWidth: 30,
+      titleSpacing: 0,
       title: Text(
-        'Order Details',
+        AppLocalizations.of(context)!.orderDetails,
         style: GoogleFonts.inter(
           fontSize: responsiveHeight(context, 20),
           fontWeight: FontWeight.w600,
           color: Color(0xFF391713),
         ),
       ),
-      leadingWidth: responsiveWidth(context, 40),
     );
   }
 
@@ -97,7 +100,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Order ID',
+      AppLocalizations.of(
+      context,
+    )!.orderId,
           style: GoogleFonts.inter(
             fontWeight: FontWeight.w600,
             fontSize: 16,
@@ -106,8 +111,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          child: Text(
-            '#6579-6432',
+          child: Text(AppLocalizations.of(
+            context,
+          )!.orderIdNumber,
             style: GoogleFonts.inter(
               fontSize: 10,
               color: Color(0xFF878787),
@@ -118,7 +124,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           ),
         ),
         Text(
-          '25m',
+          AppLocalizations.of(
+            context,
+          )!.orderDistance,
           style: GoogleFonts.inter(
             fontSize: 12,
             color: Color(0xFF263238),
@@ -135,20 +143,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTrackingStep('Order received', Icons.check, true, false),
+        _buildTrackingStep(AppLocalizations.of( context)!.orderReceived, Icons.check, true, false),
         _buildTrackingStep(
-          'Cooking your order',
+          AppLocalizations.of( context)!.cookingYourOrder,
           Icons.kitchen_outlined,
           true,
           false,
         ),
         _buildTrackingStep(
-          'Courier is picking up order',
+          AppLocalizations.of( context)!.courierIsPickingUp,
           Icons.person,
           true,
           false,
         ),
-        _buildTrackingStep('Order delivered', Icons.home, false, true),
+        _buildTrackingStep(AppLocalizations.of( context)!.orderDelivered, Icons.home, false, true),
       ],
     );
   }
@@ -202,14 +210,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: AssetImage(''), radius: 30),
+          CircleAvatar(backgroundImage: AssetImage('assets/images/delivery_hero_photo.png'), radius: 30),
           SizedBox(width: 15),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Your Delivery Hero',
+                  AppLocalizations.of( context)!.yourDeliveryHero,
                   style: TextStyle(
                     fontSize: 12,
                     color: Color(0xFF878787),
@@ -222,7 +230,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 Row(
                   children: [
                     Text(
-                      'Aleksandr V.',
+                      AppLocalizations.of( context)!.aleksandrV,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
@@ -250,7 +258,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           ),
           IconButton(
             icon: Icon(Icons.chat_rounded, color: Colors.orangeAccent),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChatScreen()),
+              );
+            },
           ),
         ],
       ),
@@ -266,7 +279,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             SizedBox(width: 5),
             Expanded(
               child: Text(
-                "your location",
+                AppLocalizations.of( context)!.yourLocation,
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
@@ -285,7 +298,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             SizedBox(width: 4),
             Expanded(
               child: Text(
-                '123 Al-Madina Street, Abdali, Amman, Jordan',
+               AppLocalizations.of( context)!.addressLine,
                 style: GoogleFonts.inter(
                   color: Color(0XFF878787),
                   fontSize: responsiveHeight(context, 14),
@@ -308,48 +321,50 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       child: SizedBox(
         width: responsiveWidth(context, 295),
         height: responsiveHeight(context, 48),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFF85DE9E), width: 1),
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x4D253EA7),
-                offset: Offset(0, 1),
-                blurRadius: 2,
-              ),
-            ],
-          ),
-          child: ElevatedButton(
-            onPressed: () {
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(10),
+          clipBehavior: Clip.hardEdge, // 💥 هاي بتمنع ظهور التأثير خارج الشكل
+          child: InkWell(
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
               );
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-              shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: const Color(0xFF85DE9E), width: 1),
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
+                ),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x4D253EA7),
+                    offset: Offset(0, 1),
+                    blurRadius: 2,
+                  ),
+                ],
               ),
-            ),
-            child: Text(
-              'Live Track',
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: responsiveHeight(context, 14),
-                height: 1.4,
-                letterSpacing: -0.01,
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.liveTrack,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: responsiveHeight(context, 14),
+                    height: 1.4,
+                    letterSpacing: -0.01,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
           ),
         ),
