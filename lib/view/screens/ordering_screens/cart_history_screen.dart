@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:foodtek_project/helper/responsive.dart';
-import 'package:foodtek_project/view/widgets/empty_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../../cubits/history_cubit.dart';
+import '../../../helper/responsive.dart';
+import '../../../states/history_state.dart';
+import '../../widgets/empty_widget.dart';
 import '../../widgets/header_widget.dart';
-import '../profile_screens/profile_screen.dart';
-import 'favorites_screen.dart';
-import 'home_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CartHistoryScreen extends StatefulWidget {
   const CartHistoryScreen({super.key});
@@ -18,58 +18,45 @@ class CartHistoryScreen extends StatefulWidget {
 
 class _CartHistoryScreenState extends State<CartHistoryScreen>
     with SingleTickerProviderStateMixin {
-
-  List<Map<String, dynamic>> cartItems = [
-    {
-      'title': 'Chicken Burger',
-      'restaurant': 'Burger Factory LTD',
-      'price': '\$20',
-      'count': 0,
-    },
-    {
-      'title': 'Onion Pizza',
-      'restaurant': 'Pizza Palace',
-      'price': '\$15',
-      'count': 0,
-    },
-    {
-      'title': 'Spicy Shawarma',
-      'restaurant': 'Hot Cool Spot',
-      'price': '\$15',
-      'count': 0,
-    },
-  ];
-
-  List<Map<String, dynamic>> historyItems = [
-    {
-      'title': 'Chicken Burger',
-      'restaurant': 'Burger Factory LTD',
-      'price': '\$20',
-      'date': '25.3.2024',
-    },
-    {
-      'title': 'Onion Pizza',
-      'restaurant': 'Pizza Palace',
-      'price': '\$15',
-      'date': '25.3.2024',
-    },
-    {
-      'title': 'Spicy Shawarma',
-      'restaurant': 'Hot Cool Spot',
-      'price': '\$15',
-      'date': '25.3.2024',
-    },
-  ];
-
-  late TabController _tabController;
+  List<Map<String, dynamic>> cartItems = [];
+   String kCartType = 'cart';
+   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    if (context.read<HistoryCubit>().state is HistoryInitial) {
+      context.read<HistoryCubit>().loadHistory();
+    }
   }
 
-
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    cartItems = [
+      {
+        'title': AppLocalizations.of(context)!.chickenBurger,
+        'restaurant': AppLocalizations.of(context)!.burgerFactoryLtd,
+        'price': '\$20',
+        'count':0,
+      },
+      {
+        'title': AppLocalizations.of(context)!.onionPizza,
+        'restaurant': AppLocalizations.of(context)!.pizzaPalace,
+        'price': '\$15',
+        'count':0,
+      },
+      {
+        'title': AppLocalizations.of(context)!.spicyShawarma,
+        'restaurant': AppLocalizations.of(context)!.hotCoolSpot,
+        'price': '\$15',
+        'count':0,
+      },
+    ];
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -93,8 +80,8 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
             indicatorWeight: 3,
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
-              Tab(child: Text('Cart', style: _tabTextStyle())),
-              Tab(child: Text('History', style: _tabTextStyle())),
+              Tab(child: Text(AppLocalizations.of(context)!.cart, style: _tabTextStyle())),
+              Tab(child: Text(AppLocalizations.of(context)!.history, style: _tabTextStyle())),
             ],
           ),
         ),
@@ -117,8 +104,8 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
     if (cartItems.isEmpty) {
       return EmptyWidget(
         imagePath: "assets/images/empty.png",
-        title: "Cart Empty",
-        description: "You don't have add any foods in cart at this time",
+        title:AppLocalizations.of(context)!.cartEmpty,
+        description: AppLocalizations.of(context)!.youDontHaveAddAnyFoodsInCartAtThisTime,
       );
     }
     return SingleChildScrollView(
@@ -146,22 +133,30 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
   }
 
   Widget _buildHistoryContent() {
-    if (historyItems.isEmpty) {
-      return EmptyWidget(
-          imagePath: "assets/images/empty.png",
-          title: "History Empty",
-          description: "You don't have any history at this time");
-    }
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ...historyItems.map((item) => _buildHistoryItem(item)),
-            _buildLoadMoreButton(),
-          ],
-        ),
-      ),
+    return BlocBuilder<HistoryCubit, HistoryState>(
+      builder: (context, state) {
+        if (state is HistoryLoaded) {
+          if (state.visibleHistoryItems.isEmpty) {
+            return EmptyWidget(
+              imagePath: "assets/images/empty.png",
+              title: AppLocalizations.of(context)!.historyEmpty,
+              description: AppLocalizations.of(context)!.youDontHaveAddAnyHistoryAtThisTime,
+            );
+          }
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  ...state.visibleHistoryItems.map((item) => _buildHistoryItem(item)),
+                  _buildLoadMoreButton(state),
+                ],
+              ),
+            ),
+          );
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
     );
   }
 
@@ -173,7 +168,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         motion: const ScrollMotion(),
         children: [
           CustomSlidableAction(
-            onPressed: (context) => showDeleteConfirmationDialog(context, item, "Cart"),
+            onPressed: (context) => showDeleteConfirmationDialog(context, item, "cart"),
             backgroundColor: const Color(0xFFFDAC1D),
             child: Icon(
               Icons.delete_outline,
@@ -213,7 +208,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         color: const Color(0xFFFF9012),
         borderRadius: BorderRadius.circular(7),
       ),
-      child: Image.asset(""),
+      child: Image.asset("assets/images/cart_menu_food.png",
+          height: responsiveHeight(context, 62),
+          width: responsiveWidth(context, 62.18),
+          fit: BoxFit.contain),
     );
   }
 
@@ -340,7 +338,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Sub-Total',
+                  AppLocalizations.of(context)!.subTotal,
                   style: GoogleFonts.inter(
                     color: const Color(0XFFFEFEFF),
                     fontWeight: FontWeight.w400,
@@ -362,7 +360,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Delivery Charge',
+                 AppLocalizations.of(context)!.deliveryCharge,
                   style: GoogleFonts.inter(
                     color: const Color(0XFFFEFEFF),
                     fontWeight: FontWeight.w400,
@@ -384,7 +382,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Discount',
+                 AppLocalizations.of(context)!.discount,
                   style: GoogleFonts.inter(
                     color: const Color(0XFFFEFEFF),
                     fontWeight: FontWeight.w400,
@@ -406,7 +404,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total:',
+                  AppLocalizations.of(context)!.total,
                   style: GoogleFonts.inter(
                     color: const Color(0XFFFEFEFF),
                     fontSize: responsiveHeight(context, 18),
@@ -426,7 +424,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
             SizedBox(height: responsiveHeight(context, 16)),
             Container(
               width: responsiveWidth(context, 366.02),
-              height: responsiveHeight(context, 57),
+              height: responsiveHeight(context, 50),
               decoration: BoxDecoration(
                 color: const Color(0XFFFEFEFF),
                 borderRadius: BorderRadius.circular(7),
@@ -434,7 +432,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               child: TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Place My Order',
+                  AppLocalizations.of(context)!.placeMyOrder,
                   style: GoogleFonts.inter(
                     color: const Color(0xFF34B56F),
                     fontSize: responsiveHeight(context, 14),
@@ -524,7 +522,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                     const SizedBox(height: 4),
                     Text(
                       item['restaurant'],
-                      style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -544,15 +545,9 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       ),
     );
   }
+
   Widget _buildHistoryItemImage(Map<String, dynamic> item) {
-    String imagePath = "";
-    if (item['title'] == 'Chicken Burger') {
-      imagePath = "assets/burger.jpg";
-    } else if (item['title'] == 'Onion Pizza') {
-      imagePath = "assets/pizza.jpg";
-    } else if (item['title'] == 'Spicy Shawarma') {
-      imagePath = "assets/shawarma.jpg";
-    }
+    final imagePath = item['image'] ?? '';
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
@@ -561,29 +556,33 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         width: 65,
         height: 65,
         fit: BoxFit.cover,
-        errorBuilder:
-            (context, error, stackTrace) => Container(
-              width: 65,
-              height: 65,
-              decoration: BoxDecoration(
-                color:
-                    item['title'] == 'Chicken Burger'
-                        ? Colors.amber
-                        : item['title'] == 'Onion Pizza'
-                        ? Colors.red.shade300
-                        : Colors.orange,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+        errorBuilder: (context, error, stackTrace) => Container(
+          width: 65,
+          height: 65,
+          decoration: BoxDecoration(
+            color: item['title'] == AppLocalizations.of(context)!.chickenBurger
+                ? Colors.amber
+                : item['title'] == AppLocalizations.of(context)!.onionPizza
+                ? Colors.red.shade300
+                : Colors.orange,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildLoadMoreButton() {
+  Widget _buildLoadMoreButton(HistoryLoaded state) {
+    final isAllLoaded = state.visibleHistoryItems.length >= state.allHistoryItems.length;
+
+    if (isAllLoaded) return const SizedBox();
+
     return TextButton(
-      onPressed: () {},
-      child: const Text(
-        'Load More..',
+      onPressed: () {
+        context.read<HistoryCubit>().loadMoreHistory();
+      },
+      child: Text(
+        AppLocalizations.of(context)!.loadMore,
         style: TextStyle(
           color: Color(0xFF25AE4B),
           fontSize: 16,
@@ -593,36 +592,40 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
     );
   }
 
-  void showDeleteConfirmationDialog(BuildContext context, Map<String, dynamic> item, String tab) {
+  void showDeleteConfirmationDialog(
+      BuildContext context,
+      Map<String, dynamic> item,
+      String tab,
+      ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Confirm Delete"),
+          title:  Text(AppLocalizations.of(context)!.confirmDeleteHistoryTitle),
           content: Text(
-            tab == "Cart"
-                ? "Are you sure you want to delete ${item['title']} from your cart?"
-                : "Are you sure you want to delete ${item['title']} from your history?",
+            tab == kCartType
+                ? "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${item['title']}${AppLocalizations.of(context)!.confirmDeleteCartContent1}"
+                : "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${item['title']}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}"
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+              child: Text(AppLocalizations.of(context)!.cancel, style: TextStyle(color: Colors.grey)),
             ),
             TextButton(
               onPressed: () {
-                setState(() {
-                  if (tab == "Cart") {
+                if (tab == kCartType) {
+                  setState(() {
                     cartItems.remove(item);
-                  } else {
-                    historyItems.remove(item);
-                  }
-                });
+                  });
+                } else {
+                  context.read<HistoryCubit>().deleteHistoryItem(item);
+                }
                 Navigator.of(context).pop();
               },
-              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+              child: Text(AppLocalizations.of(context)!.delete, style: TextStyle(color: Colors.red)),
             ),
           ],
         );

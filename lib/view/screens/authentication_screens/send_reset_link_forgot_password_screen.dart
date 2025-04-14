@@ -221,7 +221,7 @@ class _SendVerificationCodeScreenState
   Widget emailInputField(String? hintText) {
     return SizedBox(
       width: responsiveWidth(context, 295),
-      height: responsiveHeight(context, 69),
+      height: responsiveHeight(context, 70),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,12 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:foodtek_project/states/language_state.dart';
-import 'package:foodtek_project/view/screens/location_screen/location_screen.dart';
-import 'package:foodtek_project/view/screens/ordering_screens/home_screen.dart';
 import 'package:foodtek_project/view/screens/ordering_screens/main_screen.dart';
 import 'cubits/favorite_cubit.dart';
+import 'cubits/history_cubit.dart';
 import 'cubits/language_cubit.dart';
 import 'cubits/location_cubit.dart';
 import 'cubits/user_cubit.dart';
@@ -29,6 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => FavoriteCubit()),
+        BlocProvider(create: (context) => HistoryCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {

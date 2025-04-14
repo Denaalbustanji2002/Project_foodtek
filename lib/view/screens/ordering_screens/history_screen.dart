@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:foodtek_project/helper/responsive.dart';
-import 'package:foodtek_project/view/widgets/empty_widget.dart';
+import 'package:foodtek_project/view/widgets/spin_kit_hour_glass_widget.dart';
+import '../../../cubits/history_cubit.dart';
+import '../../../helper/responsive.dart';
+import '../../../states/history_state.dart';
+import '../../widgets/empty_widget.dart';
 import '../../widgets/header_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -12,26 +17,11 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  List<Map<String, dynamic>> historyItems = [
-    {
-      'title': 'Chicken Burger',
-      'restaurant': 'Burger Factory LTD',
-      'price': '\$20',
-      'date': '25.3.2024',
-    },
-    {
-      'title': 'Onion Pizza',
-      'restaurant': 'Pizza Palace',
-      'price': '\$15',
-      'date': '25.3.2024',
-    },
-    {
-      'title': 'Spicy Shawarma',
-      'restaurant': 'Hot Cool Spot',
-      'price': '\$15',
-      'date': '25.3.2024',
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<HistoryCubit>().loadHistory();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +37,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
           child: const HeaderWidget(),
         ),
       ),
-      body: _buildHistoryContent(),
+      body: BlocBuilder<HistoryCubit, HistoryState>(
+        builder: (context, state) {
+          if (state is HistoryLoaded) {
+            return _buildHistoryContent(state);
+          }
+          return const Center(child: SpinKitHourGlassWidget());
+        },
+      ),
     );
   }
 
-  Widget _buildHistoryContent() {
-    if (historyItems.isEmpty) {
+  Widget _buildHistoryContent(HistoryLoaded state) {
+    if (state.visibleHistoryItems.isEmpty) {
       return EmptyWidget(
         imagePath: "assets/images/empty.png",
-        title: "History Empty",
-        description: "You don't have any history at this time",
+        title: AppLocalizations.of(context)!.historyEmpty,
+        description:
+            AppLocalizations.of(context)!.youDontHaveAddAnyHistoryAtThisTime,
       );
     }
 
@@ -64,8 +62,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          ...historyItems.map((item) => _buildHistoryItem(item)).toList(),
-          _buildLoadMoreButton(),
+          ...state.visibleHistoryItems
+              .map((item) => _buildHistoryItem(item))
+              .toList(),
+          _buildLoadMoreButton(state),
         ],
       ),
     );
@@ -79,7 +79,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         motion: const ScrollMotion(),
         children: [
           CustomSlidableAction(
-            onPressed: (context) => _showDeleteConfirmationDialog(context, item),
+            onPressed: (context) => showDeleteConfirmationDialog(context, item),
             backgroundColor: const Color(0xFFFDAC1D),
             child: Icon(
               Icons.delete_outline,
@@ -89,21 +89,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ],
       ),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
-            ),
-          ],
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7),
+          side: const BorderSide(color: Color(0xFFDBF4D1), width: 1),
         ),
+        elevation: 0,
+        color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
             children: [
               _buildHistoryItemImage(item),
@@ -114,40 +108,83 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          item['title'],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item['title'],
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                item['restaurant'],
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                item['price'],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF25AE4B),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Icon(Icons.access_time, size: 14, color: Colors.green),
-                            const SizedBox(width: 4),
-                            Text(
-                              item['date'],
-                              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                            SizedBox(height: responsiveHeight(context, 16)),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.access_time,
+                                  size: 14,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  item['date'],
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF3B3B3B),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.replay,
+                                  size: 14,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  item['reorder'] ?? "Reorder",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      item['restaurant'],
-                      style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      item['price'],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF25AE4B),
-                      ),
                     ),
                   ],
                 ),
@@ -155,19 +192,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ],
           ),
         ),
-      ),
+      )
     );
   }
 
   Widget _buildHistoryItemImage(Map<String, dynamic> item) {
-    String imagePath = "";
-    if (item['title'] == 'Chicken Burger') {
-      imagePath = "assets/burger.jpg";
-    } else if (item['title'] == 'Onion Pizza') {
-      imagePath = "assets/pizza.jpg";
-    } else if (item['title'] == 'Spicy Shawarma') {
-      imagePath = "assets/shawarma.jpg";
-    }
+    final imagePath = item['image'] ?? '';
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
@@ -176,23 +206,31 @@ class _HistoryScreenState extends State<HistoryScreen> {
         width: 65,
         height: 65,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => Container(
-          width: 65,
-          height: 65,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
+        errorBuilder:
+            (context, error, stackTrace) => Container(
+              width: 65,
+              height: 65,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
       ),
     );
   }
 
-  Widget _buildLoadMoreButton() {
+  Widget _buildLoadMoreButton(HistoryLoaded state) {
+    final isAllLoaded =
+        state.visibleHistoryItems.length >= state.allHistoryItems.length;
+
+    if (isAllLoaded) return const SizedBox();
+
     return TextButton(
-      onPressed: () {},
-      child: const Text(
-        'Load More..',
+      onPressed: () {
+        context.read<HistoryCubit>().loadMoreHistory();
+      },
+      child: Text(
+        AppLocalizations.of(context)!.loadMore,
         style: TextStyle(
           color: Color(0xFF25AE4B),
           fontSize: 16,
@@ -202,24 +240,29 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  void _showDeleteConfirmationDialog(BuildContext context, Map<String, dynamic> item) {
+  void showDeleteConfirmationDialog(
+    BuildContext context,
+    Map<String, dynamic> item,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Confirm Delete"),
-          content: Text("Are you sure you want to delete ${item['title']} from your history?"),
+          title: Text(AppLocalizations.of(context)!.confirmDeleteHistoryTitle),
+          content: Text(
+            "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${item['title']}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}",
+          ),
           actions: [
             TextButton(
-              child: const Text("Cancel"),
-              onPressed: () => Navigator.of(context).pop(),
+              child: Text(AppLocalizations.of(context)!.cancel),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
             TextButton(
-              child: const Text("Delete"),
+              child: Text(AppLocalizations.of(context)!.delete),
               onPressed: () {
-                setState(() {
-                  historyItems.remove(item);
-                });
+                context.read<HistoryCubit>().deleteHistoryItem(item);
                 Navigator.of(context).pop();
               },
             ),
