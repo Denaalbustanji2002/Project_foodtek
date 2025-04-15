@@ -26,12 +26,12 @@ class MainScreen extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final ValueNotifier<String> currentRouteNotifier = ValueNotifier<String>('/');
 
-  final Map<AppTab, Widget> navbarPages = {
+  Map<AppTab, Widget> get navbarPages => {
     AppTab.home: HomeScreen(),
     AppTab.favorites: FavoritesScreen(),
     AppTab.cartHistory: CartHistoryScreen(),
     AppTab.history: HistoryScreen(),
-    AppTab.profile: ProfileScreen(),
+    AppTab.profile: ProfileScreen(navigatorKey: navigatorKey),
   };
 
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
@@ -58,7 +58,7 @@ class MainScreen extends StatelessWidget {
       case '/history':
         return MaterialPageRoute(settings: settings, builder: (_) => HistoryScreen());
       case '/profile':
-        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen( navigatorKey: navigatorKey));
       case '/location':
         return MaterialPageRoute(settings: settings, builder: (_) => LocationScreen());
       case '/chat':
@@ -76,7 +76,7 @@ class MainScreen extends StatelessWidget {
       case '/orderDone':
         return MaterialPageRoute(settings: settings, builder: (_) => OrderDoneSuccessfullyScreen());
         case '/foodDetails':
-        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen());
+        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen( navigatorKey: navigatorKey));
       case '/profileDetails':
         return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreenDetails());
       default:

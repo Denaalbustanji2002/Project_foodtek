@@ -6,7 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../cubits/language_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../cubits/navigation_cubit.dart';
+import '../../widgets/app_tab.dart';
+
 class ProfileScreen extends StatefulWidget {
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  const ProfileScreen({super.key, required this.navigatorKey});
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -85,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     onTap: () {
-                      _showLanguageDialog(context);
+                      _showLanguageDialog(context, widget.navigatorKey);
                     },
                   ),
                   _buildProfileMenuItem(
@@ -298,9 +305,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _showLanguageDialog(BuildContext context) {
+  void _showLanguageDialog(
+    BuildContext parentContext,
+    GlobalKey<NavigatorState> navigatorKey,
+  ) {
     showDialog(
-      context: context,
+      context: parentContext,
       builder: (context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.chooseLanguage),
@@ -309,16 +319,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               ListTile(
                 title: Text(AppLocalizations.of(context)!.arabic),
-                onTap: () {
-                  context.read<LanguageCubit>().changeLang(langCode: 'ar');
-                  Navigator.of(context).pop();
+                onTap: () async {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  await Future.delayed(Duration(milliseconds: 100));
+                  await parentContext.read<LanguageCubit>().changeLang(
+                    langCode: 'ar',
+                  );
+                  parentContext.read<NavigationCubit>().changeTab(AppTab.home);
+                  navigatorKey.currentState!.pushNamedAndRemoveUntil(
+                    '/',
+                    (route) => false,
+                  );
                 },
               ),
               ListTile(
                 title: Text(AppLocalizations.of(context)!.english),
-                onTap: () {
-                  context.read<LanguageCubit>().changeLang(langCode: 'en');
-                  Navigator.of(context).pop();
+                onTap: () async {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  await Future.delayed(Duration(milliseconds: 100));
+                  await parentContext.read<LanguageCubit>().changeLang(
+                    langCode: 'en',
+                  );
+                  parentContext.read<NavigationCubit>().changeTab(AppTab.home);
+                  navigatorKey.currentState!.pushNamedAndRemoveUntil(
+                    '/',
+                    (route) => false,
+                  );
                 },
               ),
             ],

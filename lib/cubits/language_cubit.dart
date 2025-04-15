@@ -27,4 +27,5 @@ class LanguageCubit extends Cubit<LanguageState> {
     );
     emit(LanguageInitialState(Locale(langCode)));
   }
+
 }
