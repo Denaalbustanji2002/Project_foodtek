@@ -285,5 +285,17 @@
   "selectLocation": "اختاري موقع",
   "selectedLocationTitle": "الموقع المختار",
   "selectedLocationWithCoords": "الموقع المختار ({latitude}, {longitude})",
-  "locationHeader": "شارع سوكارنو هاتا 15A"
+  "locationHeader": "شارع سوكارنو هاتا 15A",
+  "historyItemChickenBurger": "برغر دجاج",
+  "historyItemOnionPizza": "بيتزا بالبصل",
+  "historyItemSpicyShawarma": "شاورما حارة",
+  "historyItemCheesePasta": "باستا بالجبنة",
+  "historyItemSushiRoll": "لفائف سوشي",
+  "restaurantBurgerFactory": "مصنع البرغر",
+  "restaurantPizzaPalace": "قصر البيتزا",
+  "restaurantHotCoolSpot": "ركن الحار والبارد",
+  "restaurantItaliano": "إيتاليانو",
+  "restaurantTokyoSushi": "طوكيو سوشي",
+  "btnReorder": "إعادة الطلب"
+
 }

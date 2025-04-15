@@ -273,5 +273,16 @@
   "selectLocation": "Select a location",
   "selectedLocationTitle": "Selected Location",
   "selectedLocationWithCoords": "Selected location ({latitude}, {longitude})",
-  "locationHeader": "Jl. Soekarno Hatta 15A..."
+  "locationHeader": "Jl. Soekarno Hatta 15A...",
+  "historyItemChickenBurger": "Chicken Burger",
+  "historyItemOnionPizza": "Onion Pizza",
+  "historyItemSpicyShawarma": "Spicy Shawarma",
+  "historyItemCheesePasta": "Cheese Pasta",
+  "historyItemSushiRoll": "Sushi Roll",
+  "restaurantBurgerFactory": "Burger Factory LTD",
+  "restaurantPizzaPalace": "Pizza Palace",
+  "restaurantHotCoolSpot": "Hot Cool Spot",
+  "restaurantItaliano": "Italiano",
+  "restaurantTokyoSushi": "Tokyo Sushi",
+  "btnReorder": "Reorder"
 }

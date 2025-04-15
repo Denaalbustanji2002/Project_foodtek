@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:foodtek_project/extensions/localization_extension.dart';
 import 'package:foodtek_project/view/widgets/spin_kit_hour_glass_widget.dart';
 import '../../../cubits/history_cubit.dart';
 import '../../../helper/responsive.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
+
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -72,6 +74,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Widget _buildHistoryItem(Map<String, dynamic> item) {
+    String tr(String key) => AppLocalizations.of(context)!.getTranslation(key);
+
     return Slidable(
       closeOnScroll: true,
       key: ValueKey(item['title']),
@@ -115,7 +119,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item['title'],
+                                tr(item['title']),
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
@@ -124,7 +128,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                item['restaurant'],
+                                tr(item['restaurant']),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey.shade600,
@@ -156,7 +160,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 const SizedBox(width: 4),
                                 Text(
                                   item['date'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFF3B3B3B),
@@ -174,7 +178,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  item['reorder'] ?? "Reorder",
+                                  tr(item['reorder'] ?? 'btn_reorder'),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.green,
@@ -192,7 +196,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 
@@ -250,7 +254,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.confirmDeleteHistoryTitle),
           content: Text(
-            "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${item['title']}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}",
+              "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${AppLocalizations.of(context)!.getTranslation(item['title'])}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}",
           ),
           actions: [
             TextButton(

@@ -823,7 +823,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           center: Alignment(0, -0.2),
                         ),
                       ),
-                      // Second shadow effect
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,

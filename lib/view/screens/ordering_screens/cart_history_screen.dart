@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:foodtek_project/extensions/localization_extension.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../cubits/history_cubit.dart';
 import '../../../helper/responsive.dart';
@@ -19,8 +20,8 @@ class CartHistoryScreen extends StatefulWidget {
 class _CartHistoryScreenState extends State<CartHistoryScreen>
     with SingleTickerProviderStateMixin {
   List<Map<String, dynamic>> cartItems = [];
-   String kCartType = 'cart';
-   late TabController _tabController;
+  String kCartType = 'cart';
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -40,55 +41,63 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         'title': AppLocalizations.of(context)!.chickenBurger,
         'restaurant': AppLocalizations.of(context)!.burgerFactoryLtd,
         'price': '\$20',
-        'count':0,
+        'count': 0,
       },
       {
         'title': AppLocalizations.of(context)!.onionPizza,
         'restaurant': AppLocalizations.of(context)!.pizzaPalace,
         'price': '\$15',
-        'count':0,
+        'count': 0,
       },
       {
         'title': AppLocalizations.of(context)!.spicyShawarma,
         'restaurant': AppLocalizations.of(context)!.hotCoolSpot,
         'price': '\$15',
-        'count':0,
+        'count': 0,
       },
     ];
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          toolbarHeight: kToolbarHeight + 30,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: const HeaderWidget(),
-          ),
-          bottom: TabBar(
-            controller: _tabController,
-            labelColor: const Color(0xFF25AE4B),
-            unselectedLabelColor: const Color(0xFF98A0B4),
-            indicatorColor: const Color(0xFF25AE4B),
-            indicatorWeight: 3,
-            indicatorSize: TabBarIndicatorSize.tab,
-            tabs: [
-              Tab(child: Text(AppLocalizations.of(context)!.cart, style: _tabTextStyle())),
-              Tab(child: Text(AppLocalizations.of(context)!.history, style: _tabTextStyle())),
-            ],
-          ),
+        elevation: 0,
+        toolbarHeight: kToolbarHeight + 30,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: const HeaderWidget(),
         ),
-        body: TabBarView(
+        bottom: TabBar(
           controller: _tabController,
-          children: [_buildCartContent(), _buildHistoryContent()],
+          labelColor: const Color(0xFF25AE4B),
+          unselectedLabelColor: const Color(0xFF98A0B4),
+          indicatorColor: const Color(0xFF25AE4B),
+          indicatorWeight: 3,
+          indicatorSize: TabBarIndicatorSize.tab,
+          tabs: [
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.cart,
+                style: _tabTextStyle(),
+              ),
+            ),
+            Tab(
+              child: Text(
+                AppLocalizations.of(context)!.history,
+                style: _tabTextStyle(),
+              ),
+            ),
+          ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [_buildCartContent(), _buildHistoryContent()],
       ),
     );
   }
@@ -104,8 +113,11 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
     if (cartItems.isEmpty) {
       return EmptyWidget(
         imagePath: "assets/images/empty.png",
-        title:AppLocalizations.of(context)!.cartEmpty,
-        description: AppLocalizations.of(context)!.youDontHaveAddAnyFoodsInCartAtThisTime,
+        title: AppLocalizations.of(context)!.cartEmpty,
+        description:
+            AppLocalizations.of(
+              context,
+            )!.youDontHaveAddAnyFoodsInCartAtThisTime,
       );
     }
     return SingleChildScrollView(
@@ -115,7 +127,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
           children: [
             SizedBox(height: responsiveHeight(context, 16)),
             ...cartItems.map(
-                  (item) => KeyedSubtree(
+              (item) => KeyedSubtree(
                 key: ValueKey(item['title']),
                 child: _buildCartItem(item, () {
                   setState(() {
@@ -140,7 +152,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
             return EmptyWidget(
               imagePath: "assets/images/empty.png",
               title: AppLocalizations.of(context)!.historyEmpty,
-              description: AppLocalizations.of(context)!.youDontHaveAddAnyHistoryAtThisTime,
+              description:
+                  AppLocalizations.of(
+                    context,
+                  )!.youDontHaveAddAnyHistoryAtThisTime,
             );
           }
           return SingleChildScrollView(
@@ -148,7 +163,9 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  ...state.visibleHistoryItems.map((item) => _buildHistoryItem(item)),
+                  ...state.visibleHistoryItems.map(
+                    (item) => _buildHistoryItem(item),
+                  ),
                   _buildLoadMoreButton(state),
                 ],
               ),
@@ -168,7 +185,9 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         motion: const ScrollMotion(),
         children: [
           CustomSlidableAction(
-            onPressed: (context) => showDeleteConfirmationDialog(context, item, "cart"),
+            onPressed:
+                (context) =>
+                    showDeleteConfirmationDialog(context, item, "cart"),
             backgroundColor: const Color(0xFFFDAC1D),
             child: Icon(
               Icons.delete_outline,
@@ -208,10 +227,12 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         color: const Color(0xFFFF9012),
         borderRadius: BorderRadius.circular(7),
       ),
-      child: Image.asset("assets/images/cart_menu_food.png",
-          height: responsiveHeight(context, 62),
-          width: responsiveWidth(context, 62.18),
-          fit: BoxFit.contain),
+      child: Image.asset(
+        "assets/images/cart_menu_food.png",
+        height: responsiveHeight(context, 62),
+        width: responsiveWidth(context, 62.18),
+        fit: BoxFit.contain,
+      ),
     );
   }
 
@@ -360,7 +381,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                 AppLocalizations.of(context)!.deliveryCharge,
+                  AppLocalizations.of(context)!.deliveryCharge,
                   style: GoogleFonts.inter(
                     color: const Color(0XFFFEFEFF),
                     fontWeight: FontWeight.w400,
@@ -382,7 +403,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                 AppLocalizations.of(context)!.discount,
+                  AppLocalizations.of(context)!.discount,
                   style: GoogleFonts.inter(
                     color: const Color(0XFFFEFEFF),
                     fontWeight: FontWeight.w400,
@@ -448,6 +469,8 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
   }
 
   Widget _buildHistoryItem(Map<String, dynamic> item) {
+    String tr(String key) => AppLocalizations.of(context)!.getTranslation(key);
+
     return Slidable(
       closeOnScroll: true,
       key: ValueKey(item['title']),
@@ -455,7 +478,9 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         motion: const ScrollMotion(),
         children: [
           CustomSlidableAction(
-            onPressed: (context) => showDeleteConfirmationDialog(context, item, "history"),
+            onPressed:
+                (context) =>
+                    showDeleteConfirmationDialog(context, item, "history"),
             backgroundColor: const Color(0xFFFDAC1D),
             child: Icon(
               Icons.delete_outline,
@@ -465,23 +490,16 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
           ),
         ],
       ),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
-            ),
-          ],
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7),
+          side: const BorderSide(color: Color(0xFFDBF4D1), width: 1),
         ),
+        elevation: 0,
+        color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _buildHistoryItemImage(item),
               const SizedBox(width: 12),
@@ -491,50 +509,93 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          item['title'],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                tr(item['title']),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                tr(item['restaurant']),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                item['price'],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF25AE4B),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Icon(
-                              Icons.access_time,
-                              size: 14,
-                              color: Colors.green,
+                            SizedBox(height: responsiveHeight(context, 16)),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.access_time,
+                                  size: 14,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  item['date'],
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF3B3B3B),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 4),
-                            Text(
-                              item['date'],
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade600,
-                              ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.replay,
+                                  size: 14,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(width: 4),
+                                TextButton(
+                                  onPressed: () {
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  child: Text(
+                                    tr(item['reorder'] ?? 'btnReorder'),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      item['restaurant'],
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      item['price'],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF25AE4B),
-                      ),
                     ),
                   ],
                 ),
@@ -556,24 +617,28 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         width: 65,
         height: 65,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => Container(
-          width: 65,
-          height: 65,
-          decoration: BoxDecoration(
-            color: item['title'] == AppLocalizations.of(context)!.chickenBurger
-                ? Colors.amber
-                : item['title'] == AppLocalizations.of(context)!.onionPizza
-                ? Colors.red.shade300
-                : Colors.orange,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
+        errorBuilder:
+            (context, error, stackTrace) => Container(
+              width: 65,
+              height: 65,
+              decoration: BoxDecoration(
+                color:
+                    item['title'] == AppLocalizations.of(context)!.chickenBurger
+                        ? Colors.amber
+                        : item['title'] ==
+                            AppLocalizations.of(context)!.onionPizza
+                        ? Colors.red.shade300
+                        : Colors.orange,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
       ),
     );
   }
 
   Widget _buildLoadMoreButton(HistoryLoaded state) {
-    final isAllLoaded = state.visibleHistoryItems.length >= state.allHistoryItems.length;
+    final isAllLoaded =
+        state.visibleHistoryItems.length >= state.allHistoryItems.length;
 
     if (isAllLoaded) return const SizedBox();
 
@@ -593,26 +658,29 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
   }
 
   void showDeleteConfirmationDialog(
-      BuildContext context,
-      Map<String, dynamic> item,
-      String tab,
-      ) {
+    BuildContext context,
+    Map<String, dynamic> item,
+    String tab,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text(AppLocalizations.of(context)!.confirmDeleteHistoryTitle),
+          title: Text(AppLocalizations.of(context)!.confirmDeleteHistoryTitle),
           content: Text(
             tab == kCartType
-                ? "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${item['title']}${AppLocalizations.of(context)!.confirmDeleteCartContent1}"
-                : "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${item['title']}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}"
+                ? "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${AppLocalizations.of(context)!.getTranslation(item['title'])}${AppLocalizations.of(context)!.confirmDeleteCartContent1}"
+                : "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${AppLocalizations.of(context)!.getTranslation(item['title'])}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}",
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.cancel, style: TextStyle(color: Colors.grey)),
+              child: Text(
+                AppLocalizations.of(context)!.cancel,
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -625,7 +693,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 }
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.delete, style: TextStyle(color: Colors.red)),
+              child: Text(
+                AppLocalizations.of(context)!.delete,
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );

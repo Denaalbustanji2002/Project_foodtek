@@ -24,7 +24,6 @@ super.onChange(bloc, change);
     debugPrint("=======================Bloc: $bloc");
     debugPrint("=======================Transition: $transition");
     super.onTransition(bloc, transition);
-    ///Block/// not for CUBIT
   }
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {

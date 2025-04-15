@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../states/history_state.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {
@@ -8,47 +6,47 @@ class HistoryCubit extends Cubit<HistoryState> {
 
   List<Map<String, dynamic>> allHistoryItems = [
     {
-      'title': 'Chicken Burger',
-      'restaurant': 'Burger Factory LTD',
+      'title': 'historyItemChickenBurger',
+      'restaurant': 'restaurantBurgerFactory',
       'price': '\$20',
       'date': '25.3.2024',
       'image': 'assets/images/history_menu_food.png',
-      'reorder': 'Reorder',
+      'reorder': 'btnReorder',
     },
     {
-      'title': 'Onion Pizza',
-      'restaurant': 'Pizza Palace',
+      'title': 'historyItemOnionPizza',
+      'restaurant': 'restaurantPizzaPalace',
       'price': '\$15',
       'date': '25.3.2024',
       'image': 'assets/images/history_menu_food.png',
-      'reorder': 'Reorder',
+      'reorder': 'btnReorder',
     },
     {
-      'title': 'Spicy Shawarma',
-      'restaurant': 'Hot Cool Spot',
+      'title': 'historyItemSpicyShawarma',
+      'restaurant': 'restaurantHotCoolSpot',
       'price': '\$15',
       'date': '25.3.2024',
       'count': '0',
       'image': 'assets/images/history_menu_food.png',
-      'reorder': 'Reorder',
+      'reorder': 'btnReorder',
     },
     {
-      'title': 'Cheese Pasta',
-      'restaurant': 'Italiano',
+      'title': 'historyItemCheesePasta',
+      'restaurant': 'restaurantItaliano',
       'price': '\$18',
       'date': '24.3.2024',
       'count': '0',
       'image': 'assets/images/history_menu_food.png',
-      'reorder': 'Reorder',
+      'reorder': 'btnReorder',
     },
     {
-      'title': 'Sushi Roll',
-      'restaurant': 'Tokyo Sushi',
+      'title': 'historyItemSushiRoll',
+      'restaurant': 'restaurantTokyoSushi',
       'price': '\$22',
       'date': '24.3.2024',
       'count': '0',
       'image': 'assets/images/history_menu_food.png',
-      'reorder': 'Reorder',
+      'reorder': 'btnReorder',
     },
   ];
 

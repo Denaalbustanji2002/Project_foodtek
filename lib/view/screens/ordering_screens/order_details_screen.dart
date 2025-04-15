@@ -324,7 +324,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: Material(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(10),
-          clipBehavior: Clip.hardEdge, // 💥 هاي بتمنع ظهور التأثير خارج الشكل
+          clipBehavior: Clip.hardEdge,
           child: InkWell(
             onTap: () {
               Navigator.push(

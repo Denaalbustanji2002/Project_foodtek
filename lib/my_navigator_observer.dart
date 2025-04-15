@@ -18,5 +18,4 @@ class MyNavigatorObserver extends NavigatorObserver {
     routeNotifier.value = previousName;
     super.didPop(route, previousRoute);
   }
-
 }

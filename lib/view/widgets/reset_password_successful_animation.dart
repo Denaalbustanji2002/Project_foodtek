@@ -71,7 +71,6 @@ class _ResetPasswordSuccessfulAnimationState
               ),
             ),
           ),
-          // "Congratulations!" text
           Text(
             AppLocalizations.of(context)!.congratulations,
             style: TextStyle(
