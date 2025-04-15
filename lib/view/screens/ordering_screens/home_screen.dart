@@ -13,13 +13,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isFavorite = false;
-  String selectedCategory = 'All';
+  String selectedCategory= "";
 
   List<Map<String, dynamic>> foodItems = [];
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final translatedAll = AppLocalizations.of(context)!.all;
+
     foodItems = [
       {
         'name': AppLocalizations.of(context)!.pepperoniPizza,
@@ -87,8 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
         'category': AppLocalizations.of(context)!.sandwich,
       },
     ];
-
-    setState(() {});
+    if (selectedCategory != translatedAll) {
+      if (selectedCategory == "All" || selectedCategory.isEmpty) {
+        setState(() {
+          selectedCategory = translatedAll;
+        });
+      }
+    }
   }
 
   final List<Map<String, dynamic>> recommendedItems = [

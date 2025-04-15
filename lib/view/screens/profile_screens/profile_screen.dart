@@ -11,7 +11,6 @@ import '../../widgets/app_tab.dart';
 
 class ProfileScreen extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
-
   const ProfileScreen({super.key, required this.navigatorKey});
 
   @override
@@ -19,6 +18,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String selectedCategory = 'all';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -306,9 +306,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _showLanguageDialog(
-    BuildContext parentContext,
-    GlobalKey<NavigatorState> navigatorKey,
-  ) {
+      BuildContext parentContext,
+      GlobalKey<NavigatorState> navigatorKey,
+      ) {
     showDialog(
       context: parentContext,
       builder: (context) {
@@ -320,31 +320,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ListTile(
                 title: Text(AppLocalizations.of(context)!.arabic),
                 onTap: () async {
+                  print("Arabic language selected");
                   Navigator.of(context, rootNavigator: true).pop();
                   await Future.delayed(Duration(milliseconds: 100));
                   await parentContext.read<LanguageCubit>().changeLang(
                     langCode: 'ar',
                   );
+                  print("Language changed to Arabic");
+
+                  setState(() {
+                    selectedCategory = AppLocalizations.of(context)!.all; // أو "الكل" إذا كانت العربية
+                    print("Selected category set to: $selectedCategory");
+                  });
+
                   parentContext.read<NavigationCubit>().changeTab(AppTab.home);
+                  print("NavigationCubit changed to home tab");
+
                   navigatorKey.currentState!.pushNamedAndRemoveUntil(
                     '/',
-                    (route) => false,
+                        (route) => false,
                   );
+                  print("Navigated back to home");
                 },
               ),
               ListTile(
                 title: Text(AppLocalizations.of(context)!.english),
                 onTap: () async {
+                  print("English language selected");
                   Navigator.of(context, rootNavigator: true).pop();
                   await Future.delayed(Duration(milliseconds: 100));
                   await parentContext.read<LanguageCubit>().changeLang(
                     langCode: 'en',
                   );
+                  print("Language changed to English");
+
                   parentContext.read<NavigationCubit>().changeTab(AppTab.home);
+                  print("NavigationCubit changed to home tab");
+
                   navigatorKey.currentState!.pushNamedAndRemoveUntil(
                     '/',
-                    (route) => false,
+                        (route) => false,
                   );
+                  print("Navigated back to home");
                 },
               ),
             ],
@@ -353,4 +370,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
+
 }
