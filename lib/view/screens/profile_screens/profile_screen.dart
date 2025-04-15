@@ -329,7 +329,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   print("Language changed to Arabic");
 
                   setState(() {
-                    selectedCategory = AppLocalizations.of(context)!.all; // أو "الكل" إذا كانت العربية
+                    selectedCategory = AppLocalizations.of(context)!.all;
                     print("Selected category set to: $selectedCategory");
                   });
 
