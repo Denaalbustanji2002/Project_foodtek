@@ -30,14 +30,17 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: colorScheme.background,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Color(0xFF391713),
+          color: colorScheme.onBackground,
           iconSize: responsiveHeight(context, 20),
           onPressed: () {},
         ),
@@ -47,7 +50,7 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
-            color: Color(0xFF391713),
+            color: colorScheme.onBackground,
           ),
         ),
         titleSpacing: 0.0,
@@ -66,12 +69,15 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                 height: responsiveHeight(context, 416),
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Color(0XFFFFFFFF),
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Color(0xFFF5F5F5), width: 1),
+                  border: Border.all(
+                    color: isDarkMode ? colorScheme.outline.withOpacity(0.3) : Color(0xFFF5F5F5),
+                    width: 1,
+                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x1F000000),
+                      color: isDarkMode ? Colors.black.withOpacity(0.3) : Color(0x1F000000),
                       blurRadius: 15,
                       offset: Offset(0, 0),
                     ),
@@ -110,12 +116,12 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
+                    colors: [Colors.green,Colors.green,],
                   ),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFFFFFFFF),
+                      color: isDarkMode ? Colors.transparent : Color(0xFFFFFFFF),
                       spreadRadius: 1,
                       blurRadius: 10,
                       offset: Offset(0, 1),
@@ -132,7 +138,7 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                       fontSize: 14,
                       letterSpacing: -1,
                       height: 1.4,
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                 ),
@@ -141,20 +147,21 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           ],
         ),
       ),
-
-
     );
   }
 
   Widget _buildInputField(String label, TextEditingController controller,
       {bool obscureText = false, int maxLines = 1}) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: GoogleFonts.plusJakartaSans(
-            color: Color(0xFF6C7278),
+            color: colorScheme.onSurface.withOpacity(0.7),
             fontSize: responsiveHeight(context, 12),
             fontWeight: FontWeight.w500,
             height: 1.6,
@@ -166,12 +173,15 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           width: responsiveWidth(context, 356),
           height: responsiveHeight(context, 46),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Color(0xFFEDF1F3), width: 1),
+            border: Border.all(
+              color: isDarkMode ? colorScheme.outline.withOpacity(0.3) : Color(0xFFEDF1F3),
+              width: 1,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Color(0x3DE4E5E7),
+                color: isDarkMode ? Colors.transparent : Color(0x3DE4E5E7),
                 offset: Offset(0, 1),
                 blurRadius: 2,
               ),
@@ -184,7 +194,7 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
             style: GoogleFonts.inter(
               fontWeight: FontWeight.w500,
               fontSize: responsiveHeight(context, 14),
-              color: Color(0XFF1A1C1E),
+              color: colorScheme.onSurface,
               height: 1.4,
               letterSpacing: -0.01,
             ),
@@ -193,7 +203,7 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
               hintStyle: GoogleFonts.plusJakartaSans(
                 fontWeight: FontWeight.w400,
                 fontSize: responsiveHeight(context, 14),
-                color: Colors.grey[500],
+                color: colorScheme.onSurface.withOpacity(0.5),
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: responsiveWidth(context, 13),
@@ -209,30 +219,36 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
 
   Widget passwordInputField(String? hintText, String obscuringCharacter,
       {required bool obscureText}) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "password",
           style: GoogleFonts.plusJakartaSans(
-            color: const Color(0xFF6C7278),
+            color: colorScheme.onSurface.withOpacity(0.7),
             fontSize: responsiveHeight(context, 12),
             letterSpacing: -0.02,
             height: 1.6,
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: 2),
         Container(
           width: responsiveWidth(context, 356),
           height: responsiveHeight(context, 46),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFEDF1F3), width: 1),
-            boxShadow: const [
+            border: Border.all(
+              color: isDarkMode ? colorScheme.outline.withOpacity(0.3) : Color(0xFFEDF1F3),
+              width: 1,
+            ),
+            boxShadow: [
               BoxShadow(
-                color: Color(0x3DE4E5E7),
+                color: isDarkMode ? Colors.transparent : Color(0x3DE4E5E7),
                 offset: Offset(0, 1),
                 blurRadius: 2,
               ),
@@ -247,14 +263,14 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
               fontSize: 14,
               height: 1.4,
               letterSpacing: -0.01,
-              color: const Color(0xFF1A1C1E),
+              color: colorScheme.onSurface,
             ),
             decoration: InputDecoration(
               hintText: hintText ?? AppLocalizations.of(context)!.enterYourPassword,
               hintStyle: GoogleFonts.inter(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: Colors.grey[500],
+                color: colorScheme.onSurface.withOpacity(0.5),
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: responsiveWidth(context, 13),
@@ -266,7 +282,7 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                   validation.obscureTextPassword
                       ? Icons.visibility_off
                       : Icons.visibility,
-                  color: const Color(0XFFACB5BB),
+                  color: colorScheme.onSurface.withOpacity(0.5),
                   size: 12,
                 ),
                 onPressed: () {
@@ -283,16 +299,18 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
   }
 
   Widget _buildUserProfileHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CircleAvatar(
           radius: 36,
-          backgroundColor: Colors.grey.shade200,
+          backgroundColor: colorScheme.surfaceVariant,
           child: Icon(
             Icons.person,
             size: responsiveHeight(context, 60),
-            color: Colors.grey.shade600,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
         SizedBox(height: 8),
@@ -301,14 +319,14 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 16),
             fontWeight: FontWeight.w500,
-            color: Color(0xFF1B1B1B),
+            color: colorScheme.onBackground,
           ),
         ),
         SizedBox(height: 2),
         Text(
           'ahmad1709@gmail.com',
           style: GoogleFonts.inter(
-            color: Colors.grey,
+            color: colorScheme.onSurface.withOpacity(0.6),
             fontSize: responsiveHeight(context, 14),
             fontWeight: FontWeight.w400,
           ),

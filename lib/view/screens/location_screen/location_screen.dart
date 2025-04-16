@@ -100,8 +100,12 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SafeArea(
       child: Scaffold(
+        backgroundColor: colorScheme.background,
         body: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -110,9 +114,47 @@ class _LocationScreenState extends State<LocationScreen> {
               height: MediaQuery.of(context).size.height,
               child: GoogleMap(
                 initialCameraPosition: _kInitialPosition,
+                mapType: isDarkMode ? MapType.normal : MapType.normal,
+                zoomGesturesEnabled: true,
+                scrollGesturesEnabled: true,
+                rotateGesturesEnabled: true,
+                tiltGesturesEnabled: true,
                 onMapCreated: (controller) {
                   setState(() {
                     _mapController = controller;
+                    // Set map style for dark mode
+                    if (isDarkMode) {
+                      controller.setMapStyle('''
+                        [
+                          {
+                            "elementType": "geometry",
+                            "stylers": [
+                              {
+                                "color": "#242f3e"
+                              }
+                            ]
+                          },
+                          {
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                              {
+                                "color": "#746855"
+                              }
+                            ]
+                          },
+                          {
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                              {
+                                "color": "#242f3e"
+                              }
+                            ]
+                          }
+                        ]
+                      ''');
+                    } else {
+                      controller.setMapStyle(null);
+                    }
                   });
                 },
                 onTap: (LatLng position) {
@@ -142,7 +184,7 @@ class _LocationScreenState extends State<LocationScreen> {
               child: IconButton(
                 icon: Icon(
                   Icons.arrow_back,
-                  color: Colors.black,
+                  color: colorScheme.onBackground,
                   size: responsiveHeight(context, 24),
                 ),
                 onPressed: () {
@@ -158,9 +200,19 @@ class _LocationScreenState extends State<LocationScreen> {
                 width: responsiveWidth(context, 327),
                 height: responsiveHeight(context, 42),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(40),
-                  border: Border.all(color: Color(0xFFD6D6D6), width: 1),
+                  border: Border.all(
+                    color: colorScheme.outline.withOpacity(0.5),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.shadow.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: Offset(0, 2),
+                    )
+                  ],
                 ),
                 child: TextField(
                   controller: searchTextEditingController,
@@ -169,7 +221,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     hintStyle: GoogleFonts.inter(
                       fontSize: responsiveHeight(context, 12),
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF878787),
+                      color: colorScheme.onSurface.withOpacity(0.6),
                       letterSpacing: 0.0,
                     ),
                     contentPadding: EdgeInsets.symmetric(
@@ -183,7 +235,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       ),
                       child: Icon(
                         Icons.search,
-                        color: Color(0xFF25AE4B),
+                        color: colorScheme.primary,
                         size: responsiveHeight(context, 18),
                       ),
                     ),
@@ -196,7 +248,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: colorScheme.surface,
                   ),
                   onSubmitted: (value) {
                     _performLocationSearch(value);
@@ -213,11 +265,11 @@ class _LocationScreenState extends State<LocationScreen> {
                 height: responsiveHeight(context, 154),
                 padding: EdgeInsets.all(responsiveHeight(context, 24)),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: colorScheme.shadow.withOpacity(0.2),
                       blurRadius: 10,
                       offset: Offset(0, 4),
                     )
@@ -232,7 +284,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       style: GoogleFonts.inter(
                         fontSize: responsiveHeight(context, 12),
                         fontWeight: FontWeight.w500,
-                        color: const Color(0XFF878787),
+                        color: colorScheme.onSurface.withOpacity(0.6),
                         letterSpacing: -0.01,
                         height: 1.4,
                       ),
@@ -243,7 +295,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       children: [
                         Icon(
                           Icons.location_on_outlined,
-                          color: const Color(0xFF4CAF50),
+                          color: colorScheme.primary,
                           size: responsiveHeight(context, 18.46),
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
@@ -253,7 +305,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             style: GoogleFonts.inter(
                               fontSize: responsiveHeight(context, 12),
                               fontWeight: FontWeight.w600,
-                              color: const Color(0XFF6C7278),
+                              color: colorScheme.onSurface,
                               letterSpacing: -0.01,
                               height: 1.4,
                             ),
@@ -271,7 +323,10 @@ class _LocationScreenState extends State<LocationScreen> {
                             context.read<NavigationCubit>().goTo(ScreenIndex.DeliveryTrackingScreen);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Please select a location first")),
+                              SnackBar(
+                                content: Text("Please select a location first"),
+                                backgroundColor: colorScheme.error,
+                              ),
                             );
                           }
                         },
@@ -280,7 +335,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           elevation: 0,
-                          backgroundColor: const Color(0xFF25AE4B),
+                          backgroundColor: Colors.green,
                         ),
                         child: Text(
                           "Set Location",
@@ -290,7 +345,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             fontSize: responsiveHeight(context, 12),
                             height: 1.4,
                             letterSpacing: -0.01,
-                            color: Colors.white,
+                            color: colorScheme.onPrimary,
                           ),
                         ),
                       ),
@@ -305,11 +360,11 @@ class _LocationScreenState extends State<LocationScreen> {
               right: responsiveWidth(context, 20),
               child: FloatingActionButton(
                 mini: true,
-                backgroundColor: Colors.white,
+                backgroundColor: colorScheme.surface,
                 onPressed: _goToCurrentLocation,
                 child: Icon(
                   Icons.my_location,
-                  color: Color(0xFF25AE4B),
+                  color: colorScheme.primary,
                   size: responsiveHeight(context, 20),
                 ),
               ),

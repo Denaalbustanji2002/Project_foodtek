@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../cubits/ThemeCubit.dart';
 
 class NotificationWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -21,10 +24,9 @@ class NotificationWidget extends StatelessWidget implements PreferredSizeWidget 
   Widget build(BuildContext context) {
     return  SafeArea(
         child: AppBar(
-
             toolbarHeight: preferredSize.height,
             elevation: 0,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Theme.of(context).colorScheme.background,
             automaticallyImplyLeading: false,
             flexibleSpace: Padding(
 
@@ -93,7 +95,8 @@ class NotificationDialog extends StatefulWidget {
   _NotificationDialogState createState() => _NotificationDialogState();
 }
 
-class _NotificationDialogState extends State<NotificationDialog> with SingleTickerProviderStateMixin {
+class _NotificationDialogState extends State<NotificationDialog>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -121,11 +124,13 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeCubit>().isDarkMode;
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       padding: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode ? Colors.grey[900] : Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
       ),
       child: Column(
@@ -136,15 +141,25 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back_outlined),
+                  icon: Icon(
+                    Icons.arrow_back_outlined,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
                   onPressed: () => Navigator.pop(context),
                 ),
                 Text(
                   'Notifications',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.more_vert_outlined),
+                  icon: Icon(
+                    Icons.more_vert_outlined,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
                   onPressed: () {},
                 ),
               ],
@@ -153,26 +168,22 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
           TabBar(
             controller: _tabController,
             labelColor: Color(0xFF2CDA5E),
-            unselectedLabelColor: Colors.grey,
+            unselectedLabelColor: isDarkMode ? Colors.grey[600] : Colors.grey,
             indicatorColor: Color(0xFF2CDA5E),
             isScrollable: false,
             indicatorWeight: 1.0,
             indicatorSize: TabBarIndicatorSize.label,
             labelPadding: EdgeInsets.symmetric(horizontal: 0),
             padding: EdgeInsets.symmetric(horizontal: 100),
-            tabs: [
-              Tab(text: 'All'),
-              Tab(text: 'Unread'),
-              Tab(text: 'Read'),
-            ],
+            tabs: [Tab(text: 'All'), Tab(text: 'Unread'), Tab(text: 'Read')],
           ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: [
-                _buildNotificationList(0),
-                _buildNotificationList(1),
-                _buildNotificationList(2),
+                _buildNotificationList(0, isDarkMode),
+                _buildNotificationList(1, isDarkMode),
+                _buildNotificationList(2, isDarkMode),
               ],
             ),
           ),
@@ -181,7 +192,7 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
     );
   }
 
-  Widget _buildNotificationList(int tabIndex) {
+  Widget _buildNotificationList(int tabIndex, bool isDarkMode) {
     final filteredNotifications = _filterNotifications(tabIndex);
     return ListView.builder(
       padding: EdgeInsets.symmetric(vertical: 7),
@@ -190,6 +201,7 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
         final notification = filteredNotifications[index];
         return NotificationItem(
           notification: notification,
+          isDarkMode: isDarkMode,
           onTap: () {
             setState(() {
               notification.isRead = true;
@@ -204,22 +216,44 @@ class _NotificationDialogState extends State<NotificationDialog> with SingleTick
 class NotificationItem extends StatelessWidget {
   final Notification notification;
   final VoidCallback onTap;
+  final bool isDarkMode;
 
-  const NotificationItem({super.key, required this.notification, required this.onTap});
+  const NotificationItem({
+    super.key,
+    required this.notification,
+    required this.onTap,
+    required this.isDarkMode,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: notification.isRead ? Colors.white : Color(0xFFF1F6FC), // خلفية رمادية لغير المقروءة
+      color: notification.isRead
+          ? (isDarkMode ? Colors.grey[850] : Colors.white)
+          : (isDarkMode ? Colors.grey[800] : Color(0xFFF1F6FC)),
       child: ListTile(
-        title: Text(notification.title, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          notification.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(notification.message),
+            Text(
+              notification.message,
+              style: TextStyle(
+                color: isDarkMode ? Colors.white70 : Colors.black87,
+              ),
+            ),
             Text(
               DateFormat('yyyy-MM-dd – HH:mm').format(notification.timestamp),
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+              style: TextStyle(
+                color: isDarkMode ? Colors.grey[400] : Colors.grey,
+                fontSize: 12,
+              ),
             ),
           ],
         ),
@@ -230,7 +264,4 @@ class NotificationItem extends StatelessWidget {
       ),
     );
   }
-
 }
-
-

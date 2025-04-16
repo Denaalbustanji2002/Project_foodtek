@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodtec/view/screens/home_cart/widget/appbar2.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../cubits/ThemeCubit.dart';
 
 class HistoryScreen extends StatefulWidget {
   @override
@@ -11,7 +14,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   bool _isLoadingMore = false;
   bool _hasMoreHistory = true;
 
-  // Data for history
   List<Map<String, dynamic>> historyItems = [
     {
       'name': 'Pizza',
@@ -27,33 +29,43 @@ class _HistoryScreenState extends State<HistoryScreen> {
       'image': 'assets/images/Empty-amico.png',
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
     },
-
   ];
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = context.watch<ThemeCubit>().isDarkMode;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: Appbar2(),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all( 10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text('History', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'History',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+            ),
           ),
-          _buildHistoryContent(),
+          _buildHistoryContent(isDarkMode),
         ],
       ),
     );
   }
 
-  Widget _buildHistoryContent() {
+  Widget _buildHistoryContent(bool isDarkMode) {
     if (historyItems.isEmpty && !_isLoadingMore) {
       return _buildEmptyState(
         'History Empty',
         'You don\'t have any order history',
+        isDarkMode,
       );
     }
 
@@ -61,23 +73,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: ListView.separated(
         padding: EdgeInsets.all(16),
         separatorBuilder: (_, __) => SizedBox(height: 16),
-        itemCount: historyItems.length + 1, // +1 for Load More widget
+        itemCount: historyItems.length + 1,
         itemBuilder: (context, index) {
           if (index == historyItems.length) {
-            return _buildLoadMoreWidget();
+            return _buildLoadMoreWidget(isDarkMode);
           }
-          return _buildHistoryItem(historyItems[index], index);
+          return _buildHistoryItem(historyItems[index], index, isDarkMode);
         },
       ),
     );
   }
 
-  Widget _buildLoadMoreWidget() {
+  Widget _buildLoadMoreWidget(bool isDarkMode) {
     if (!_hasMoreHistory) {
       return Padding(
         padding: EdgeInsets.all(16),
         child: Center(
-          child: Text('No more orders', style: TextStyle(color: Colors.grey)),
+          child: Text(
+            'No more orders',
+            style: TextStyle(color: isDarkMode ? Colors.grey[400] : Colors.grey),
+          ),
         ),
       );
     }
@@ -87,14 +102,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: Center(
         child: _isLoadingMore
             ? CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          valueColor: AlwaysStoppedAnimation<Color>(
+            isDarkMode ? Colors.green[200]! : Colors.green,
+          ),
         )
             : GestureDetector(
           onTap: _loadMoreHistory,
           child: Text(
             'Load More...',
             style: TextStyle(
-              color: Colors.green,
+              color: isDarkMode ? Colors.green[200] : Colors.green,
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
@@ -104,41 +121,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Future<void> _loadMoreHistory() async {
-    if (_isLoadingMore || !_hasMoreHistory) return;
-
-    setState(() {
-      _isLoadingMore = true;
-    });
-
-    // Simulating network delay
-    await Future.delayed(Duration(seconds: 2));
-
-    final newItems = [
-      {
-        'name': 'Pizza ${historyItems.length + 1}',
-        'description': 'Just added',
-        'price': '\$12',
-        'image': 'assets/images/Empty-amico.png',
-        'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      },
-      {
-        'name': 'Pasta ${historyItems.length + 2}',
-        'description': 'Just added',
-        'price': '\$12',
-        'image': 'assets/images/Empty-amico.png',
-        'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      },
-    ];
-
-    setState(() {
-      historyItems.addAll(newItems);
-      _isLoadingMore = false;
-      _hasMoreHistory = historyItems.length < 10; // Example: stop after 10 items
-    });
-  }
-
-  Widget _buildEmptyState(String title, String subtitle) {
+  Widget _buildEmptyState(String title, String subtitle, bool isDarkMode) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -156,13 +139,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[600],
+              color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
             ),
           ),
           SizedBox(height: 10),
           Text(
             subtitle,
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 16,
+              color: isDarkMode ? Colors.grey[500] : Colors.grey,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -170,7 +156,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildHistoryItem(Map<String, dynamic> item, int index) {
+  Widget _buildHistoryItem(Map<String, dynamic> item, int index, bool isDarkMode) {
     return Dismissible(
       key: Key(item['name'] + item['date']),
       direction: DismissDirection.endToStart,
@@ -180,12 +166,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
         color: Colors.orange,
         child: Icon(Icons.delete, color: Colors.white),
       ),
-      onDismissed: (direction) {
-        _removeHistoryItem(index);
-      },
+      onDismissed: (direction) => _removeHistoryItem(index),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDarkMode ? Colors.grey[800] : Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
@@ -219,12 +203,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                     SizedBox(height: 5),
                     Text(
                       item['description'],
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: isDarkMode ? Colors.grey[400] : Colors.grey),
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -232,7 +219,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                        color: isDarkMode ? Colors.green[200] : Colors.green,
                       ),
                     ),
                   ],
@@ -244,28 +231,34 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(Icons.access_time, size: 16, color: Colors.green),
+                    Icon(
+                        Icons.access_time,
+                        size: 16,
+                        color: isDarkMode ? Colors.green[200] : Colors.green),
                     SizedBox(width: 8),
                     Text(
                       item['date'],
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: isDarkMode ? Colors.grey[400] : Colors.grey),
                     ),
                   ],
                 ),
                 SizedBox(height: 10),
                 TextButton(
-                  onPressed: () {
-                    _reorderItem(item);
-                  },
+                  onPressed: () => _reorderItem(item),
                   child: Row(
                     children: [
-                      Icon(Icons.replay, size: 16, color: Colors.green),
+                      Icon(
+                          Icons.replay,
+                          size: 16,
+                          color: isDarkMode ? Colors.green[200] : Colors.green),
                       SizedBox(width: 4),
                       Text(
                         'Reorder',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.green,
+                          color: isDarkMode ? Colors.green[200] : Colors.green,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -282,32 +275,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   void _removeHistoryItem(int index) {
     final removedItem = historyItems[index];
-    setState(() {
-      historyItems.removeAt(index);
-    });
+    setState(() => historyItems.removeAt(index));
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('${removedItem['name']} removed from history'),
         action: SnackBarAction(
           label: 'Undo',
-          onPressed: () {
-            setState(() {
-              historyItems.insert(index, removedItem);
-            });
-          },
+          onPressed: () => setState(() => historyItems.insert(index, removedItem)),
         ),
       ),
     );
   }
 
   void _reorderItem(Map<String, dynamic> item) {
-    setState(() {
-      // Add item to cart (Cart logic not included here)
-    });
-
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${item['name']} added to cart')),
-    );
+        SnackBar(content: Text('${item['name']} added to cart')));
+  }
+
+  Future<void> _loadMoreHistory() async {
+    if (_isLoadingMore || !_hasMoreHistory) return;
+
+    setState(() => _isLoadingMore = true);
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      historyItems.addAll([
+        {
+          'name': 'Pizza ${historyItems.length + 1}',
+          'description': 'Just added',
+          'price': '\$12',
+          'image': 'assets/images/Empty-amico.png',
+          'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        },
+        {
+          'name': 'Pasta ${historyItems.length + 2}',
+          'description': 'Just added',
+          'price': '\$12',
+          'image': 'assets/images/Empty-amico.png',
+          'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        },
+      ]);
+      _isLoadingMore = false;
+      _hasMoreHistory = historyItems.length < 10;
+    });
   }
 }

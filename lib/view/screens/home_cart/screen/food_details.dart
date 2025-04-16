@@ -70,14 +70,18 @@ class _FoodInCategState extends State<FoodInCateg> {
         margin: EdgeInsets.symmetric(horizontal: 5),
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.green : Colors.white,
+          color: isSelected
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0XFF85DE9E)),
+          border: Border.all(color: Theme.of(context).primaryColor),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
+            color: isSelected
+                ? Colors.white
+                : Theme.of(context).textTheme.bodyLarge?.color,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -107,9 +111,16 @@ class _FoodInCategState extends State<FoodInCateg> {
     return Container(
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.green.shade200),
+        border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.5)),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).shadowColor.withOpacity(0.1),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -118,24 +129,28 @@ class _FoodInCategState extends State<FoodInCateg> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 80 , width: 105),
+                    SizedBox(height: 80, width: 105),
                     Text(
                       item['title'],
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     SizedBox(height: 10),
                     Text(
                       item['description'],
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                          fontSize: 12
+                      ),
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -143,12 +158,13 @@ class _FoodInCategState extends State<FoodInCateg> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     SizedBox(height: 10),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -159,8 +175,6 @@ class _FoodInCategState extends State<FoodInCateg> {
                       ),
                       onPressed: () {
                         context.read<NavigationCubit>().goTo(ScreenIndex.OrderHome);
-
-
                       },
                       child: Text(
                         'Order Now',
@@ -176,7 +190,7 @@ class _FoodInCategState extends State<FoodInCateg> {
                 right: 0,
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).cardColor,
                   backgroundImage: AssetImage(item['image']),
                 ),
               ),
@@ -185,16 +199,19 @@ class _FoodInCategState extends State<FoodInCateg> {
                 right: -10,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xffDBF4D1),
+                    color: Theme.of(context).primaryColor.withOpacity(0.2),
                     shape: BoxShape.circle,
                     boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 4),
+                      BoxShadow(
+                          color: Theme.of(context).shadowColor.withOpacity(0.2),
+                          blurRadius: 4
+                      ),
                     ],
                   ),
                   child: IconButton(
                     icon: Icon(
                       isFavoriteList[index] ? Icons.favorite : Icons.favorite_border,
-                      color: isFavoriteList[index] ? Colors.red : Colors.grey,
+                      color: isFavoriteList[index] ? Colors.red : Theme.of(context).iconTheme.color,
                     ),
                     onPressed: () {
                       setState(() {
@@ -207,12 +224,8 @@ class _FoodInCategState extends State<FoodInCateg> {
                           );
                         }
                       });
-
-
-
                     },
                   ),
-
                 ),
               ),
             ],
@@ -225,7 +238,7 @@ class _FoodInCategState extends State<FoodInCateg> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: CustomAppBar(),
       body: Column(
         children: [
@@ -242,7 +255,7 @@ class _FoodInCategState extends State<FoodInCateg> {
                         ? 'All'
                         : '${categories[index - 1]['icon']} ${categories[index - 1]['name']}',
                     selectedCategoryIndex == index,
-                    () => setState(() => selectedCategoryIndex = index),
+                        () => setState(() => selectedCategoryIndex = index),
                   );
                 },
               ),
@@ -253,5 +266,4 @@ class _FoodInCategState extends State<FoodInCateg> {
         ],
       ),
     );
-  }
-}
+  }}

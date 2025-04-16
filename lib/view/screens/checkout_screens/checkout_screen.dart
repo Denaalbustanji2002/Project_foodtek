@@ -27,7 +27,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar:  NotificationWidget(), // Assuming this is your custom app bar
       body: SafeArea(
         child: SingleChildScrollView(

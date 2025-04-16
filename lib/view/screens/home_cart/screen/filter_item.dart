@@ -32,7 +32,7 @@ class _FilterItemState extends State<FilterItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: Appbar2(),
       body: Column(
         children: [

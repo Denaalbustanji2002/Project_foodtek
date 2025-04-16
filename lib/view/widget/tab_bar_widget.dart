@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class   TabBarWidget extends StatefulWidget {
+class TabBarWidget extends StatefulWidget {
   const TabBarWidget({super.key});
 
   @override
@@ -11,7 +11,6 @@ class _TabBarWidgetState extends State<TabBarWidget> {
   int selectedCategoryIndex = 0;
 
   final List<Map<String, dynamic>> categories = [
-
     {'icon': '🍔', 'name': 'Burgers'},
     {'icon': '🍕', 'name': 'Pizza'},
     {'icon': '🍣', 'name': 'Sushi'},
@@ -33,20 +32,27 @@ class _TabBarWidgetState extends State<TabBarWidget> {
   }
 
   Widget buildCategoryTab(String text, bool isSelected, VoidCallback onTap) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.green : Colors.white,
+          color: isSelected
+              ? Colors.green
+              : theme.cardColor, // adapts to light/dark mode
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color(0XFF85DE9E)),
+          border: Border.all(color: const Color(0xFF85DE9E)),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
+            color: isSelected
+                ? Colors.white
+                : (isDark ? Colors.white : Colors.black),
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -56,18 +62,22 @@ class _TabBarWidgetState extends State<TabBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         SizedBox(
           height: 43,
           child: Padding(
-            padding: EdgeInsets.only(left: 22),
+            padding: const EdgeInsets.only(left: 22),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length + 1,
               itemBuilder: (context, index) {
                 return buildCategoryTab(
-                  index == 0 ? 'All' : '${categories[index - 1]['icon']} ${categories[index - 1]['name']}',
+                  index == 0
+                      ? 'All'
+                      : '${categories[index - 1]['icon']} ${categories[index - 1]['name']}',
                   selectedCategoryIndex == index,
                       () => onCategorySelected(index),
                 );
@@ -75,11 +85,12 @@ class _TabBarWidgetState extends State<TabBarWidget> {
             ),
           ),
         ),
+        const SizedBox(height: 12),
         SizedBox(
           height: 300,
           child: GridView.builder(
-            padding: EdgeInsets.all(16),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
@@ -88,20 +99,33 @@ class _TabBarWidgetState extends State<TabBarWidget> {
             itemCount: products.length,
             itemBuilder: (context, index) {
               return Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                color: theme.cardColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
                 elevation: 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(products[index]['image'], height: 80), // تأكد من وضع الصور داخل assets
-                    SizedBox(height: 8),
-                    Text(products[index]['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("\$${products[index]['price']}"),
-                    SizedBox(height: 8),
+                    Image.asset(products[index]['image'], height: 80),
+                    const SizedBox(height: 8),
+                    Text(
+                      products[index]['name'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: theme.textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                    Text(
+                      "\$${products[index]['price']}",
+                      style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+                    ),
+                    const SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () {},
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                      child: Text("Order Now"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      child: const Text("Order Now"),
                     ),
                   ],
                 ),

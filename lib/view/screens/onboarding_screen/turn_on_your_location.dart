@@ -87,7 +87,7 @@ class _TurnOnYourLocationState extends State<TurnOnYourLocation> {
   Widget build(BuildContext context) {
     section1 section = section1();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(
         children: [
           section.buildTopImage(context, "assets/images/maps.png"),

@@ -25,7 +25,7 @@ class NavigationCubit extends Cubit<int> {
     }
   }
 
-  // إضافة دالة للعودة إلى الشاشة الرئيسية
+
   void resetToHome() {
     _history = [ScreenIndex.HomeScreen];
     emit(ScreenIndex.HomeScreen);

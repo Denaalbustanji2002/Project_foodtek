@@ -12,7 +12,7 @@ class WelcomeScreen extends StatelessWidget {
     section1 section = section1();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(
         children: [
           section.buildTopImage(context, "assets/images/splash_screen.png"),

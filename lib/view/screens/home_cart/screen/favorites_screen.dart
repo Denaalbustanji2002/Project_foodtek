@@ -163,7 +163,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: widget.favoriteItems.isEmpty

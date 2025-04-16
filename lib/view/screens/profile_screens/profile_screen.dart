@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtec/view/screens/profile_screens/profile_screen_details.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/screen_index.dart';
+import '../../../cubits/ThemeCubit.dart';
 import '../../../cubits/navigatiion_cubit.dart';
 import '../../../helper/responsive.dart';
+import '../../../states/ThemeState.dart';
 import '../add_to_cart/screen/history_screen.dart';
-
-
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -17,18 +16,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: Color(0XFFFFFFFF),
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: colorScheme.background,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Color(0xFF391713),
+          color: colorScheme.onBackground,
           iconSize: responsiveHeight(context, 20),
           onPressed: () {},
         ),
@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
-            color: Color(0xFF391713),
+            color: colorScheme.onBackground,
             letterSpacing: 0.0,
             height: 1.0,
           ),
@@ -55,7 +55,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Card(
-              color: Color(0XFFFFFFFF),
+              color: colorScheme.surface,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: colorScheme.outline.withOpacity(0.2),
+                  width: 1,
+                ),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -69,8 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Personal information',
                     onTap: () {
                       context.read<NavigationCubit>().goTo(ScreenIndex.ProfileScreenDetails);
-
-
                     },
                   ),
                   _buildProfileMenuItem(
@@ -80,13 +86,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     trailing: Text(
                       'عربية',
                       style: GoogleFonts.cairo(
-                        color: Color(0XFF1D1D1D),
+                        color: colorScheme.onSurface,
                         fontSize: responsiveHeight(context, 14),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     onTap: () {},
                   ),
+                  _buildThemeModeMenuItem(context),
                   _buildProfileMenuItem(
                     context: context,
                     icon: Icons.privacy_tip_outlined,
@@ -106,7 +113,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Card(
-              color: Color(0XFFFFFFFF),
+              color: colorScheme.surface,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: colorScheme.outline.withOpacity(0.2),
+                  width: 1,
+                ),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -129,7 +144,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Card(
-              color: Color(0XFFFFFFFF),
+              color: colorScheme.surface,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: colorScheme.outline.withOpacity(0.2),
+                  width: 1,
+                ),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -140,20 +163,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Help Center',
                     onTap: () {},
                   ),
-                  _buildLogoutButton(),
+                  _buildLogoutButton(context),
                 ],
               ),
             ),
           ),
         ],
       ),
-
-
-
     );
   }
 
   Widget _buildUserProfileHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: EdgeInsets.all(12.0),
       child: Column(
@@ -161,11 +183,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           CircleAvatar(
             radius: 36,
-            backgroundColor: Colors.grey.shade200,
+            backgroundColor: colorScheme.surfaceVariant,
             child: Icon(
               Icons.person,
               size: responsiveHeight(context, 60),
-              color: Colors.grey.shade600,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
           SizedBox(height: 8),
@@ -178,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 16),
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF1B1B1B),
+                  color: colorScheme.onBackground,
                   letterSpacing: 0.0,
                   height: 1.0,
                 ),
@@ -187,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 'ahmad1709@gmail.com',
                 style: GoogleFonts.inter(
-                  color: Colors.grey,
+                  color: colorScheme.onSurface.withOpacity(0.6),
                   fontSize: responsiveHeight(context, 14),
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.0,
@@ -202,6 +224,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildSectionTitle(String title, BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
       child: Align(
@@ -209,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Text(
           title,
           style: GoogleFonts.inter(
-            color: Color(0xFF1B1B1B),
+            color: colorScheme.onBackground,
             fontWeight: FontWeight.w500,
             fontSize: responsiveHeight(context, 16),
             letterSpacing: 0.0,
@@ -227,16 +251,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Widget? trailing,
     VoidCallback? onTap,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ListTile(
       dense: true,
       visualDensity: VisualDensity.compact,
       contentPadding: EdgeInsets.symmetric(horizontal: 16),
       minLeadingWidth: 24,
-      leading: Icon(icon, color: Color(0XFF1D1D1D), size: 20),
+      leading: Icon(
+          icon,
+          color: colorScheme.onSurface,
+          size: 20
+      ),
       title: Text(
         title,
         style: GoogleFonts.inter(
-          color: Color(0XFF1D1D1D),
+          color: colorScheme.onSurface,
           fontSize: responsiveHeight(context, 14),
           fontWeight: FontWeight.w500,
         ),
@@ -251,24 +281,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required String title,
     required bool value,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 12),
-      leading: Icon(icon, color: Color(0XFF1D1D1D), size: 20),
+      leading: Icon(
+          icon,
+          color: colorScheme.onSurface,
+          size: 20
+      ),
       title: Text(
         title,
         style: GoogleFonts.inter(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: Color(0XFF1D1D1D),
+          color: colorScheme.onSurface,
         ),
       ),
       trailing: Transform.scale(
         scale: 0.7,
         child: Switch(
-          activeColor: Color(0XFFFFFFFF),
-          activeTrackColor: Color(0XFF09CA67),
-          inactiveTrackColor: Color(0XFFAFAFAF),
-          inactiveThumbColor: Color(0XFFFFFFFF),
+          activeColor: colorScheme.onPrimary,
+          activeTrackColor: Colors.green,
+          inactiveTrackColor: colorScheme.outline.withOpacity(0.5),
+          inactiveThumbColor: colorScheme.onPrimary,
           value: value,
           onChanged: (bool newValue) {},
         ),
@@ -276,15 +312,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildLogoutButton() {
+  Widget _buildLogoutButton(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ListTile(
       dense: true,
       visualDensity: VisualDensity.compact,
       contentPadding: EdgeInsets.symmetric(horizontal: 16),
       minLeadingWidth: 24,
-      leading: Icon(Icons.logout, color: Colors.red, size: 20),
-      title: Text('Log Out', style: TextStyle(color: Colors.red)),
+      leading: Icon(
+          Icons.logout,
+          color: colorScheme.error,
+          size: 20
+      ),
+      title: Text(
+          'Log Out',
+          style: TextStyle(color: colorScheme.error)
+      ),
       onTap: () {},
+    );
+  }
+
+  Widget _buildThemeModeMenuItem(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        final isDark = context.read<ThemeCubit>().isDarkMode;
+        return ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 12),
+          leading: Icon(
+            isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
+            color: colorScheme.onSurface,
+          ),
+          title: Text(
+            isDark ? 'Dark Mode' : 'Light Mode',
+            style: GoogleFonts.inter(
+              color: colorScheme.onSurface,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          trailing: Transform.scale(
+            scale: 0.7,
+            child: Switch(
+              activeColor: colorScheme.onPrimary,
+              activeTrackColor: Colors.green,
+              inactiveTrackColor: colorScheme.outline.withOpacity(0.5),
+              inactiveThumbColor: colorScheme.onPrimary,
+              value: isDark,
+              onChanged: (value) {
+                context.read<ThemeCubit>().changeTheme(
+                  value ? ThemeMode.dark : ThemeMode.light,
+                );
+              },
+            ),
+          ),
+          onTap: () {
+            context.read<ThemeCubit>().changeTheme(
+              isDark ? ThemeMode.light : ThemeMode.dark,
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -30,7 +30,8 @@ class _OrderDoneSuccessfullyScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: NotificationWidget(),
       body: SingleChildScrollView(
         child: Padding(

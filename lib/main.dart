@@ -1,19 +1,26 @@
+// 1. في الملف الرئيسي (main.dart)
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodtec/states/ThemeState.dart';
 import 'package:foodtec/states/language_state.dart';
-import 'package:foodtec/view/screens/home_cart/screen/home_screen.dart';
 import 'package:foodtec/view/screens/home_cart/widget/main_navbar.dart';
-import 'package:foodtec/view/screens/onboarding_screen/splash_screen.dart';
+
+import 'cubits/ThemeCubit.dart';
 import 'cubits/language_cubit.dart';
 import 'cubits/location_cubit.dart';
 import 'cubits/navigatiion_cubit.dart';
 import 'cubits/orders_cubit.dart';
 import 'cubits/user_cubit.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'gen_l10n/app_localizations.dart';
+
+import 'helper/shared_preferences_helper.dart';
 import 'my_bloc_observer.dart';
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesHelper.instance.init();
   Bloc.observer = MyBlocObserver();
+
   runApp(const MyApp());
 }
 
@@ -24,36 +31,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => LocationCubit()),
         BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => OrderCubit()),
         BlocProvider(create: (context) => NavigationCubit()),
       ],
-      child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context, state) {
-          String languageCode = 'en';
+      child: Builder(
+        builder: (context) {
+          return BlocBuilder<LanguageCubit, LanguageState>(
+            builder: (context, languageState) {
+              return BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, themeState) {
+                  String languageCode = 'en';
+                  if (languageState is LanguageChangedSuccessfulState) {
+                    languageCode = languageState.locale.languageCode;
+                  }
 
-          if (state is LanguageChangedSuccessfulState) {
-            languageCode = state.locale.languageCode;
-          }
-
-          return MaterialApp(
-
-            debugShowCheckedModeBanner: false,
-            title: 'Foodtek',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            ),
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: [Locale('en'), Locale('ar')],
-            locale: Locale(languageCode),
-            home: MainbarScreen(),
+                  return MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    title: 'Foodtek',
+                    theme: themeState.lightTheme,
+                    darkTheme: themeState.darkTheme,
+                    themeMode: themeState.themeMode,
+                    supportedLocales: const [Locale('en'), Locale('ar')],
+                    locale: Locale(languageCode),
+                    home: MainbarScreen(),
+                  );
+                },
+              );
+            },
           );
         },
       ),

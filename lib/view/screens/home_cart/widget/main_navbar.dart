@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/screen_index.dart';
+import '../../../../cubits/ThemeCubit.dart';
 import '../../../../cubits/navigatiion_cubit.dart';
+import '../../../../states/ThemeState.dart';
 import '../../add_to_cart/screen/cart_screen.dart';
 import '../../add_to_cart/screen/history_screen.dart';
 import '../../chat_screen/chat_screen.dart';
-
 import '../../checkout_screens/add_card_screen.dart';
 import '../../checkout_screens/checkout_screen.dart';
 import '../../checkout_screens/order_details_screen.dart';
@@ -27,192 +27,247 @@ class MainbarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationCubit, int>(
-      builder: (context, currentIndex) {
-        final navCubit = context.read<NavigationCubit>();
-        final bool showTrack = _shouldShowTrack(currentIndex, navCubit.previousIndex);
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, themeState) {
+        final isDarkMode = themeState.themeMode == ThemeMode.dark;
 
-        return Scaffold(
-          body: _buildCurrentScreen(currentIndex),
-          bottomNavigationBar: _buildAdaptiveBottomNavBar(context, currentIndex, showTrack),
+        return MaterialApp(
+          theme: themeState.lightTheme,
+          darkTheme: themeState.darkTheme,
+          themeMode: themeState.themeMode,
+          home: BlocBuilder<NavigationCubit, int>(
+            builder: (context, currentIndex) {
+              final navCubit = context.read<NavigationCubit>();
+              final bool showTrack = _shouldShowTrack(currentIndex, navCubit.previousIndex);
+
+              return Scaffold(
+                body: _buildCurrentScreen(currentIndex),
+                bottomNavigationBar: _shouldShowBottomNav(currentIndex)
+                    ? BottomAppBar(
+                  color: isDarkMode
+                      ? Colors.grey[900]
+                      : const Color(0xFFDBF4D1),
+                  child: SizedBox(
+                    height: 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _bottomBarIcon(
+                          context,
+                          Icons.home,
+                          'Home',
+                          0,
+                          currentIndex,
+                          isDarkMode,
+                        ),
+                        _bottomBarIcon(
+                          context,
+                          Icons.favorite,
+                          'Favorites',
+                          1,
+                          currentIndex,
+                          isDarkMode,
+                        ),
+                        GestureDetector(
+                          onTap: () => context.read<NavigationCubit>().goTo(ScreenIndex.CartScreen),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.shopping_cart,
+                                color: isDarkMode
+                                    ? Colors.green[200]
+                                    : const Color(0xFF25AE4B),
+                              ),
+                              Text(
+                                'Cart',
+                                style: TextStyle(
+                                    color: isDarkMode
+                                        ? Colors.green[200]
+                                        : const Color(0xFF25AE4B),
+                                    fontSize: 12
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _bottomBarIcon(
+                          context,
+                          showTrack ? Icons.track_changes : Icons.history,
+                          showTrack ? 'Track' : 'History',
+                          3,
+                          currentIndex,
+                          isDarkMode,
+                        ),
+                        _bottomBarIcon(
+                          context,
+                          Icons.person,
+                          'Profile',
+                          4,
+                          currentIndex,
+                          isDarkMode,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                    : null,
+              );
+            },
+          ),
         );
       },
     );
   }
 
-  Widget _buildCurrentScreen(int currentIndex) {
-    switch (currentIndex) {
-      case ScreenIndex.HomeScreen:
-        return HomeScreen();
-      case ScreenIndex.HistoryScreen:
-        return HistoryScreen();
-      case ScreenIndex.FilterItem:
-        return FilterItem();
-      case ScreenIndex.FavoritesScreen:
-        return FavoritesScreen(favoriteItems: []);
-      case ScreenIndex.CartScreen:
-        return CartScreen();
-      case ScreenIndex.ProfileScreen:
-        return ProfileScreen();
-      case ScreenIndex.ProfileScreenDetails:
-        return ProfileScreenDetails();
-      case ScreenIndex.ChatScreen:
-        return ChatScreen();
-      case ScreenIndex.DeliveryTrackingScreen:
-        return DeliveryTrackingScreen();
-      case ScreenIndex.HistoryScreen:
-        return HistoryScreen();
-      case ScreenIndex.FoodInCateg:
-        return FoodInCateg();
-      case ScreenIndex.OrderHome:
-        return OrderHome();
-      case ScreenIndex.OrderDetailsScreen:
-        return OrderDetailsScreen();
+  // ... باقي الدوال保持不变 (_buildCurrentScreen, _shouldShowBottomNav, etc.)
 
-      case ScreenIndex.CheckoutScreen:
-        return CheckoutScreen();
-      case ScreenIndex.AddtoCardScreen:
-        return AddtoCardScreen();
-      case ScreenIndex.OrderDoneSuccessfullyScreen:
-        return OrderDoneSuccessfullyScreen();
-      case ScreenIndex.LocationScreen:
-        return LocationScreen();
+  Widget _bottomBarIcon(
+      BuildContext context,
+      IconData icon,
+      String label,
+      int index,
+      int currentIndex,
+      bool isDarkMode,
+      ) {
+    final selectedIndex = _getBottomNavIndex(currentIndex);
+    final isSelected = selectedIndex == index;
 
-      default:
-        return HomeScreen();
-    }
-  }
+    final selectedColor = isDarkMode ? Colors.green[200]! : const Color(0xFF25AE4B);
+    final unselectedColor = isDarkMode ? Colors.grey[400]! : const Color(0xFF484C52);
 
-  bool _shouldShowBottomNav(int currentIndex) {
-    const hiddenScreens = [
-      //ScreenIndex.ProfileScreen,
-      // ScreenIndex.FoodInCateg,
-     // ScreenIndex.ChatScreen,
-       ScreenIndex.NotificationScreen,
-    ];
-    return !hiddenScreens.contains(currentIndex);
-  }
-
-  bool _shouldShowTrack(int currentIndex, int previousIndex) {
-    return currentIndex == ScreenIndex.DeliveryTrackingScreen ||
-        currentIndex == ScreenIndex.OrderHome
-        ||
-        currentIndex == ScreenIndex.LocationScreen ||
-        currentIndex == ScreenIndex.OrderDoneSuccessfullyScreen ||
-        currentIndex == ScreenIndex.ProfileScreen|| currentIndex == ScreenIndex.ProfileScreenDetails || // أضف هذه الشاشة
-        previousIndex == ScreenIndex.ProfileScreenDetails || previousIndex == ScreenIndex.DeliveryTrackingScreen ||currentIndex == ScreenIndex.AddCardScreen || currentIndex == ScreenIndex.CheckoutScreen;
-  }
-
-  Widget? _buildAdaptiveBottomNavBar(BuildContext context, int currentIndex, bool showTrack) {
-    if (!_shouldShowBottomNav(currentIndex)) {
-      return null;
-    }
-
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        BottomNavigationBar(
-          backgroundColor: const Color(0xFFDBF4D1),
-          currentIndex: _getBottomNavIndex(currentIndex),
-          selectedItemColor: const Color(0xFF25AE4B),
-          unselectedItemColor: Color(0xFF484C52),
-          onTap: (index) => _handleBottomNavTap(context, index, showTrack),
-          type: BottomNavigationBarType.fixed,
-          items: _buildBottomNavItems(showTrack),
-        ),
-        _buildFloatingCartButton(context),
-      ],
-    );
-  }
-
-  List<BottomNavigationBarItem> _buildBottomNavItems(bool showTrack) {
-    return [
-      const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home' ,),
-      const BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
-      const BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-      BottomNavigationBarItem(
-        icon: Icon(showTrack ? Icons.track_changes : Icons.history),
-        label: showTrack ? 'Track' : 'History',
-      ),
-      const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-    ];
-  }
-
-  Widget _buildFloatingCartButton(BuildContext context) {
-    return Positioned(
-      bottom: 35,
-      left: MediaQuery.of(context).size.width / 2 - 32,
-      child: GestureDetector(
-        onTap: () => context.read<NavigationCubit>().goTo(ScreenIndex.CartScreen),
-        child: Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: const Color(0xFF25AE4B),
-            shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFFDBF4D1), width: 4),
+    return GestureDetector(
+      onTap: () {
+        final navCubit = context.read<NavigationCubit>();
+        final screenIndex = _bottomNavToScreenIndex(
+            index,
+            _shouldShowTrack(currentIndex, navCubit.previousIndex)
+        );
+        navCubit.goTo(screenIndex);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: isSelected ? selectedColor : unselectedColor,
           ),
-          child: const Icon(Icons.shopping_cart_outlined,
-              color: Color(0xFFDBF4D1), size: 24),
-        ),
+          Text(
+            label,
+            style: TextStyle(
+                color: isSelected ? selectedColor : unselectedColor,
+                fontSize: 12
+            ),
+          ),
+        ],
       ),
     );
   }
-
-  void _handleBottomNavTap(BuildContext context, int index, bool showTrack) {
-    final targetIndex = _bottomNavToScreenIndex(index, showTrack);
-
-    if (targetIndex == ScreenIndex.ProfileScreen) {
-      context.read<NavigationCubit>().goTo(ScreenIndex.ProfileScreen);
-    }
-    else if (targetIndex == ScreenIndex.ProfileScreenDetails) {
-      context.read<NavigationCubit>().goTo(ScreenIndex.ProfileScreenDetails);
-    }
-    else {
-      context.read<NavigationCubit>().goTo(targetIndex);
-    }
-
+}
+Widget _buildCurrentScreen(int currentIndex) {
+  switch (currentIndex) {
+    case ScreenIndex.HomeScreen:
+      return HomeScreen();
+    case ScreenIndex.HistoryScreen:
+      return HistoryScreen();
+    case ScreenIndex.FilterItem:
+      return FilterItem();
+    case ScreenIndex.FavoritesScreen:
+      return FavoritesScreen(favoriteItems: []);
+    case ScreenIndex.CartScreen:
+      return CartScreen();
+    case ScreenIndex.ProfileScreen:
+      return ProfileScreen();
+    case ScreenIndex.ProfileScreenDetails:
+      return ProfileScreenDetails();
+    case ScreenIndex.ChatScreen:
+      return ChatScreen();
+    case ScreenIndex.DeliveryTrackingScreen:
+      return DeliveryTrackingScreen();
+    case ScreenIndex.FoodInCateg:
+      return FoodInCateg();
+    case ScreenIndex.OrderHome:
+      return OrderHome();
+    case ScreenIndex.OrderDetailsScreen:
+      return OrderDetailsScreen();
+    case ScreenIndex.CheckoutScreen:
+      return CheckoutScreen();
+    case ScreenIndex.AddtoCardScreen:
+      return AddtoCardScreen();
+    case ScreenIndex.OrderDoneSuccessfullyScreen:
+      return OrderDoneSuccessfullyScreen();
+    case ScreenIndex.LocationScreen:
+      return LocationScreen();
+    default:
+      return HomeScreen();
   }
+}
 
-  int _getBottomNavIndex(int currentIndex) {
-    if (!_isBottomNavScreen(currentIndex)) {
-      return _findClosestBottomNavIndex(currentIndex);
-    }
+bool _shouldShowBottomNav(int currentIndex) {
+  const hiddenScreens = [ScreenIndex.NotificationScreen];
+  return !hiddenScreens.contains(currentIndex);
+}
 
-    switch (currentIndex) {
-      case ScreenIndex.HomeScreen: return 0;
-      case ScreenIndex.FavoritesScreen: return 1;
-      case ScreenIndex.CartScreen: return 2;
-      case ScreenIndex.ProfileScreen: return 4;
-      case ScreenIndex.DeliveryTrackingScreen:
-      case ScreenIndex.HistoryScreen: return 3;
-      default: return 0;
-    }
-  }
-
-  bool _isBottomNavScreen(int index) {
-    return [
-      ScreenIndex.HomeScreen,
-      ScreenIndex.FavoritesScreen,
-      ScreenIndex.CartScreen,
-      ScreenIndex.ProfileScreen,
-      ScreenIndex.DeliveryTrackingScreen,
-      ScreenIndex.HistoryScreen,
-    ].contains(index);
-  }
-
-  int _findClosestBottomNavIndex(int currentIndex) {
+bool _shouldShowTrack(int currentIndex, int previousIndex) {
+  return currentIndex == ScreenIndex.DeliveryTrackingScreen ||
+      currentIndex == ScreenIndex.OrderHome ||
+      currentIndex == ScreenIndex.LocationScreen ||
+      currentIndex == ScreenIndex.OrderDoneSuccessfullyScreen ||
+      currentIndex == ScreenIndex.ProfileScreen ||
+      currentIndex == ScreenIndex.ProfileScreenDetails ||
+      previousIndex == ScreenIndex.ProfileScreenDetails ||
+      previousIndex == ScreenIndex.DeliveryTrackingScreen ||
+      currentIndex == ScreenIndex.AddCardScreen ||
+      currentIndex == ScreenIndex.CheckoutScreen;
+}
+int _getBottomNavIndex(int currentIndex) {
+  if (!_isBottomNavScreen(currentIndex)) {
     return 0;
   }
 
-  int _bottomNavToScreenIndex(int bottomNavIndex, bool showTrack) {
-    switch (bottomNavIndex) {
-      case 0: return ScreenIndex.HomeScreen;
-      case 1: return ScreenIndex.FavoritesScreen;
-      case 2: return ScreenIndex.CartScreen;
-      case 3: return showTrack ? ScreenIndex.DeliveryTrackingScreen : ScreenIndex.HistoryScreen;
-      case 4: return ScreenIndex.ProfileScreen;
-      default: return ScreenIndex.HomeScreen;
-    }
+  switch (currentIndex) {
+    case ScreenIndex.HomeScreen:
+      return 0;
+    case ScreenIndex.FavoritesScreen:
+      return 1;
+    case ScreenIndex.CartScreen:
+      return 2;
+    case ScreenIndex.DeliveryTrackingScreen:
+    case ScreenIndex.HistoryScreen:
+      return 3;
+    case ScreenIndex.ProfileScreen:
+      return 4;
+    default:
+      return 0;
+  }
+}
+
+bool _isBottomNavScreen(int index) {
+  return [
+    ScreenIndex.HomeScreen,
+    ScreenIndex.FavoritesScreen,
+    ScreenIndex.CartScreen,
+    ScreenIndex.ProfileScreen,
+    ScreenIndex.DeliveryTrackingScreen,
+    ScreenIndex.HistoryScreen,
+  ].contains(index);
+}
+
+int _bottomNavToScreenIndex(int bottomNavIndex, bool showTrack) {
+  switch (bottomNavIndex) {
+    case 0:
+      return ScreenIndex.HomeScreen;
+    case 1:
+      return ScreenIndex.FavoritesScreen;
+    case 2:
+      return ScreenIndex.CartScreen;
+    case 3:
+      return showTrack ? ScreenIndex.DeliveryTrackingScreen : ScreenIndex.HistoryScreen;
+    case 4:
+      return ScreenIndex.ProfileScreen;
+    default:
+      return ScreenIndex.HomeScreen;
   }
 }

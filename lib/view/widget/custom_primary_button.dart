@@ -12,29 +12,31 @@ class CustomPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF25AE4B),
+        backgroundColor: isDarkMode ? Colors.grey[700]! : const Color(0xFF25AE4B),
         padding: const EdgeInsets.only(
-          top: 10,    // Padding-top: 10px
-          right: 24,  // Padding-right: 24px
-          bottom: 10, // Padding-bottom: 10px
-          left: 24,   // Padding-left: 24px
+          top: 10,
+          right: 24,
+          bottom: 10,
+          left: 24,
         ),
-        minimumSize: const Size(295, 48), // Width: 295, Height: 48
+        minimumSize: const Size(295, 48),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Border-radius: 10px
+          borderRadius: BorderRadius.circular(10),
           side: const BorderSide(
-            color: Colors.transparent, // No visible border color by default
-            width: 1,                  // Border-width: 1px
+            color: Colors.transparent,
+            width: 1,
           ),
         ),
       ),
       onPressed: onTap,
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: isDarkMode ? Colors.white : Colors.white,
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),

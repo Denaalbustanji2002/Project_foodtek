@@ -18,7 +18,9 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar(context), body: _buildBody(context));
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: _buildAppBar(context), body: _buildBody(context));
   }
 
   AppBar _buildAppBar(BuildContext context) {

@@ -34,7 +34,7 @@ class _OrderHomeState extends State<OrderHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Padding(

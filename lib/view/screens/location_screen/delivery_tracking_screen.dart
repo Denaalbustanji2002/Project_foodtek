@@ -18,8 +18,7 @@ class DeliveryTrackingScreen extends StatefulWidget {
 class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
   final LatLng _deliveryStartPoint = LatLng(-7.9778, 112.6389);
   final LatLng _deliveryEndPoint = LatLng(-7.9778, 112.6500);
-  final TextEditingController searchTextEditingController =
-  TextEditingController();
+  final TextEditingController searchTextEditingController = TextEditingController();
   GoogleMapController? _mapController;
 
   Set<Marker> _markers = {};
@@ -38,9 +37,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
         Marker(
           markerId: MarkerId('delivery_start'),
           position: _deliveryStartPoint,
-          icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueGreen,
-          ),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           infoWindow: InfoWindow(title: 'Delivery Start'),
         ),
       );
@@ -70,7 +67,11 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: Stack(
         children: [
           GoogleMap(
@@ -82,6 +83,39 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
             polylines: _polylines,
             onMapCreated: (controller) {
               _mapController = controller;
+              // Set map style for dark mode
+              if (isDarkMode) {
+                controller.setMapStyle('''
+                  [
+                    {
+                      "elementType": "geometry",
+                      "stylers": [
+                        {
+                          "color": "#242f3e"
+                        }
+                      ]
+                    },
+                    {
+                      "elementType": "labels.text.fill",
+                      "stylers": [
+                        {
+                          "color": "#746855"
+                        }
+                      ]
+                    },
+                    {
+                      "elementType": "labels.text.stroke",
+                      "stylers": [
+                        {
+                          "color": "#242f3e"
+                        }
+                      ]
+                    }
+                  ]
+                ''');
+              } else {
+                controller.setMapStyle(null);
+              }
             },
           ),
           Positioned(
@@ -90,7 +124,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Colors.black,
+                color: colorScheme.onBackground,
                 size: responsiveHeight(context, 24),
               ),
               onPressed: () {
@@ -105,9 +139,19 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
               width: responsiveWidth(context, 327),
               height: responsiveHeight(context, 42),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(40),
-                border: Border.all(color: Color(0xFFD6D6D6), width: 1),
+                border: Border.all(
+                  color: colorScheme.outline.withOpacity(0.5),
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.shadow.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: Offset(0, 2),
+                  )
+                ],
               ),
               child: TextField(
                 controller: searchTextEditingController,
@@ -116,7 +160,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                   hintStyle: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 12),
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF878787),
+                    color: colorScheme.onSurface.withOpacity(0.6),
                     letterSpacing: 0.0,
                   ),
                   contentPadding: EdgeInsets.symmetric(
@@ -130,7 +174,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                     ),
                     child: Icon(
                       Icons.search,
-                      color: Color(0xFF25AE4B),
+                      color: colorScheme.primary,
                       size: responsiveHeight(context, 18),
                     ),
                   ),
@@ -143,7 +187,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: colorScheme.surface,
                 ),
                 onSubmitted: (value) {
                   _performLocationSearch(value);
@@ -158,7 +202,20 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
             child: Container(
               height: responsiveHeight(context, 290),
               padding: EdgeInsets.all(16),
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.shadow.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: Offset(0, -5),
+                  )
+                ],
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -171,21 +228,20 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                         style: GoogleFonts.inter(
                           fontSize: responsiveHeight(context, 16),
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF1C1B1F),
+                          color: colorScheme.onSurface,
                           letterSpacing: 0.0,
                         ),
                       ),
                       InkWell(
                         onTap: () {
                           context.read<NavigationCubit>().goTo(ScreenIndex.OrderDetailsScreen);
-
                         },
                         child: Text(
                           'All Details',
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 16),
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF25AE4B),
+                            color: Colors.green,
                             letterSpacing: 0.0,
                           ),
                         ),
@@ -203,7 +259,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                               style: GoogleFonts.inter(
                                 fontSize: responsiveHeight(context, 12),
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xFF25AE4B),
+                                color: colorScheme.primary,
                               ),
                             ),
                             SizedBox(height: responsiveHeight(context, 8)),
@@ -226,7 +282,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                               style: GoogleFonts.inter(
                                 fontSize: responsiveHeight(context, 12),
                                 fontWeight: FontWeight.w600,
-                                color: Colors.grey,
+                                color: colorScheme.onSurface.withOpacity(0.6),
                               ),
                             ),
                             SizedBox(height: responsiveHeight(context, 8)),
@@ -249,7 +305,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                               style: GoogleFonts.inter(
                                 fontSize: responsiveHeight(context, 12),
                                 fontWeight: FontWeight.w600,
-                                color: Colors.grey,
+                                color: colorScheme.onSurface.withOpacity(0.6),
                               ),
                             ),
                             SizedBox(height: responsiveHeight(context, 8)),
@@ -257,7 +313,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                               height: responsiveHeight(context, 6),
                               width: responsiveWidth(context, 100),
                               decoration: BoxDecoration(
-                                color: Color(0xFFACACAC),
+                                color: colorScheme.onSurface.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
@@ -270,8 +326,11 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor: Colors.grey[300],
-                        child: Icon(Icons.person, color: Colors.black),
+                        backgroundColor: colorScheme.surfaceVariant,
+                        child: Icon(
+                          Icons.person,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       SizedBox(width: responsiveWidth(context, 12)),
                       Column(
@@ -280,7 +339,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                           Text(
                             'Your Delivery Hero',
                             style: GoogleFonts.inter(
-                              color: Color(0xFF878787),
+                              color: colorScheme.onSurface.withOpacity(0.6),
                               fontSize: responsiveHeight(context, 12),
                               fontWeight: FontWeight.w500,
                               letterSpacing: -0.01,
@@ -295,7 +354,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w400,
                                   fontSize: responsiveHeight(context, 14),
-                                  color: Color(0xFF1C1B1F),
+                                  color: colorScheme.onSurface,
                                 ),
                               ),
                               SizedBox(width: responsiveWidth(context, 8)),
@@ -312,7 +371,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                                     style: GoogleFonts.inter(
                                       fontSize: responsiveHeight(context, 14),
                                       fontWeight: FontWeight.w600,
-                                      color: Color(0xFFACACAC),
+                                      color: colorScheme.onSurface.withOpacity(0.6),
                                     ),
                                   ),
                                 ],
@@ -330,11 +389,11 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                               padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.grey[200],
+                                color: colorScheme.surfaceVariant,
                               ),
                               child: Icon(
                                 Icons.call,
-                                color: Color(0xFF25AE4B),
+                                color:Colors.green,
                               ),
                             ),
                           ),
@@ -347,7 +406,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                               padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.grey[200],
+                                color: colorScheme.surfaceVariant,
                               ),
                               child: Icon(
                                 Icons.chat_rounded,
@@ -365,7 +424,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                     style: GoogleFonts.inter(
                       fontSize: responsiveHeight(context, 12),
                       fontWeight: FontWeight.w500,
-                      color: Color(0XFF878787),
+                      color: colorScheme.onSurface.withOpacity(0.6),
                       letterSpacing: -0.01,
                     ),
                   ),
@@ -374,14 +433,14 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                     children: [
                       Icon(
                         Icons.location_on_outlined,
-                        color: Color(0xFF25AE4B),
+                        color: colorScheme.primary,
                       ),
                       SizedBox(width: 4),
                       Expanded(
                         child: Text(
                           '123 Al-Madina Street, Abdali, Amman, Jordan',
                           style: GoogleFonts.inter(
-                            color: Color(0XFF878787),
+                            color: colorScheme.onSurface.withOpacity(0.6),
                             fontSize: responsiveHeight(context, 14),
                             fontWeight: FontWeight.w600,
                             height: 1.00,
@@ -396,7 +455,6 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
           ),
         ],
       ),
-
     );
   }
 

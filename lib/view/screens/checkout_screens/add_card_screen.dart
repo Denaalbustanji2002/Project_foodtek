@@ -88,7 +88,7 @@ class _AddCardScreenState extends State<AddtoCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: NotificationWidget(),
       body: SafeArea(
         child: SingleChildScrollView(

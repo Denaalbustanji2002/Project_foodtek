@@ -10,8 +10,10 @@ class Section2 {
       double borderRadius,
       double padding,
       double gap, {
+        required BuildContext context,
         Widget? child,
       }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Positioned(
       width: width,
       height: height,
@@ -20,13 +22,14 @@ class Section2 {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
-          color: Colors.white,
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 24,
-              offset: const Offset(0, 4),
-            ),
+            if (!isDark)
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 24,
+                offset: const Offset(0, 4),
+              ),
           ],
         ),
         padding: EdgeInsets.all(padding),
@@ -36,47 +39,53 @@ class Section2 {
   }
 
   Widget customButton({
+    required BuildContext context,
     required String text,
     bool isOutlined = false,
     Widget? icon,
     VoidCallback? onPressed,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = isDark ? Colors.grey[700]! : const Color(0xFFEDF1F3);
+    final backgroundGradient = isOutlined
+        ? null
+        : const LinearGradient(
+      colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
+    );
+
+    final textColor = isOutlined
+        ? (isDark ? Colors.white : const Color(0xFF1A1D1F))
+        : Colors.white;
+
     return Container(
-      width: 295, // Width: 295px
-      height: 48, // Height: 48px
+      width: 295,
+      height: 48,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10), // Border-radius: 10px
+        borderRadius: BorderRadius.circular(10),
         border: isOutlined
-            ? Border.all(color: const Color(0xFFEDF1F3), width: 1) // Border-width: 1px
+            ? Border.all(color: borderColor, width: 1)
             : null,
-        gradient: isOutlined
-            ? null
-            : const LinearGradient(
-          colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
-        ),
+        gradient: backgroundGradient,
+        color: isOutlined ? Colors.transparent : null,
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
+          borderRadius: BorderRadius.circular(10),
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: 10,    // Padding-top: 10px
-              right: 24,  // Padding-right: 24px
-              bottom: 10, // Padding-bottom: 10px
-              left: 24,   // Padding-left: 24px
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (icon != null) ...[
                   icon,
-                  const SizedBox(width: 10), // Gap: 10px
+                  const SizedBox(width: 10),
                 ],
                 Text(
                   text,
                   style: TextStyle(
-                    color: isOutlined ? const Color(0xFF1A1D1F) : Colors.white,
+                    color: textColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

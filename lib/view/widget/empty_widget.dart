@@ -1,66 +1,45 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
+class CustomPrimaryButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
 
-import '../../helper/responsive.dart';
-
-class EmptyWidget extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String description;
-
-  const EmptyWidget({
-    super.key,
-    required this.imagePath,
-    required this.title,
-    required this.description,
-  });
+  const CustomPrimaryButton({
+    Key? key,
+    required this.text,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: responsiveHeight(context, 240)),
-          Image.asset(
-            imagePath,
-            width: responsiveWidth(context, 282),
-            height: responsiveHeight(context, 282),
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isDarkMode ? Colors.grey[700]! : const Color(0xFF25AE4B),
+        padding: const EdgeInsets.only(
+          top: 10,
+          right: 24,
+          bottom: 10,
+          left: 24,
+        ),
+        minimumSize: const Size(295, 48),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(
+            color: Colors.transparent,
+            width: 1,
           ),
-          SizedBox(height: responsiveHeight(context, 51)),
-          SizedBox(
-            width: responsiveWidth(context, 450),
-            height: responsiveHeight(context, 76),
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                fontSize: responsiveHeight(context, 32),
-                fontWeight: FontWeight.w700,
-                height: 1.3,
-                letterSpacing: -0.02,
-                color: const Color(0xFF111827),
-              ),
-            ),
-          ),
-          SizedBox(height: responsiveHeight(context, 12)),
-          SizedBox(
-            width: responsiveWidth(context, 384),
-            height: responsiveHeight(context, 22),
-            child: Text(
-              description,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                fontSize: responsiveHeight(context, 16),
-                fontWeight: FontWeight.w500,
-                height: 1.4,
-                letterSpacing: -0.01,
-                color: const Color(0xFF6C7278),
-              ),
-            ),
-          ),
-        ],
+        ),
+      ),
+      onPressed: onTap,
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

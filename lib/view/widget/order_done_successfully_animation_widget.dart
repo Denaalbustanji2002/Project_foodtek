@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../helper/responsive.dart';
 
-
 class OrderDoneSuccessfullyAnimationWidget extends StatefulWidget {
   const OrderDoneSuccessfullyAnimationWidget({super.key});
 
@@ -49,8 +48,11 @@ class _OrderDoneSuccessfullyAnimationWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+
     return Container(
-      color: Colors.transparent,
+      color: Colors.transparent, // لو حبيت مستقبلاً ممكن تغيره لـ backgroundColor
       width: responsiveWidth(context, 430.5),
       height: responsiveHeight(context, 420),
       alignment: Alignment.center,

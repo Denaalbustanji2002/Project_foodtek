@@ -13,6 +13,9 @@ class SpinKitHourGlassWidget extends StatefulWidget {
 class _SpinKitHourGlassWidgetState extends State<SpinKitHourGlassWidget> {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final spinnerColor = isDark ? Colors.white : const Color(0xFF25AE4B);
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -20,7 +23,7 @@ class _SpinKitHourGlassWidgetState extends State<SpinKitHourGlassWidget> {
           SizedBox(
             width: responsiveWidth(context, 25),
             height: responsiveHeight(context, 25),
-            child: SpinKitHourGlass(color: Color(0xFF25AE4B)),
+            child: SpinKitHourGlass(color: spinnerColor),
           ),
         ],
       ),
