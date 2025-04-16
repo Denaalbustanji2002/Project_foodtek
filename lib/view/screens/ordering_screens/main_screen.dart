@@ -37,50 +37,94 @@ class MainScreen extends StatelessWidget {
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(settings: settings, builder: (_) => HomeScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => HomeScreen(),
+        );
       case '/foodDetails':
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => FoodDetailScreen(
-            name: args['name'],
-            description: args['description'],
-            rating: args['rating'],
-            price: args['price'],
-            imagePath: args['imagePath'],
-          ),
+          builder:
+              (_) => FoodDetailScreen(
+                name: args['name'],
+                description: args['description'],
+                rating: args['rating'],
+                price: args['price'],
+                imagePath: args['imagePath'],
+              ),
         );
 
       case '/favorites':
-        return MaterialPageRoute(settings: settings, builder: (_) => FavoritesScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => FavoritesScreen(),
+        );
       case '/cartHistory':
-        return MaterialPageRoute(settings: settings, builder: (_) => CartHistoryScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => CartHistoryScreen(),
+        );
       case '/history':
-        return MaterialPageRoute(settings: settings, builder: (_) => HistoryScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => HistoryScreen(),
+        );
       case '/profile':
-        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen( navigatorKey: navigatorKey));
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ProfileScreen(navigatorKey: navigatorKey),
+        );
       case '/location':
-        return MaterialPageRoute(settings: settings, builder: (_) => LocationScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => LocationScreen(),
+        );
       case '/chat':
-        return MaterialPageRoute(settings: settings, builder: (_) => ChatScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ChatScreen(),
+        );
       case '/orderDetails':
-        return MaterialPageRoute(settings: settings, builder: (_) => OrderDetailsScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => OrderDetailsScreen(),
+        );
       case '/checkout':
-        return MaterialPageRoute(settings: settings, builder: (_) => CheckoutScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => CheckoutScreen(),
+        );
       case '/filterScreen':
-        return MaterialPageRoute(settings: settings, builder: (_) => FilterScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => FilterScreen(),
+        );
       case '/addCard':
-        return MaterialPageRoute(settings: settings, builder: (_) => AddCardScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => AddCardScreen(),
+        );
       case '/deliveryTracking':
-        return MaterialPageRoute(settings: settings, builder: (_) => DeliveryTrackingScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => DeliveryTrackingScreen(),
+        );
       case '/orderDone':
-        return MaterialPageRoute(settings: settings, builder: (_) => OrderDoneSuccessfullyScreen());
-        case '/foodDetails':
-        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreen( navigatorKey: navigatorKey));
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => OrderDoneSuccessfullyScreen(),
+        );
       case '/profileDetails':
-        return MaterialPageRoute(settings: settings, builder: (_) => ProfileScreenDetails());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ProfileScreenDetails(),
+        );
       default:
-        return MaterialPageRoute(settings: settings, builder: (_) => HomeScreen());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => HomeScreen(),
+        );
     }
   }
 
@@ -110,8 +154,10 @@ class MainScreen extends StatelessWidget {
                 shape: const CircleBorder(),
                 onPressed: () {
                   context.read<NavigationCubit>().changeTab(AppTab.cartHistory);
-                  navigatorKey.currentState!
-                      .pushNamedAndRemoveUntil('/cartHistory', (route) => false);
+                  navigatorKey.currentState!.pushNamedAndRemoveUntil(
+                    '/cartHistory',
+                    (route) => false,
+                  );
                 },
                 child: const Icon(
                   Icons.shopping_cart_outlined,
@@ -120,7 +166,8 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
             ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
           );
         },
       ),

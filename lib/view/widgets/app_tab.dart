@@ -3,5 +3,6 @@ enum AppTab {
   favorites,
   cartHistory,
   history,
+  track,
   profile,
 }

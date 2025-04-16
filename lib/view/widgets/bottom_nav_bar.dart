@@ -20,9 +20,10 @@ class BottomNavBar extends StatelessWidget {
     '/orderDetails',
     '/profileDetails',
     '/profile',
+    '/filterScreen',
   ];
 
-   BottomNavBar({
+  BottomNavBar({
     super.key,
     required this.currentTab,
     required this.navigatorKey,
@@ -93,13 +94,18 @@ class BottomNavBar extends StatelessWidget {
       AppTab tab,
       String currentRoute,
       ) {
-    final bool isSelected = currentTab == tab;
+    final List<String> bottomRoutes = ['/', '/favorites', '/cartHistory', '/history', '/profile'];
+    final bool isBottomScreen = bottomRoutes.contains(currentRoute);
+    final bool isSelected = isBottomScreen && (currentTab == tab);
+    final bool shouldShowTrack = trackingPages.contains(currentRoute);
+    final AppTab actualTab = (tab == AppTab.history && shouldShowTrack) ? AppTab.track : tab;
+
     return InkWell(
       onTap: () {
-        if (currentTab != tab) {
-          context.read<NavigationCubit>().changeTab(tab);
+        if (!isSelected) {
+          context.read<NavigationCubit>().changeTab(actualTab);
           String targetRoute;
-          switch (tab) {
+          switch (actualTab) {
             case AppTab.home:
               targetRoute = '/';
               break;
@@ -109,12 +115,11 @@ class BottomNavBar extends StatelessWidget {
             case AppTab.cartHistory:
               targetRoute = '/cartHistory';
               break;
+            case AppTab.track:
+              targetRoute = '/deliveryTracking';
+              break;
             case AppTab.history:
-              if (trackingPages.contains(currentRoute)) {
-                targetRoute = '/deliveryTracking';
-              } else {
-                targetRoute = '/history';
-              }
+              targetRoute = '/history';
               break;
             case AppTab.profile:
               targetRoute = '/profile';

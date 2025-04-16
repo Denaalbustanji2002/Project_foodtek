@@ -7,7 +7,8 @@ import '../../widgets/Search_bar_widget.dart';
 import 'package:foodtek_project/view/widgets/header_widget.dart';
 
 class FavoritesScreen extends StatefulWidget {
-  const FavoritesScreen({Key? key}) : super(key: key);
+
+   FavoritesScreen({Key? key}) : super(key: key);
 
   @override
   State<FavoritesScreen> createState() => _FavoritesScreenState();

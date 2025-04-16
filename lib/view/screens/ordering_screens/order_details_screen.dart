@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
-import '../chat_screen/chat_screen.dart';
 import '../location_screen/delivery_tracking_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -259,9 +258,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           IconButton(
             icon: Icon(Icons.chat_rounded, color: Colors.orangeAccent),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => ChatScreen()),
+                '/chat',
               );
             },
           ),
@@ -327,9 +326,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           clipBehavior: Clip.hardEdge,
           child: InkWell(
             onTap: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
+                '/deliveryTracking',
               );
             },
             borderRadius: BorderRadius.circular(10),

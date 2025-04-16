@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../screens/ordering_screens/filter_screen.dart';
+import '../../cubits/navigation_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'app_tab.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({super.key});
@@ -48,9 +49,10 @@ class SearchBarWidget extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.tune, color: Color(0xFF878787)),
               onPressed: () {
-                Navigator.push(
+                context.read<NavigationCubit>().changeTab(AppTab.track);
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (context) => FilterScreen()),
+                  '/filterScreen',
                 );
               },
             ),

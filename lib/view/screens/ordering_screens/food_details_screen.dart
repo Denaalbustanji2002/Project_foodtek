@@ -94,7 +94,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const SearchBarWidget(),
+             SearchBarWidget(),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),

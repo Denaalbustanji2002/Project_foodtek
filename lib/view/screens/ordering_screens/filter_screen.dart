@@ -109,7 +109,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                 AppLocalizations.of(context)!.min,
+                  AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -232,7 +232,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                 AppLocalizations.of(context)!.min,
+                  AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -255,7 +255,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                 AppLocalizations.of(context)!.max,
+                  AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     color: Color(0xFF4B4B4B),
@@ -449,7 +449,7 @@ class _FilterScreenState extends State<FilterScreen> {
               _selectedDishes.contains(AppLocalizations.of(context)!.clamChowder),
             ),
             _buildDishChip(
-            AppLocalizations.of(context)!.misoGlazedCod,
+              AppLocalizations.of(context)!.misoGlazedCod,
               _selectedDishes.contains(AppLocalizations.of(context)!.misoGlazedCod),
             ),
             _buildDishChip(

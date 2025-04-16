@@ -11,6 +11,8 @@ import 'cubits/user_cubit.dart';
 import 'my_bloc_observer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
           }
 
           return MaterialApp(
+            navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Foodtek',
             theme: ThemeData(
