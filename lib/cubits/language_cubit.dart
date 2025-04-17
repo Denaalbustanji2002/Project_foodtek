@@ -30,7 +30,6 @@ class LanguageCubit extends Cubit<LanguageState> {
       );
       emit(LanguageChangedSuccessfulState(Locale(langCode)));
     } catch (e) {
-      // Fallback to default language
       emit(LanguageChangedSuccessfulState(Locale('en')));
     }
   }

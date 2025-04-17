@@ -65,10 +65,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,  // استخدام لون الخلفية من الـ ThemeExtension
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: theme.appBarColor,  // استخدام لون الـ AppBar من الـ ThemeExtension
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         toolbarHeight: kToolbarHeight + 30,
         title: Padding(
@@ -77,9 +77,9 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         ),
         bottom: TabBar(
           controller: _tabController,
-          labelColor: theme.primaryColor,  // استخدام اللون الرئيسي من الـ ThemeExtension
-          unselectedLabelColor: theme.secondaryTextColor,  // استخدام لون النص غير المحدد من الـ ThemeExtension
-          indicatorColor: theme.primaryColor,  // استخدام اللون الأساسي لمؤشر الـ TabBar
+          labelColor: theme.primaryColor,
+          unselectedLabelColor: theme.secondaryTextColor,
+          indicatorColor: theme.primaryColor,
           indicatorWeight: 3,
           indicatorSize: TabBarIndicatorSize.tab,
           tabs: [
@@ -204,10 +204,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
-          side: BorderSide(color: theme.borderColor, width: 1),  // استخدام لون الحدود من الـ ThemeExtension
+          side: BorderSide(color: theme.borderColor, width: 1),
         ),
         elevation: 0,
-        color: theme.containerColor,  // استخدام لون الخلفية للـ Card من الـ ThemeExtension
+        color: theme.containerColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
@@ -230,7 +230,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       width: responsiveWidth(context, 62.18),
       height: responsiveHeight(context, 62),
       decoration: BoxDecoration(
-        color: theme.primaryColor,  // استخدام اللون الأساسي من الـ ThemeExtension بدلاً من اللون الثابت
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(7),
       ),
       child: Image.asset(
@@ -254,14 +254,14 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
             style: GoogleFonts.inter(
               fontWeight: FontWeight.w500,
               fontSize: responsiveHeight(context, 15),
-              color: theme.textColorPrimary,  // استخدام لون النص الأساسي من الـ ThemeExtension
+              color: theme.textColorPrimary,
             ),
           ),
           SizedBox(height: responsiveHeight(context, 4)),
           Text(
             item['restaurant'],
             style: GoogleFonts.inter(
-              color: theme.secondaryTextColor,  // استخدام لون النص الثانوي من الـ ThemeExtension
+              color: theme.secondaryTextColor,
               fontWeight: FontWeight.w400,
               fontSize: responsiveHeight(context, 12),
             ),
@@ -270,7 +270,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
           Text(
             item['price'],
             style: GoogleFonts.inter(
-              color: theme.primaryColor,  // استخدام اللون الأساسي من الـ ThemeExtension
+              color: theme.primaryColor,
               fontWeight: FontWeight.w700,
               fontSize: responsiveHeight(context, 19),
             ),
@@ -297,7 +297,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       width: responsiveWidth(context, 26),
       height: responsiveHeight(context, 26),
       decoration: BoxDecoration(
-        color: theme.disabledColor,  // استخدام لون الخلفية من الـ ThemeExtension
+        color: theme.disabledColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
@@ -308,7 +308,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         },
         child: Icon(
           Icons.remove,
-          color: theme.primaryColor,  // استخدام اللون الأساسي من الـ ThemeExtension
+          color: theme.primaryColor,
           size: responsiveHeight(context, 18),
         ),
       ),
@@ -326,7 +326,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         style: GoogleFonts.poppins(
           fontSize: responsiveHeight(context, 16),
           fontWeight: FontWeight.w500,
-          color: theme.textColorPrimary,  // استخدام اللون النصي الأساسي من الـ ThemeExtension
+          color: theme.textColorPrimary,
         ),
       ),
     );
@@ -339,7 +339,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       width: responsiveWidth(context, 26),
       height: responsiveHeight(context, 26),
       decoration: BoxDecoration(
-        color: theme.primaryColor,  // استخدام اللون الأساسي من الـ ThemeExtension
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
@@ -350,7 +350,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         },
         child: Icon(
           Icons.add,
-          color: theme.buttonTextColor,  // استخدام لون النص من الـ ThemeExtension
+          color: theme.buttonTextColor,
           size: responsiveHeight(context, 18),
         ),
       ),
@@ -364,7 +364,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       height: responsiveHeight(context, 206),
       width: responsiveWidth(context, 378),
       decoration: BoxDecoration(
-        color: theme.primaryColor,  // استخدام اللون الأساسي من الـ ThemeExtension
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(7),
       ),
       child: Padding(
@@ -377,7 +377,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   AppLocalizations.of(context)!.subTotal,
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
                   ),
@@ -385,7 +385,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   '100 \$',
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
                   ),
@@ -399,7 +399,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   AppLocalizations.of(context)!.deliveryCharge,
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
                   ),
@@ -407,7 +407,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   '10 \$',
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
                   ),
@@ -421,7 +421,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   AppLocalizations.of(context)!.discount,
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
                   ),
@@ -429,7 +429,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   '10 \$',
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
                   ),
@@ -443,7 +443,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   AppLocalizations.of(context)!.total,
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontSize: responsiveHeight(context, 18),
                     fontWeight: FontWeight.w700,
                   ),
@@ -451,7 +451,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 Text(
                   '110\$',
                   style: GoogleFonts.inter(
-                    color: theme.buttonTextColor,  // استخدام اللون النصي من الـ ThemeExtension
+                    color: theme.buttonTextColor,
                     fontSize: responsiveHeight(context, 18),
                     fontWeight: FontWeight.w700,
                   ),
@@ -463,7 +463,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
               width: responsiveWidth(context, 366.02),
               height: responsiveHeight(context, 50),
               decoration: BoxDecoration(
-                color: theme.surfaceColor,  // استخدام اللون السطحي من الـ ThemeExtension
+                color: theme.surfaceColor,
                 borderRadius: BorderRadius.circular(7),
               ),
               child: TextButton(
@@ -471,7 +471,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 child: Text(
                   AppLocalizations.of(context)!.placeMyOrder,
                   style: GoogleFonts.inter(
-                    color: theme.primaryColor,  // استخدام اللون الأساسي من الـ ThemeExtension
+                    color: theme.primaryColor,
                     fontSize: responsiveHeight(context, 14),
                     fontWeight: FontWeight.w700,
                   ),
@@ -496,11 +496,11 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         children: [
           CustomSlidableAction(
             onPressed: (context) => showDeleteConfirmationDialog(context, item, "history"),
-            backgroundColor: theme.deleteButtonColor,  // استخدام اللون الخاص بزر الحذف من الـ ThemeExtension
+            backgroundColor: theme.deleteButtonColor,
             child: Icon(
               Icons.delete_outline,
               size: responsiveHeight(context, 25),
-              color: theme.buttonTextColor,  // استخدام اللون النصي للأزرار من الـ ThemeExtension
+              color: theme.buttonTextColor,
             ),
           ),
         ],
@@ -508,10 +508,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
-          side: BorderSide(color: theme.borderColor, width: 1),  // استخدام لون الحدود من الـ ThemeExtension
+          side: BorderSide(color: theme.borderColor, width: 1),
         ),
         elevation: 0,
-        color: theme.containerColor,  // استخدام لون الخلفية للحاوية من الـ ThemeExtension
+        color: theme.containerColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
@@ -535,7 +535,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
-                                  color: theme.textColorPrimary,  // استخدام اللون الأساسي للنص من الـ ThemeExtension
+                                  color: theme.textColorPrimary,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -543,7 +543,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                 tr(item['restaurant']),
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: theme.secondaryTextColor,  // استخدام اللون الثانوي للنص من الـ ThemeExtension
+                                  color: theme.secondaryTextColor,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -552,7 +552,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
-                                  color: theme.primaryColor,  // استخدام اللون الخاص بالأسعار من الـ ThemeExtension
+                                  color: theme.primaryColor,
                                 ),
                               ),
                             ],
@@ -567,7 +567,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                 Icon(
                                   Icons.access_time,
                                   size: 14,
-                                  color: theme.iconColor,  // استخدام اللون الخاص بالأيقونات من الـ ThemeExtension
+                                  color: theme.iconColor,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
@@ -575,7 +575,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700,
-                                    color: theme.buttonTextColor,  // استخدام اللون النصي الخاص بالتاريخ من الـ ThemeExtension
+                                    color: theme.buttonTextColor,
                                   ),
                                 ),
                               ],
@@ -586,7 +586,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                 Icon(
                                   Icons.replay,
                                   size: 14,
-                                  color: theme.iconColor,  // استخدام اللون الخاص بالأيقونات من الـ ThemeExtension
+                                  color: theme.iconColor,
                                 ),
                                 const SizedBox(width: 4),
                                 TextButton(
@@ -600,7 +600,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                                     tr(item['reorder'] ?? 'btn_reorder'),
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: theme.primaryColor,  // استخدام اللون الخاص بأزرار إعادة الطلب من الـ ThemeExtension
+                                      color: theme.primaryColor,
                                     ),
                                   ),
                                 ),
@@ -636,10 +636,10 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
           height: 65,
           decoration: BoxDecoration(
             color: item['title'] == AppLocalizations.of(context)!.chickenBurger
-                ? theme.titleColor  // استخدام اللون المخصص للدجاج من الـ ThemeExtension
+                ? theme.titleColor
                 : item['title'] == AppLocalizations.of(context)!.onionPizza
-                ? theme.titleColor  // استخدام اللون المخصص للبيتزا من الـ ThemeExtension
-                : theme.titleColor,  // استخدام اللون الافتراضي في حال حدوث خطأ
+                ? theme.titleColor
+                : theme.titleColor,
             borderRadius: BorderRadius.circular(8),
           ),
         ),

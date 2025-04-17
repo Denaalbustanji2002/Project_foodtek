@@ -4,7 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:foodtek_project/states/language_state.dart';
 import 'package:foodtek_project/states/theme_state.dart';
 import 'package:foodtek_project/theme/app_theme_extensions.dart';
-import 'package:foodtek_project/view/screens/authentication_screens/reset_password_screen.dart';
 import 'package:foodtek_project/view/screens/onboarding_screens/splash_screen.dart';
 import 'cubits/favorite_cubit.dart';
 import 'cubits/history_cubit.dart';
@@ -21,7 +20,6 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize SharedPreferences first
   await SharedPreferencesHelper.instance.init();
 
   Bloc.observer = MyBlocObserver();
@@ -58,7 +56,7 @@ class MyApp extends StatelessWidget {
                 title: 'Foodtek',
                 theme: ThemeData(
                   extensions: [
-                    AppThemeExtension.light, // ← استخدم الامتداد هنا
+                    AppThemeExtension.light,
                   ],
                   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                   brightness: Brightness.light,
@@ -72,7 +70,7 @@ class MyApp extends StatelessWidget {
                 ),
                 darkTheme: ThemeData(
                   extensions: [
-                    AppThemeExtension.dark, // ← وهنا أيضاً
+                    AppThemeExtension.dark,
                   ],
                   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
                   brightness: Brightness.dark,

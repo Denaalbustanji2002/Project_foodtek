@@ -73,7 +73,7 @@ class _FilterScreenState extends State<FilterScreen> {
       style: GoogleFonts.inter(
         fontSize: responsiveHeight(context, 20),
         fontWeight: FontWeight.w600,
-        color: theme.textColorPrimary, // استخدم اللون من الـ AppThemeExtension
+        color: theme.textColorPrimary,
         letterSpacing: 0.0,
         height: 1.0,
       ),
@@ -89,7 +89,7 @@ class _FilterScreenState extends State<FilterScreen> {
         title,
         style: GoogleFonts.inter(
           fontSize: responsiveHeight(context, 14),
-          color: theme.secondaryTextColor, // استخدم اللون من الـ AppThemeExtension
+          color: theme.secondaryTextColor,  
           fontWeight: FontWeight.w600,
           letterSpacing: 0.0,
           height: 14 / 17,
@@ -113,7 +113,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),  
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -121,7 +121,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,  
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -136,7 +136,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),  
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -144,7 +144,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,  
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -168,7 +168,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$0',
                       style: GoogleFonts.inter(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,  
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -177,7 +177,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$10B',
                       style: TextStyle(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,  
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
@@ -192,10 +192,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
-                    activeTrackColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2), // استخدم اللون من الـ AppThemeExtension
-                    thumbColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    overlayColor: theme.primaryColor.withOpacity(0.1), // استخدم اللون من الـ AppThemeExtension
+                    activeTrackColor: theme.primaryColor,  
+                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2),  
+                    thumbColor: theme.primaryColor,  
+                    overlayColor: theme.primaryColor.withOpacity(0.1),  
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 6,
                     ),
@@ -235,7 +235,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),  
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -243,7 +243,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,  
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -258,7 +258,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),  
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -266,7 +266,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,  
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -290,7 +290,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$0',
                       style: GoogleFonts.inter(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,  
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -299,7 +299,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$50',
                       style: GoogleFonts.inter(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,  
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -313,10 +313,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
-                    activeTrackColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2), // استخدم اللون من الـ AppThemeExtension
-                    thumbColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    overlayColor: theme.primaryColor.withOpacity(0.1), // استخدم اللون من الـ AppThemeExtension
+                    activeTrackColor: theme.primaryColor,  
+                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2),  
+                    thumbColor: theme.primaryColor,  
+                    overlayColor: theme.primaryColor.withOpacity(0.1),  
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 3,
                     ),

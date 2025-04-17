@@ -133,7 +133,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
-                  // استخدام لون العنوان من الثيم
                   color: theme.titleColor,
                 ),
               ),
@@ -141,7 +140,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
                 onPressed: () {},
                 icon: Icon(
                   Icons.more_vert,
-                  // استخدام لون الأيقونة من الثيم
                   color: theme.iconColor,
                 ),
               ),
@@ -186,7 +184,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
     );
   }
   Widget buildTab(String text, {required bool isSelected}) {
-    // استخراج كائن الثيم
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return GestureDetector(
@@ -200,7 +197,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
           Text(
             text,
             style: GoogleFonts.inter(
-              // استخدام primaryColor للنص المحدد وsecondaryTextColor للنص غير المحدد
               color: isSelected ? theme.primaryColor : theme.secondaryTextColor,
               fontWeight: FontWeight.w500,
               fontSize: 18,
@@ -295,7 +291,6 @@ class NotificationItem extends StatelessWidget {
 }
 
 void showNotificationsSheet(BuildContext context) {
-  // استخراج كائن الثيم
   final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
   showModalBottomSheet(
@@ -314,7 +309,6 @@ void showNotificationsSheet(BuildContext context) {
         height: responsiveHeight(context, 700),
         margin: EdgeInsets.only(top: 230),
         decoration: BoxDecoration(
-          // استخدام لون أغمق مناسب للدارك مود
           color: theme.containerColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           boxShadow: [

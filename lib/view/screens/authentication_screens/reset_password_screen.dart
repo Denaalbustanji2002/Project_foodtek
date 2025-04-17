@@ -259,7 +259,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 ),
                                 SizedBox(height: responsiveHeight(context, 24)),
 
-                                // Input fields
                                 Container(
                                   width: responsiveWidth(context, 295),
                                   child: Column(

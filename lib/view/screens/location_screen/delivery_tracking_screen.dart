@@ -97,7 +97,6 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                 size: responsiveHeight(context, 24),
               ),
               onPressed: () {
-                // Navigation logic here
               },
             ),
           ),
@@ -331,7 +330,6 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // Call action
                             },
                             child: Container(
                               padding: EdgeInsets.all(8),

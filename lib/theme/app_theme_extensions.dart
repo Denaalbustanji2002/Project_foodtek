@@ -37,7 +37,6 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   final Color bottomNavBarSelectedTextColor;
   final Color bottomNavBarUnselectedTextColor;
   final Color splashScreenColor;
-  // ألوان المضافة لشاشة إعادة تعيين كلمة المرور
   final Color resetPasswordSuccessTextColor;
   final Color resetPasswordSuccessSubtitleTextColor;
 
@@ -242,7 +241,6 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     bottomNavBarUnselectedIconColor: Color(0xFF484C52),
     bottomNavBarSelectedTextColor: Color(0xFF25AE4B),
     bottomNavBarUnselectedTextColor: Color(0xFF484C52),
-    // إضافة ألوان شاشة إعادة تعيين كلمة المرور للوضع الفاتح
     resetPasswordSuccessTextColor: Color(0xFFFFFFFF),
     resetPasswordSuccessSubtitleTextColor: Color(0xFFFFFFFF),
     splashScreenColor: Color(0xFF25AE4B),

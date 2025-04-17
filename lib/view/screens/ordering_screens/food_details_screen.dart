@@ -130,7 +130,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: theme.shadowColor, // ظل خفيف
+                              color: theme.shadowColor,
                               offset: Offset.zero,
                               blurRadius: 0,
                               spreadRadius: 1,

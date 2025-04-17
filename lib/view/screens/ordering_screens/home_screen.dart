@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: theme.primaryColor, // بدل Colors.green
+        color: theme.primaryColor,
       ),
       child: Row(
         children: [
@@ -317,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     AppLocalizations.of(context)!.experienceOurDeliciousNewDish,
                     style: GoogleFonts.inter(
-                      color: theme.buttonTextColor, // بدل Colors.white
+                      color: theme.buttonTextColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -328,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       AppLocalizations.of(context)!.percentOff,
                       style: GoogleFonts.leagueSpartan(
-                        color: theme.buttonTextColor, // بدل Colors.white
+                        color: theme.buttonTextColor,
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0,
@@ -423,7 +423,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: theme.titleColor, // استخدام اللون من الـ ThemeExtension
+              color: theme.titleColor,
             ),
           ),
         ),
@@ -575,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
       String price,
       String imagePath,
       ) {
-    final theme = Theme.of(context).extension<AppThemeExtension>()!; // جلب التيم الحالي
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return InkWell(
       onTap: () {
@@ -598,9 +598,9 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 209,
         margin: const EdgeInsets.only(right: 10, bottom: 10),
         decoration: BoxDecoration(
-          color: theme.containerColor, // استخدام اللون من التيم
+          color: theme.containerColor, 
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.borderColor, width: 1), // استخدام borderColor من التيم
+          border: Border.all(color: theme.borderColor, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -623,7 +623,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
-                  color: theme.textColorPrimary, // استخدام اللون من التيم
+                  color: theme.textColorPrimary, 
                   height: 1.0,
                   letterSpacing: -0.03,
                 ),
@@ -637,7 +637,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 description,
                 style: GoogleFonts.inter(
                   fontSize: 12,
-                  color: theme.secondaryTextColor, // استخدام اللون من التيم
+                  color: theme.secondaryTextColor, 
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.start,
@@ -655,12 +655,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
-                      color: theme.primaryColor, // استخدام اللون من التيم
+                      color: theme.primaryColor, 
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: theme.primaryColor, // استخدام اللون من التيم
+                      color: theme.primaryColor, 
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(Icons.add, color: Colors.white, size: 24),
@@ -682,7 +682,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String imagePath,
     required String rating,
   }) {
-    final theme = Theme.of(context).extension<AppThemeExtension>()!; // جلب التيم الحالي
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return Stack(
       clipBehavior: Clip.none,
@@ -692,9 +692,9 @@ class _HomeScreenState extends State<HomeScreen> {
           height: responsiveHeight(context, 252),
           margin: EdgeInsets.only(top: 44.5),
           decoration: BoxDecoration(
-            color: theme.containerColor, // استخدام اللون من التيم
+            color: theme.containerColor, 
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: theme.borderColor, width: 1), // استخدام borderColor من التيم
+            border: Border.all(color: theme.borderColor, width: 1),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -713,7 +713,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: responsiveHeight(context, 14),
                         height: 15 / 14,
                         letterSpacing: 0.0,
-                        color: theme.textColorPrimary, // استخدام اللون من التيم
+                        color: theme.textColorPrimary, 
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -726,7 +726,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w300,
                         fontSize: responsiveHeight(context, 10),
                         height: 12 / 10,
-                        color: theme.secondaryTextColor, // استخدام اللون من التيم
+                        color: theme.secondaryTextColor, 
                       ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -738,7 +738,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w600,
                         fontSize: responsiveHeight(context, 14),
                         height: 15 / 14,
-                        color: theme.textColorPrimary, // استخدام اللون من التيم
+                        color: theme.textColorPrimary, 
                       ),
                     ),
                   ],
@@ -760,7 +760,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.primaryColor, // استخدام اللون من التيم
+                  backgroundColor: theme.primaryColor, 
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -797,8 +797,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: theme.backgroundColor, // استخدام اللون من التيم
-                border: Border.all(color: theme.borderColor, width: 2), // استخدام borderColor من التيم
+                color: theme.backgroundColor, 
+                border: Border.all(color: theme.borderColor, width: 2),
               ),
               width: responsiveWidth(context, 35),
               height: responsiveHeight(context, 35),
@@ -808,7 +808,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : Icons.favorite_border_rounded,
                 color: favoriteItems.any((item) => item['name'] == name)
                     ? Colors.red
-                    : theme.iconColor, // استخدام اللون من التيم
+                    : theme.iconColor, 
                 size: responsiveHeight(context, 13),
               ),
             ),
@@ -825,7 +825,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: responsiveHeight(context, 89),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: theme.shadowColor, // استخدام اللون من التيم
+                color: theme.shadowColor, 
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),

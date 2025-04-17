@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontWeight: FontWeight.w700,
               letterSpacing: -0.02,
               height: 1.3,
-              color: theme?.textColorPrimary ?? Color(0XFF111827), // استخدم اللون المناسب حسب الوضع
+              color: theme?.textColorPrimary ?? Color(0XFF111827),
             ),
             textAlign: TextAlign.center,
           ),
@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.w700,
                 letterSpacing: -0.01,
                 height: 1.4,
-                color: theme?.secondaryTextColor ?? const Color(0XFF6C7278), // اللون الثاني
+                color: theme?.secondaryTextColor ?? const Color(0XFF6C7278),
               ),
             ),
             const SizedBox(width: 6),
@@ -242,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w600,
                   letterSpacing: -0.01,
                   height: 1.4,
-                  color: theme?.primaryColor, // اللون الرئيسي
+                  color: theme?.primaryColor,
                 ),
               ),
             ),

@@ -130,7 +130,6 @@ class TurnOnYourLocation extends StatelessWidget {
 
   Widget buildMapImage(BuildContext context) {
     final isDark = context.watch<ThemeCubit>().isDarkMode;
-    // 2. اختار الباث حسب الحالة
     final imagePath = isDark
         ? "assets/images/dark_map.jpg"
         : "assets/images/light_map.png";
@@ -176,7 +175,7 @@ class TurnOnYourLocation extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w700,
                 fontSize: responsiveHeight(context, 32),
-                color: theme.titleColor, // تم التعديل هون
+                color: theme.titleColor,
                 letterSpacing: 0,
                 height: 1.0,
               ),
@@ -196,7 +195,7 @@ class TurnOnYourLocation extends StatelessWidget {
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w400,
                 fontSize: responsiveHeight(context, 16),
-                color: theme.secondaryTextColor, // وتم التعديل هون
+                color: theme.secondaryTextColor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -220,7 +219,7 @@ class TurnOnYourLocation extends StatelessWidget {
             gradient: LinearGradient(
               colors: [
                 theme.primaryColor,
-                theme.primaryColor.withOpacity(0.7), // أو حط لون ثاني حسب الثيم
+                theme.primaryColor.withOpacity(0.7),
               ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,

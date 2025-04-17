@@ -235,7 +235,6 @@ class _SendVerificationCodeScreenState
             AppLocalizations.of(context)!.email,
             style: GoogleFonts.plusJakartaSans(
               color: theme.secondaryTextColor,
-              // اللون من التيم الفاتح أو الداكن
               fontSize: responsiveHeight(context, 12),
               letterSpacing: -0.02,
               height: 1.6,
@@ -250,10 +249,9 @@ class _SendVerificationCodeScreenState
               color: theme.containerColor,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: theme.borderColor, width: 1),
-              // اللون من التيم
               boxShadow: [
                 BoxShadow(
-                  color: theme.shadowColor, // الظل من التيم
+                  color: theme.shadowColor,
                   offset: const Offset(0, 1),
                   blurRadius: 2,
                 ),
