@@ -3,6 +3,7 @@ import 'package:foodtek_project/helper/responsive.dart';
 import 'package:foodtek_project/view/widgets/Search_bar_widget.dart';
 import 'package:foodtek_project/view/widgets/header_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../theme/app_theme_extensions.dart';
 import 'food_details_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -149,11 +150,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         toolbarHeight: kToolbarHeight + 20,
         title: Padding(
@@ -193,6 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCategoryList() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     final categories = [
       {'key': 'all', 'name': AppLocalizations.of(context)!.all, 'icon': null},
       {
@@ -229,28 +234,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: isSelected ? Colors.white : Colors.black,
+                foregroundColor:
+                isSelected ? theme.buttonTextColor : theme.textColorPrimary,
                 backgroundColor:
-                    isSelected ? const Color(0xFF25AE4B) : Colors.white,
+                isSelected ? theme.primaryColor : theme.containerColor,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7),
-                  side:
-                      (categories[index]['name'] ==
-                                      AppLocalizations.of(context)!.all &&
-                                  isSelected) ||
-                              isSelected
-                          ? BorderSide.none
-                          : const BorderSide(color: Color(0xFFDBF4D1)),
+                  side: ((categories[index]['name'] ==
+                      AppLocalizations.of(context)!.all &&
+                      isSelected) ||
+                      isSelected)
+                      ? BorderSide.none
+                      : BorderSide(
+                    color: isSelected ? theme.primaryColor : theme.borderColor,
+                    width: 1.2,
+                  ),
                 ),
                 minimumSize:
-                    categories[index]['name'] ==
-                            AppLocalizations.of(context)!.all
-                        ? const Size(49, 43)
-                        : (isSelected
-                            ? const Size(49, 43)
-                            : const Size(126, 43)),
+                categories[index]['name'] == AppLocalizations.of(context)!.all
+                    ? const Size(49, 43)
+                    : (isSelected
+                    ? const Size(49, 43)
+                    : const Size(126, 43)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -261,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         letterSpacing: -3,
-                        color: Colors.black,
+                        color: theme.textColorPrimary,
                         height: 1.0,
                       ),
                     ),
@@ -273,7 +280,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: responsiveHeight(context, 18),
                       fontWeight: FontWeight.w500,
                       letterSpacing: -0.03,
-                      color: isSelected ? Colors.white : Colors.black,
+                      color: isSelected
+                          ? theme.buttonTextColor
+                          : theme.textColorPrimary,
                     ),
                   ),
                 ],
@@ -286,12 +295,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPromoBanner() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Container(
       margin: const EdgeInsets.all(12),
       height: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.green,
+        color: theme.primaryColor, // بدل Colors.green
       ),
       child: Row(
         children: [
@@ -306,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     AppLocalizations.of(context)!.experienceOurDeliciousNewDish,
                     style: GoogleFonts.inter(
-                      color: Colors.white,
+                      color: theme.buttonTextColor, // بدل Colors.white
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -317,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       AppLocalizations.of(context)!.percentOff,
                       style: GoogleFonts.leagueSpartan(
-                        color: Colors.white,
+                        color: theme.buttonTextColor, // بدل Colors.white
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0,
@@ -400,6 +411,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildTopRatedSection() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -410,7 +423,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF391713),
+              color: theme.titleColor, // استخدام اللون من الـ ThemeExtension
             ),
           ),
         ),
@@ -449,6 +462,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildRecommendedSection() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -462,7 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF391713),
+                  color: theme.titleColor,
                   letterSpacing: -0.03,
                   height: 1.0,
                 ),
@@ -477,13 +492,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Inter',
-                        color: Color(0xFF25AE4B),
+                        color: theme.primaryColor,
                       ),
                     ),
                     SizedBox(width: 6),
                     Icon(
                       Icons.chevron_right,
-                      color: Color(0xFF25AE4B),
+                      color: theme.primaryColor,
                       size: 12.99,
                     ),
                   ],
@@ -505,7 +520,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: const EdgeInsets.only(right: 27.5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(19.12),
-                  color: Colors.black,
+                  color: theme.surfaceColor,
                 ),
                 child: Stack(
                   fit: StackFit.expand,
@@ -523,8 +538,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 11,
                         width: 34,
                         decoration: BoxDecoration(
-                          color: Color(0xFF25AE4B),
-                          borderRadius: BorderRadius.only(
+                          color: theme.primaryColor,
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(30),
                             bottomLeft: Radius.circular(30),
                           ),
@@ -554,26 +569,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildFoodItem(
-    String name,
-    String description,
-    String rating,
-    String price,
-    String imagePath,
-  ) {
+      String name,
+      String description,
+      String rating,
+      String price,
+      String imagePath,
+      ) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!; // جلب التيم الحالي
+
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             settings: RouteSettings(name: '/foodDetails'),
-            builder:
-                (_) => FoodDetailScreen(
-                  name: name,
-                  description: description,
-                  rating: rating,
-                  price: price,
-                  imagePath: imagePath,
-                ),
+            builder: (_) => FoodDetailScreen(
+              name: name,
+              description: description,
+              rating: rating,
+              price: price,
+              imagePath: imagePath,
+            ),
           ),
         );
       },
@@ -582,9 +598,9 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 209,
         margin: const EdgeInsets.only(right: 10, bottom: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.containerColor, // استخدام اللون من التيم
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Color(0xFFDBF4D1), width: 1),
+          border: Border.all(color: theme.borderColor, width: 1), // استخدام borderColor من التيم
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -607,7 +623,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
-                  color: Color(0xFF0D0D0D),
+                  color: theme.textColorPrimary, // استخدام اللون من التيم
                   height: 1.0,
                   letterSpacing: -0.03,
                 ),
@@ -621,7 +637,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 description,
                 style: GoogleFonts.inter(
                   fontSize: 12,
-                  color: Color(0xFF3B3B3B),
+                  color: theme.secondaryTextColor, // استخدام اللون من التيم
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.start,
@@ -639,12 +655,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
-                      color: Color(0xFF25AE4B),
+                      color: theme.primaryColor, // استخدام اللون من التيم
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: theme.primaryColor, // استخدام اللون من التيم
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(Icons.add, color: Colors.white, size: 24),
@@ -658,6 +674,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
   Widget _buildFoodItemCard({
     required String name,
     required String description,
@@ -665,6 +682,8 @@ class _HomeScreenState extends State<HomeScreen> {
     required String imagePath,
     required String rating,
   }) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!; // جلب التيم الحالي
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -673,9 +692,9 @@ class _HomeScreenState extends State<HomeScreen> {
           height: responsiveHeight(context, 252),
           margin: EdgeInsets.only(top: 44.5),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.containerColor, // استخدام اللون من التيم
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Color(0xFFDBF4D1), width: 1),
+            border: Border.all(color: theme.borderColor, width: 1), // استخدام borderColor من التيم
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -694,7 +713,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: responsiveHeight(context, 14),
                         height: 15 / 14,
                         letterSpacing: 0.0,
-                        color: Color(0xFF24262F),
+                        color: theme.textColorPrimary, // استخدام اللون من التيم
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -707,7 +726,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w300,
                         fontSize: responsiveHeight(context, 10),
                         height: 12 / 10,
-                        color: Color(0xFF969AB0),
+                        color: theme.secondaryTextColor, // استخدام اللون من التيم
                       ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -719,7 +738,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w600,
                         fontSize: responsiveHeight(context, 14),
                         height: 15 / 14,
-                        color: Color(0xFF24262F),
+                        color: theme.textColorPrimary, // استخدام اللون من التيم
                       ),
                     ),
                   ],
@@ -741,7 +760,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF25AE4B),
+                  backgroundColor: theme.primaryColor, // استخدام اللون من التيم
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -755,7 +774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: responsiveHeight(context, 10),
                     height: 15 / 10,
                     letterSpacing: 0.0,
-                    color: Color(0xFFFFFFFF),
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -778,8 +797,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0xFFDBF4D1),
-                border: Border.all(color: Color(0xFFDBF4D1), width: 2),
+                color: theme.backgroundColor, // استخدام اللون من التيم
+                border: Border.all(color: theme.borderColor, width: 2), // استخدام borderColor من التيم
               ),
               width: responsiveWidth(context, 35),
               height: responsiveHeight(context, 35),
@@ -787,10 +806,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 favoriteItems.any((item) => item['name'] == name)
                     ? Icons.favorite
                     : Icons.favorite_border_rounded,
-                color:
-                    favoriteItems.any((item) => item['name'] == name)
-                        ? Colors.red
-                        : Color(0xFF222628),
+                color: favoriteItems.any((item) => item['name'] == name)
+                    ? Colors.red
+                    : theme.iconColor, // استخدام اللون من التيم
                 size: responsiveHeight(context, 13),
               ),
             ),
@@ -807,7 +825,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: responsiveHeight(context, 89),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0xFFEEEEEE),
+                color: theme.shadowColor, // استخدام اللون من التيم
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),

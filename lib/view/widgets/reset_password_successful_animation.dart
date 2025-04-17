@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../theme/app_theme_extensions.dart';
+
 class ResetPasswordSuccessfulAnimation extends StatefulWidget {
   const ResetPasswordSuccessfulAnimation({super.key});
 
@@ -47,6 +49,9 @@ class _ResetPasswordSuccessfulAnimationState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppThemeExtension>()!;
+
     return Container(
       color: Colors.transparent,
       width: responsiveWidth(context, 430.5),
@@ -76,7 +81,7 @@ class _ResetPasswordSuccessfulAnimationState
             style: TextStyle(
               fontSize: responsiveWidth(context, 32),
               fontWeight: FontWeight.w700,
-              color: Color(0xFFFFFFFF),
+              color: appTheme.buttonTextColor,
               letterSpacing: -0.02,
               height: 1.3,
             ),
@@ -87,7 +92,7 @@ class _ResetPasswordSuccessfulAnimationState
             style: TextStyle(
               fontSize: responsiveWidth(context, 22),
               fontWeight: FontWeight.w400,
-              color: Color(0xFFFFFFFF),
+              color: appTheme.buttonTextColor,
               letterSpacing: -0.01,
               height: 34 / 24,
             ),

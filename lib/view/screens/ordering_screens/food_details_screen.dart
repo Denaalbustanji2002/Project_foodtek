@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../cubits/cart_cubit.dart';
 import '../../../models/cart_model.dart';
+import '../../../theme/app_theme_extensions.dart';
 import 'cart_history_screen.dart';
 import '../../widgets/search_bar_widget.dart';
 import '../../widgets/header_widget.dart';
@@ -79,11 +80,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         toolbarHeight: kToolbarHeight + 20,
         title: const Padding(
@@ -94,7 +97,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       body: SafeArea(
         child: Column(
           children: [
-             SearchBarWidget(),
+            SearchBarWidget(),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
@@ -115,17 +118,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     SizedBox(height: responsiveHeight(context, 24)),
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.only(top: 20),
                       child: Container(
                         width: 330,
                         height: 48,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF25AE4B),
+                          color: theme.primaryColor,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.white.withOpacity(0.12)),
+                          border: Border.all(
+                            color: theme.borderColor.withOpacity(0.12),
+                          ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF85DE9E),
+                              color: theme.shadowColor, // ظل خفيف
                               offset: Offset.zero,
                               blurRadius: 0,
                               spreadRadius: 1,
@@ -137,12 +142,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               spreadRadius: 0,
                             ),
                           ],
-                          gradient: const LinearGradient(
+                          gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Color(0xFF25AE4B),
-                              Color(0xFF25AE4B),
+                              theme.primaryColor,
+                              theme.primaryColor,
                             ],
                           ),
                         ),
@@ -158,7 +163,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             context.read<CartCubit>().addToCart(item);
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('${item.title} ${AppLocalizations.of(context)!.hasBeenAddedToTheCart}')),
+                              SnackBar(
+                                content: Text('${item.title} ${AppLocalizations.of(context)!.hasBeenAddedToTheCart}'),
+                              ),
                             );
 
                             Navigator.pushReplacement(
@@ -166,19 +173,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               MaterialPageRoute(builder: (context) => CartHistoryScreen()),
                             );
                           },
-
-                        style: TextButton.styleFrom(
+                          style: TextButton.styleFrom(
                             padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                             backgroundColor: Colors.transparent,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child:  Text(
+                          child: Text(
                             AppLocalizations.of(context)!.addToCart,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              color: Colors.white,
+                              color: theme.buttonTextColor,
                               fontSize: responsiveHeight(context, 14),
                               fontWeight: FontWeight.w500,
                               height: 1.4,
@@ -188,7 +194,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                         ),
                       ),
-                    )],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -232,31 +239,35 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget buildFoodName() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Text(
       widget.name,
       style: GoogleFonts.inter(
         fontSize: responsiveHeight(context, 20),
         fontWeight: FontWeight.w500,
-        color: const Color(0xFF1B1B1B),
+        color: theme.titleColor,
       ),
     );
   }
 
   Widget buildRatingRow() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Row(
       children: [
         ...List.generate(
           4,
-              (_) => const Icon(Icons.star, color: Color(0xFFFFC107), size: 18),
+              (_) => Icon(Icons.star, color: theme.iconColor, size: 18),
         ),
-        const Icon(Icons.star_half, color: Color(0xFFFFC107), size: 18),
+        Icon(Icons.star_half, color: theme.iconColor, size: 18),
         SizedBox(width: responsiveWidth(context, 6)),
         Text(
           widget.rating,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 12),
             fontWeight: FontWeight.w400,
-            color: const Color(0xFF868889),
+            color: theme.secondaryTextColor,
           ),
         ),
       ],
@@ -264,6 +275,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget buildPriceRow() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Row(
       children: [
         Text(
@@ -271,7 +284,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w500,
-            color: const Color(0xFF009944),
+            color: theme.primaryColor,
           ),
         ),
         SizedBox(width: responsiveWidth(context, 8)),
@@ -280,7 +293,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 16),
             decoration: TextDecoration.lineThrough,
-            color: const Color(0xFF838383),
+            color: theme.secondaryTextColor,
           ),
         ),
       ],
@@ -288,10 +301,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget buildDescription() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Text(
       widget.description,
       style: GoogleFonts.inter(
-        color: const Color(0xFF838383),
+        color: theme.secondaryTextColor,
         fontSize: responsiveHeight(context, 12),
         height: 1.5,
         fontWeight: FontWeight.w400,
@@ -300,6 +315,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget buildSpicyAndQuantityRow() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -309,20 +326,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-               AppLocalizations.of(context)!.spicy,
+                AppLocalizations.of(context)!.spicy,
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF838383),
+                  color: theme.secondaryTextColor,
                 ),
               ),
               Column(
                 children: [
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: const Color(0xFFEF2A39),
-                      inactiveTrackColor: const Color(0xFFF3F4F6),
-                      thumbColor: const Color(0xFFEF2A39),
+                      activeTrackColor: theme.spicyRedColor,
+                      inactiveTrackColor: theme.containerColor,
+                      thumbColor: theme.spicyRedColor,
                       trackHeight: 3,
                       thumbShape: RectSliderThumbShape(
                         thumbWidth: 10,
@@ -344,9 +361,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: responsiveHeight(context, 12),
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF1CC019),
+                          color: theme.mildGreenColor,
                           height: 1.0,
-                          letterSpacing: 0.0,
                         ),
                       ),
                       Text(
@@ -354,9 +370,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: responsiveHeight(context, 12),
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFFEF2A39),
+                          color: theme.spicyRedColor,
                           height: 1.0,
-                          letterSpacing: 0.0,
                         ),
                       ),
                     ],
@@ -374,9 +389,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               style: GoogleFonts.inter(
                 fontSize: responsiveHeight(context, 12),
                 fontWeight: FontWeight.w500,
-                color: const Color(0xFF838383),
+                color: theme.secondaryTextColor,
                 height: 1.0,
-                letterSpacing: 0.0,
               ),
             ),
             const SizedBox(height: 8),
@@ -384,8 +398,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               children: [
                 _buildIconButton(
                   icon: Icons.remove,
-                  iconColor: const Color(0xFF25AE4B),
-                  backgroundColor: const Color(0xFFF2F2F2),
+                  iconColor: theme.primaryColor,
+                  backgroundColor: theme.containerColor,
                   size: 26,
                   onTap: () {
                     setState(() {
@@ -401,14 +415,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     style: GoogleFonts.poppins(
                       fontSize: responsiveHeight(context, 16),
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xFF181818),
+                      color: theme.textColorPrimary,
                     ),
                   ),
                 ),
                 _buildIconButton(
                   icon: Icons.add,
                   iconColor: Colors.white,
-                  backgroundColor: const Color(0xFF25AE4B),
+                  backgroundColor: theme.primaryColor,
                   size: 26,
                   onTap: () {
                     setState(() {

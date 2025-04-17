@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../theme/app_theme_extensions.dart';
+
 class WelcomeScreen extends StatelessWidget {
   final PageController pageController;
 
@@ -10,9 +12,12 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppThemeExtension>();
+
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: appTheme?.scaffoldBackgroundColor ?? Colors.white,
         width: responsiveWidth(context, 430),
         height: responsiveHeight(context, 932),
         child: Stack(
@@ -56,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                         fontSize: responsiveHeight(context, 32),
-                        color: Color(0xFF455A64),
+                        color: appTheme?.titleColor ?? Color(0xFF455A64),
                         letterSpacing: 0,
                         height: 1.0,
                       ),
@@ -80,11 +85,10 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: responsiveHeight(context, 16),
                         height: 1.0,
                         letterSpacing: -0.01,
-                        color: Color(0xFF455A64),
+                        color: appTheme?.secondaryTextColor ?? Color(0xFF455A64),
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -96,11 +100,21 @@ class WelcomeScreen extends StatelessWidget {
                 height: responsiveHeight(context, 48),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF25AE4B), Color(0xFF0F481F)],
+                    colors: [
+                      appTheme?.primaryColor ?? Color(0xFF25AE4B),
+                      Color(0xFF0F481F)
+                    ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   ),
                   borderRadius: BorderRadius.circular(69),
+                  boxShadow: [
+                    BoxShadow(
+                      color: appTheme?.shadowColor ?? Colors.black.withOpacity(0.1),
+                      offset: Offset(0, 2),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
                 child: ElevatedButton(
                   onPressed: () {
@@ -119,14 +133,14 @@ class WelcomeScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                   ),
                   child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.continueText,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    )
+                      child: Text(
+                        AppLocalizations.of(context)!.continueText,
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: appTheme?.buttonTextColor ?? Colors.white,
+                        ),
+                      )
                   ),
                 ),
               ),
@@ -135,5 +149,4 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
+  }}

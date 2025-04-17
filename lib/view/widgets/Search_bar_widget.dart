@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../cubits/navigation_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../theme/app_theme_extensions.dart';
 import 'app_tab.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -10,6 +11,8 @@ class SearchBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
       child: Container(
@@ -17,20 +20,20 @@ class SearchBarWidget extends StatelessWidget {
         width: 370,
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.containerColor,
           borderRadius: BorderRadius.circular(30.0),
-          border: Border.all(color: Color(0xFFD6D6D6)),
+          border: Border.all(color: theme.borderColor),
         ),
         child: Row(
           children: [
-            const Icon(Icons.search, color: Color(0xFF878787)),
+            Icon(Icons.search, color: theme.iconColor),
             const SizedBox(width: 8),
             Expanded(
               child: TextField(
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF1A1C1E),
+                  color: theme.textFieldTextColor,
                   height: 1.5,
                 ),
                 decoration: InputDecoration(
@@ -39,7 +42,7 @@ class SearchBarWidget extends StatelessWidget {
                   hintStyle: GoogleFonts.inter(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: const Color(0xFF878787),
+                    color: theme.hintTextColor,
                     height: 1.5,
                   ),
                   contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -47,7 +50,7 @@ class SearchBarWidget extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.tune, color: Color(0xFF878787)),
+              icon: Icon(Icons.tune, color: theme.iconColor),
               onPressed: () {
                 context.read<NavigationCubit>().changeTab(AppTab.track);
                 Navigator.pushNamed(

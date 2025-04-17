@@ -4,7 +4,9 @@ import '../helper/shared_preferences_helper.dart';
 import '../states/language_state.dart';
 
 class LanguageCubit extends Cubit<LanguageState> {
-  LanguageCubit() : super(LanguageInitialState(Locale('en')));
+  LanguageCubit() : super(LanguageInitialState(Locale('en'))) {
+    getLang();
+  }
 
   Future<void> changeLang({required String langCode}) async {
     try {
@@ -21,11 +23,15 @@ class LanguageCubit extends Cubit<LanguageState> {
   }
 
   Future<void> getLang() async {
-    String langCode = await SharedPreferencesHelper.instance.getPrefString(
-      key: 'lang',
-      defaultValue: 'en',
-    );
-    emit(LanguageInitialState(Locale(langCode)));
+    try {
+      String langCode = await SharedPreferencesHelper.instance.getPrefString(
+        key: 'lang',
+        defaultValue: 'en',
+      );
+      emit(LanguageChangedSuccessfulState(Locale(langCode)));
+    } catch (e) {
+      // Fallback to default language
+      emit(LanguageChangedSuccessfulState(Locale('en')));
+    }
   }
-
 }

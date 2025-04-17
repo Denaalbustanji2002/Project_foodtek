@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../theme/app_theme_extensions.dart';
+
 class ChooseYourFoodScreen extends StatelessWidget {
   final PageController pageController;
 
@@ -11,9 +13,12 @@ class ChooseYourFoodScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Container(
-        color: Colors.white,
+        color: theme.backgroundColor,
         width: responsiveWidth(context, 430),
         height: responsiveHeight(context, 932),
         child: Stack(
@@ -56,7 +61,7 @@ class ChooseYourFoodScreen extends StatelessWidget {
                         fontSize: responsiveHeight(context, 32),
                         height: 1.0,
                         letterSpacing: 0.0,
-                        color: Color(0xFF455A64),
+                        color: theme.titleColor,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -76,7 +81,7 @@ class ChooseYourFoodScreen extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontSize: responsiveHeight(context, 16),
                         letterSpacing: -0.01,
-                        color: Color(0xFF455A64),
+                        color: theme.secondaryTextColor,
                       ),
                     ),
                   ),
@@ -91,10 +96,10 @@ class ChooseYourFoodScreen extends StatelessWidget {
                 height: responsiveHeight(context, 48),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF25AE4B), Color(0xFF0F481F)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
+                    colors: [
+                      theme.primaryColor ?? Color(0xFF25AE4B),
+                      Color(0xFF0F481F)
+                    ],),
                   borderRadius: BorderRadius.circular(69),
                 ),
                 child: ElevatedButton(
@@ -120,7 +125,7 @@ class ChooseYourFoodScreen extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: Colors.white,
+                        color: theme.buttonTextColor,
                       ),
                     ),
                   ),

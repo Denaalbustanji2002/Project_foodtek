@@ -29,6 +29,7 @@
   "forgotPassword": "Forgot Password?",
   "logIn": "Log In",
   "or": "Or",
+  "yesTurnItOn": "Yes, Turn It On",
   "continueWithGoogle": "Continue with Google",
   "continueWithFacebook": "Continue with Facebook",
   "continueWithApple": "Continue with Apple",
@@ -284,5 +285,7 @@
   "restaurantHotCoolSpot": "Hot Cool Spot",
   "restaurantItaliano": "Italiano",
   "restaurantTokyoSushi": "Tokyo Sushi",
-  "btnReorder": "Reorder"
+  "btnReorder": "Reorder",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode"
 }

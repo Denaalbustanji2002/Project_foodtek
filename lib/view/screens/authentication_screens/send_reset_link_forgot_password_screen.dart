@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../cubits/user_cubit.dart';
 import '../../../helper/responsive.dart';
 import '../../../states/user_state.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/spin_kit_hour_glass_widget.dart';
 import '../../widgets/verification_code_widget.dart';
 import 'login_screen.dart';
@@ -25,30 +26,32 @@ class _SendVerificationCodeScreenState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Scaffold(
-        backgroundColor: const Color(0XFF25AE4B),
-        body: SafeArea(
-          top: true,
-          left: true,
-          child: Container(
-            height: responsiveHeight(context, 932),
-            width: responsiveWidth(context, 430),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/splash_screen.png'),
-                fit: BoxFit.cover,
-              ),
+      backgroundColor: theme.splashScreenColor,
+      body: SafeArea(
+        top: true,
+        left: true,
+        child: Container(
+          height: responsiveHeight(context, 932),
+          width: responsiveWidth(context, 430),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/splash_screen.png'),
+              fit: BoxFit.cover,
             ),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [foodTekLogo(), resetPasswordCard()],
-              ),
+          ),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [foodTekLogo(), resetPasswordCard()],
             ),
-          ),)
+          ),
+        ),
+      ),
     );
   }
 
@@ -80,6 +83,7 @@ class _SendVerificationCodeScreenState
   }
 
   Widget resetPasswordCard() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Positioned(
       top: responsiveHeight(context, 311),
       left: responsiveWidth(context, 43),
@@ -88,7 +92,7 @@ class _SendVerificationCodeScreenState
         height: responsiveHeight(context, 366.3),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.backgroundColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -108,6 +112,8 @@ class _SendVerificationCodeScreenState
   }
 
   Widget backToLoginRow() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Row(
       children: [
         GestureDetector(
@@ -123,10 +129,7 @@ class _SendVerificationCodeScreenState
             child: SvgPicture.asset(
               'assets/images/Vector.svg',
               fit: BoxFit.fill,
-              colorFilter: const ColorFilter.mode(
-                Colors.black,
-                BlendMode.srcIn,
-              ),
+              colorFilter: ColorFilter.mode(theme.iconColor, BlendMode.srcIn),
             ),
           ),
         ),
@@ -135,7 +138,7 @@ class _SendVerificationCodeScreenState
           AppLocalizations.of(context)!.backToLoginPage,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 12),
-            color: const Color(0xFF6C7278),
+            color: theme.secondaryTextColor,
             fontWeight: FontWeight.w500,
             letterSpacing: -0.01,
             height: 1.4,
@@ -152,7 +155,7 @@ class _SendVerificationCodeScreenState
             AppLocalizations.of(context)!.logIn,
             style: GoogleFonts.inter(
               fontSize: responsiveHeight(context, 12),
-              color: const Color(0xFF25AE4B),
+              color: theme.primaryColor,
               fontWeight: FontWeight.w500,
               letterSpacing: -0.01,
               height: 1.4,
@@ -163,7 +166,7 @@ class _SendVerificationCodeScreenState
           AppLocalizations.of(context)!.page,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 12),
-            color: const Color(0xFF6C7278),
+            color: theme.secondaryTextColor,
             fontWeight: FontWeight.w500,
             letterSpacing: -0.01,
             height: 1.4,
@@ -174,6 +177,8 @@ class _SendVerificationCodeScreenState
   }
 
   Widget resetPasswordTitleAndDescription() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return SizedBox(
       width: responsiveWidth(context, 295),
       height: responsiveHeight(context, 105),
@@ -189,7 +194,7 @@ class _SendVerificationCodeScreenState
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 32),
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF111827),
+                  color: theme.titleColor,
                   letterSpacing: -0.02,
                   height: 1.3,
                 ),
@@ -206,7 +211,7 @@ class _SendVerificationCodeScreenState
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: responsiveHeight(context, 12),
-                color: const Color(0xFF6C7278),
+                color: theme.secondaryTextColor,
                 fontWeight: FontWeight.w500,
                 letterSpacing: -0.01,
                 height: 1.4,
@@ -219,6 +224,7 @@ class _SendVerificationCodeScreenState
   }
 
   Widget emailInputField(String? hintText) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return SizedBox(
       width: responsiveWidth(context, 295),
       height: responsiveHeight(context, 70),
@@ -228,7 +234,8 @@ class _SendVerificationCodeScreenState
           Text(
             AppLocalizations.of(context)!.email,
             style: GoogleFonts.plusJakartaSans(
-              color: const Color(0xFF6C7278),
+              color: theme.secondaryTextColor,
+              // اللون من التيم الفاتح أو الداكن
               fontSize: responsiveHeight(context, 12),
               letterSpacing: -0.02,
               height: 1.6,
@@ -240,13 +247,14 @@ class _SendVerificationCodeScreenState
             width: responsiveWidth(context, 295),
             height: responsiveHeight(context, 46),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.containerColor,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey.shade300, width: 1),
-              boxShadow: const [
+              border: Border.all(color: theme.borderColor, width: 1),
+              // اللون من التيم
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x3DE4E5E7),
-                  offset: Offset(0, 1),
+                  color: theme.shadowColor, // الظل من التيم
+                  offset: const Offset(0, 1),
                   blurRadius: 2,
                 ),
               ],
@@ -256,7 +264,7 @@ class _SendVerificationCodeScreenState
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w500,
                 fontSize: responsiveHeight(context, 14),
-                color: const Color(0XFF1A1C1E),
+                color: theme.textFieldTextColor,
                 height: 1.4,
                 letterSpacing: -0.01,
               ),
@@ -266,7 +274,7 @@ class _SendVerificationCodeScreenState
                 hintStyle: GoogleFonts.inter(
                   fontWeight: FontWeight.w400,
                   fontSize: responsiveHeight(context, 14),
-                  color: Colors.grey[500],
+                  color: theme.hintTextColor,
                 ),
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: responsiveWidth(context, 10),
@@ -283,54 +291,61 @@ class _SendVerificationCodeScreenState
   }
 
   Widget sendButton() {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return BlocConsumer<UserCubit, UserState>(
       listener: (context, state) {
         if (state is ForgotPasswordSuccessState) {
-
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return Dialog(
-                backgroundColor: Colors.white,
+                backgroundColor: theme.backgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: SizedBox(
                   width: responsiveWidth(context, 343),
                   height: responsiveHeight(context, 389),
-                  child: VerificationCodeWidget(email:validation.emailTextEditingController.text),
+                  child: VerificationCodeWidget(
+                    email: validation.emailTextEditingController.text,
+                  ),
                 ),
               );
             },
           );
         } else if (state is ForgotPasswordFailedState) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.error)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error)),
+          );
         }
       },
       builder: (context, state) {
         if (state is ForgotPasswordLoadingState) {
           return const Center(child: SpinKitHourGlassWidget());
         }
+
         return Container(
           width: responsiveWidth(context, 295),
           height: responsiveHeight(context, 48),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0x1EFFFFFF), Color(0x00FFFFFF)],
+              colors: [
+                theme.containerColor.withOpacity(0.12),
+                theme.containerColor.withOpacity(0),
+              ],
             ),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
-                color: Color(0x7A253EA7),
-                offset: Offset(0, 1),
+                color: theme.shadowColor,
+                offset: const Offset(0, 1),
                 blurRadius: 2,
               ),
               BoxShadow(
-                color: Color(0xFF85DE9E),
-                offset: Offset(0, 0),
+                color: theme.mildGreenColor,
+                offset: const Offset(0, 0),
                 blurRadius: 0,
                 spreadRadius: 1,
               ),
@@ -356,7 +371,6 @@ class _SendVerificationCodeScreenState
 
               if (!validation.showErrorEmail) {
                 final userCubit = context.read<UserCubit>();
-
                 await userCubit.forgotPasswordResetLink(
                   validation.emailTextEditingController.text.trim(),
                 );
@@ -371,7 +385,7 @@ class _SendVerificationCodeScreenState
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF32B768),
+              backgroundColor: theme.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -381,7 +395,7 @@ class _SendVerificationCodeScreenState
               style: GoogleFonts.inter(
                 fontSize: responsiveHeight(context, 14),
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: theme.buttonTextColor,
                 letterSpacing: -0.01,
                 height: 1.4,
               ),

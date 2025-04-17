@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../theme/app_theme_extensions.dart';
+
 
 class GetDeliveryScreen extends StatelessWidget {
   final PageController pageController;
@@ -12,9 +14,11 @@ class GetDeliveryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: theme.scaffoldBackgroundColor,
         width: responsiveWidth(context, 430),
         height: responsiveHeight(context, 932),
         child: Stack(
@@ -57,7 +61,7 @@ class GetDeliveryScreen extends StatelessWidget {
                         fontSize: responsiveHeight(context, 32),
                         height: 1.0,
                         letterSpacing: 0.0,
-                        color: Color(0xFF455A64),
+                        color: theme.textColorPrimary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -77,13 +81,13 @@ class GetDeliveryScreen extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontSize: responsiveHeight(context, 16),
                         letterSpacing: -0.01,
-                        color: Color(0xFF455A64),
+                        color: theme.secondaryTextColor,
                       ),
                     ),
                   ),
                 ],
               ),
-            ) ,
+            ),
             Positioned(
               top: responsiveHeight(context, 712),
               left: responsiveWidth(context, 62),
@@ -92,9 +96,10 @@ class GetDeliveryScreen extends StatelessWidget {
                 height: responsiveHeight(context, 48),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF25AE4B), Color(0xFF0F481F)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
+                    colors: [
+                      theme.primaryColor ?? Color(0xFF25AE4B),
+                      Color(0xFF0F481F)
+                    ],
                   ),
                   borderRadius: BorderRadius.circular(69),
                 ),
@@ -120,18 +125,15 @@ class GetDeliveryScreen extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: Colors.white,
+                        color: theme.buttonTextColor,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-            // Skip Button and Pagination
-
           ],
         ),
       ),
     );
-  }
-}
+  }}

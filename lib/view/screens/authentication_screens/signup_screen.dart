@@ -8,6 +8,7 @@ import '../../../cubits/user_cubit.dart';
 import '../../../helper/responsive.dart';
 import '../../../helper/validation.dart';
 import '../../../states/user_state.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/spin_kit_hour_glass_widget.dart';
 import 'login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,125 +32,75 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     UserCubit userCubit = context.read<UserCubit>();
-
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Scaffold(
-      backgroundColor: const Color(0XFF25AE4B),
+      backgroundColor: theme.splashScreenColor,
       body: SafeArea(
         top: true,
         left: true,
         maintainBottomViewPadding: true,
         child: SingleChildScrollView(
-        child: Container(
-          height: responsiveHeight(context, 932),
-          width: responsiveWidth(context, 430),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/splash_screen.png'),
-              fit: BoxFit.cover,
+          child: Container(
+            height: responsiveHeight(context, 932),
+            width: responsiveWidth(context, 430),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/splash_screen.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: responsiveHeight(context, 74),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Foodtek',
-                            style: GoogleFonts.protestRiot(
-                              fontSize: responsiveWidth(context, 80),
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                              height: 1.0,
-                              letterSpacing: 0.0,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: responsiveHeight(context, 201),
-                  left: responsiveWidth(context, 43),
-                  child: Container(
-                    width: responsiveWidth(context, 343),
-                    constraints: BoxConstraints(
-                      maxHeight: responsiveHeight(context, 661),
-                    ),
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    top: responsiveHeight(context, 74),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Align(
-                            alignment: Alignment.topLeft,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
-                                );
-                              },
-                              child: SizedBox(
-                                width: responsiveWidth(context, 24),
-                                height: responsiveHeight(context, 24),
-                                child: SvgPicture.asset(
-                                  'assets/images/Vector.svg',
-                                  fit: BoxFit.none,
-                                  colorFilter: ColorFilter.mode(
-                                    Colors.black,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Foodtek',
+                              style: GoogleFonts.protestRiot(
+                                fontSize: responsiveWidth(context, 80),
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                height: 1.0,
+                                letterSpacing: 0.0,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            AppLocalizations.of(context)!.signUp,
-                            style: GoogleFonts.inter(
-                              color: Color(0XFF111827),
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -0.02,
-                              height: 1.3,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Text(
-                                AppLocalizations.of(
-                                  context,
-                                )!.alreadyHaveAnAccount,
-                                style: GoogleFonts.inter(
-                                  color: Color(0XFF6C7278),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: -0.01,
-                                  height: 1.4,
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              InkWell(
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: responsiveHeight(context, 201),
+                    left: responsiveWidth(context, 43),
+                    child: Container(
+                      width: responsiveWidth(context, 343),
+                      constraints: BoxConstraints(
+                        maxHeight: responsiveHeight(context, 661),
+                      ),
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: theme.backgroundColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: GestureDetector(
                                 onTap: () {
                                   Navigator.pushReplacement(
                                     context,
@@ -158,264 +109,319 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                   );
                                 },
-                                child: Text(
-                                  AppLocalizations.of(context)!.logIn,
-                                  style: GoogleFonts.inter(
-                                    color: Color(0XFF25AE4B),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    letterSpacing: -0.01,
-                                    height: 1.4,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          BlocConsumer<UserCubit, UserState>(
-                            listener: (context, state) {
-                              if (state is SignUpSuccessState) {
-                                print(
-                                  "User signed up successfully, navigating to OrderScreen",
-                                );
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
-                                );
-                              } else if (state is SignUpFailedState) {
-                                print(
-                                  "SignUp failed with error message: ${state.errorMessage}",
-                                );
-                                showDialog(
-                                  context: context,
-                                  builder:
-                                      (context) => AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        15,
-                                      ),
+                                child: SizedBox(
+                                  width: responsiveWidth(context, 24),
+                                  height: responsiveHeight(context, 24),
+                                  child: SvgPicture.asset(
+                                    'assets/images/Vector.svg',
+                                    fit: BoxFit.none,
+                                    colorFilter: ColorFilter.mode(
+                                      Colors.black,
+                                      BlendMode.srcIn,
                                     ),
-                                    title: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.error,
-                                          color: Colors.red,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.error,
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    content: Text(
-                                      state.errorMessage,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed:
-                                            () => Navigator.pop(context),
-                                        style: TextButton.styleFrom(
-                                          foregroundColor: Colors.white,
-                                          backgroundColor: Colors.red,
-                                        ),
-                                        child: Text(
-                                          AppLocalizations.of(context)!.ok,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            },
-                            builder: (context, state) {
-                              if (state is UserLoadingSignUp) {
-                                return SpinKitHourGlassWidget();
-                              } else {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    nameAndEmailAndPasswordInputField(
-                                      label:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.fullName,
-                                      hintText:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.enterYourFullName,
-                                      controller:
-                                      validation
-                                          .fullNameTextEditingController,
-                                      errorText:
-                                      validation.showErrorFullName
-                                          ? AppLocalizations.of(
-                                        context,
-                                      )!.fullNameCanNotBeEmpty
-                                          : null,
-                                    ),
-                                    SizedBox(height: 8),
-                                    nameAndEmailAndPasswordInputField(
-                                      label:
-                                      AppLocalizations.of(context)!.email,
-                                      hintText:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.enterYourEmail,
-                                      controller:
-                                      validation.emailTextEditingController,
-                                      errorText:
-                                      validation.showErrorEmail
-                                          ? AppLocalizations.of(
-                                        context,
-                                      )!.pleaseEnterValidEmail
-                                          : null,
-                                    ),
-                                    SizedBox(height: 8),
-                                    dateInputField(context),
-                                    SizedBox(height: 8),
-                                    phoneInputField(),
-                                    SizedBox(height: 8),
-                                    nameAndEmailAndPasswordInputField(
-                                      label:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.setPassword,
-                                      hintText:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.enterYourPassword,
-                                      controller:
-                                      validation
-                                          .passwordTextEditingController,
-                                      isPassword: true,
-                                      errorText:
-                                      validation.showErrorPassword
-                                          ? AppLocalizations.of(
-                                        context,
-                                      )!.passwordDoesNotMeetCriteria
-                                          : null,
-                                      obscuringCharacter: '*',
-                                    ),
-                                  ],
-                                );
-                              }
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 48,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  validation.checkFullName(
-                                    fullName:
-                                    validation
-                                        .fullNameTextEditingController
-                                        .text,
-                                  );
-                                  validation.checkEmail(
-                                    email:
-                                    validation
-                                        .emailTextEditingController
-                                        .text,
-                                  );
-                                  validation.checkPhone(
-                                    phone:
-                                    validation
-                                        .phoneTextEditingController
-                                        .text,
-                                  );
-                                  validation.checkPassword(
-                                    password:
-                                    validation
-                                        .passwordTextEditingController
-                                        .text,
-                                  );
-                                  validation.checkBirthDate();
-
-                                  if (!validation.showErrorFullName &&
-                                      !validation.showErrorEmail &&
-                                      !validation.showErrorPhone &&
-                                      !validation.showErrorPassword &&
-                                      !validation.showErrorBirthDate) {
-                                    await userCubit.saveInfo(
-                                      email:
-                                      validation
-                                          .emailTextEditingController
-                                          .text,
-                                      password:
-                                      validation
-                                          .passwordTextEditingController
-                                          .text,
-                                      remember: true,
-                                    );
-
-                                    await userCubit.signUp(
-                                      fullName:
-                                      validation
-                                          .fullNameTextEditingController
-                                          .text,
-                                      email:
-                                      validation
-                                          .emailTextEditingController
-                                          .text,
-                                      password:
-                                      validation
-                                          .passwordTextEditingController
-                                          .text,
-                                      phoneNumber:
-                                      validation
-                                          .phoneTextEditingController
-                                          .text,
-                                      dateOfBirth:
-                                      validation
-                                          .birthOfDateTextEditingController
-                                          .text,
-                                    );
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF32B768),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context)!.register,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            Text(
+                              AppLocalizations.of(context)!.signUp,
+                              style: GoogleFonts.inter(
+                                color: theme.textColorPrimary,
+                                fontSize: 32,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.02,
+                                height: 1.3,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Text(
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.alreadyHaveAnAccount,
+                                  style: GoogleFonts.inter(
+                                    color: theme.secondaryTextColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: -0.01,
+                                    height: 1.4,
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.logIn,
+                                    style: GoogleFonts.inter(
+                                      color: Color(0XFF25AE4B),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      letterSpacing: -0.01,
+                                      height: 1.4,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            BlocConsumer<UserCubit, UserState>(
+                              listener: (context, state) {
+                                if (state is SignUpSuccessState) {
+                                  print(
+                                    "User signed up successfully, navigating to OrderScreen",
+                                  );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(),
+                                    ),
+                                  );
+                                } else if (state is SignUpFailedState) {
+                                  print(
+                                    "SignUp failed with error message: ${state.errorMessage}",
+                                  );
+                                  showDialog(
+                                    context: context,
+                                    builder:
+                                        (context) => AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              15,
+                                            ),
+                                          ),
+                                          title: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.error,
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          content: Text(
+                                            state.errorMessage,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed:
+                                                  () => Navigator.pop(context),
+                                              style: TextButton.styleFrom(
+                                                foregroundColor: Colors.white,
+                                                backgroundColor: Colors.red,
+                                              ),
+                                              child: Text(
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.ok,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                  );
+                                }
+                              },
+                              builder: (context, state) {
+                                if (state is UserLoadingSignUp) {
+                                  return SpinKitHourGlassWidget();
+                                } else {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      nameAndEmailAndPasswordInputField(
+                                        label:
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.fullName,
+                                        hintText:
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.enterYourFullName,
+                                        controller:
+                                            validation
+                                                .fullNameTextEditingController,
+                                        errorText:
+                                            validation.showErrorFullName
+                                                ? AppLocalizations.of(
+                                                  context,
+                                                )!.fullNameCanNotBeEmpty
+                                                : null,
+                                      ),
+                                      SizedBox(height: 8),
+                                      nameAndEmailAndPasswordInputField(
+                                        label:
+                                            AppLocalizations.of(context)!.email,
+                                        hintText:
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.enterYourEmail,
+                                        controller:
+                                            validation
+                                                .emailTextEditingController,
+                                        errorText:
+                                            validation.showErrorEmail
+                                                ? AppLocalizations.of(
+                                                  context,
+                                                )!.pleaseEnterValidEmail
+                                                : null,
+                                      ),
+                                      SizedBox(height: 8),
+                                      dateInputField(context),
+                                      SizedBox(height: 8),
+                                      phoneInputField(),
+                                      SizedBox(height: 8),
+                                      nameAndEmailAndPasswordInputField(
+                                        label:
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.setPassword,
+                                        hintText:
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.enterYourPassword,
+                                        controller:
+                                            validation
+                                                .passwordTextEditingController,
+                                        isPassword: true,
+                                        errorText:
+                                            validation.showErrorPassword
+                                                ? AppLocalizations.of(
+                                                  context,
+                                                )!.passwordDoesNotMeetCriteria
+                                                : null,
+                                        obscuringCharacter: '*',
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 48,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    validation.checkFullName(
+                                      fullName:
+                                          validation
+                                              .fullNameTextEditingController
+                                              .text,
+                                    );
+                                    validation.checkEmail(
+                                      email:
+                                          validation
+                                              .emailTextEditingController
+                                              .text,
+                                    );
+                                    validation.checkPhone(
+                                      phone:
+                                          validation
+                                              .phoneTextEditingController
+                                              .text,
+                                    );
+                                    validation.checkPassword(
+                                      password:
+                                          validation
+                                              .passwordTextEditingController
+                                              .text,
+                                    );
+                                    validation.checkBirthDate();
+
+                                    if (!validation.showErrorFullName &&
+                                        !validation.showErrorEmail &&
+                                        !validation.showErrorPhone &&
+                                        !validation.showErrorPassword &&
+                                        !validation.showErrorBirthDate) {
+                                      await userCubit.saveInfo(
+                                        email:
+                                            validation
+                                                .emailTextEditingController
+                                                .text,
+                                        password:
+                                            validation
+                                                .passwordTextEditingController
+                                                .text,
+                                        remember: true,
+                                      );
+
+                                      await userCubit.signUp(
+                                        fullName:
+                                            validation
+                                                .fullNameTextEditingController
+                                                .text,
+                                        email:
+                                            validation
+                                                .emailTextEditingController
+                                                .text,
+                                        password:
+                                            validation
+                                                .passwordTextEditingController
+                                                .text,
+                                        phoneNumber:
+                                            validation
+                                                .phoneTextEditingController
+                                                .text,
+                                        dateOfBirth:
+                                            validation
+                                                .birthOfDateTextEditingController
+                                                .text,
+                                      );
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF32B768),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.register,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),)
+      ),
     );
   }
 

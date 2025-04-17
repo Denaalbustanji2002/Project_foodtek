@@ -4,8 +4,10 @@ import 'package:foodtek_project/view/screens/authentication_screens/login_screen
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../cubits/location_cubit.dart';
+import '../../../cubits/theme_cubit.dart';
 import '../../../helper/responsive.dart';
 import '../../../states/location_state.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/permission_denid_forever_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -14,8 +16,10 @@ class TurnOnYourLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: BlocListener<LocationCubit, LocationState>(
         listener: (context, state) {
           if (state is LocationPermissionGranted) {
@@ -25,17 +29,25 @@ class TurnOnYourLocation extends StatelessWidget {
             );
           } else if (state is LocationPermissionDenied) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(AppLocalizations.of(context)!.locationPermissionDenied,)),
+              SnackBar(
+                content: Text(
+                  AppLocalizations.of(context)!.locationPermissionDenied,
+                  style: TextStyle(color: theme.textColorPrimary),
+                ),
+                backgroundColor: theme.containerColor,
+              ),
             );
           } else if (state is LocationPermissionDeniedForever) {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
+                  backgroundColor: theme.containerColor,
                   title: Text(
-                    AppLocalizations.of(context)!.oopsPermissionDeniedForeverPleaseAllowLocationPermissionFromSettings,
+                    AppLocalizations.of(context)!
+                        .oopsPermissionDeniedForeverPleaseAllowLocationPermissionFromSettings,
                     style: TextStyle(
-                      color: Colors.red,
+                      color: theme.spicyRedColor,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -48,7 +60,10 @@ class TurnOnYourLocation extends StatelessWidget {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.ok,
-                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: theme.primaryColor,
+                        ),
                       ),
                     ),
                   ],
@@ -58,37 +73,45 @@ class TurnOnYourLocation extends StatelessWidget {
           } else if (state is LocationServiceDisabled) {
             showDialog(
               context: context,
-              builder:
-                  (context) => AlertDialog(
-                    title: Text(AppLocalizations.of(context)!.locationServiceDisabled),
-                    content: Text(
-                      AppLocalizations.of(context)!.pleaseEnableLocationServicesToContinue,
+              builder: (context) => AlertDialog(
+                backgroundColor: theme.containerColor,
+                title: Text(
+                  AppLocalizations.of(context)!.locationServiceDisabled,
+                  style: TextStyle(color: theme.titleColor),
+                ),
+                content: Text(
+                  AppLocalizations.of(context)!
+                      .pleaseEnableLocationServicesToContinue,
+                  style: TextStyle(color: theme.secondaryTextColor),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Geolocator.openLocationSettings();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.openSettings,
+                      style: TextStyle(
+                        color: theme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Geolocator.openLocationSettings();
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!.openSettings,
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          AppLocalizations.of(context)!.cancel,
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
-                        ),
-                      ),
-                    ],
                   ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                      style: TextStyle(
+                        color: theme.disabledColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           }
         },
@@ -106,14 +129,21 @@ class TurnOnYourLocation extends StatelessWidget {
   }
 
   Widget buildMapImage(BuildContext context) {
+    final isDark = context.watch<ThemeCubit>().isDarkMode;
+    // 2. اختار الباث حسب الحالة
+    final imagePath = isDark
+        ? "assets/images/dark_map.jpg"
+        : "assets/images/light_map.png";
+
     return Positioned(
       top: 0,
       left: 0,
       width: responsiveWidth(context, 430),
       height: responsiveHeight(context, 254),
-      child: Image.asset("assets/images/maps.png", fit: BoxFit.cover),
+      child: Image.asset(imagePath, fit: BoxFit.cover),
     );
   }
+
 
   Widget buildCenterImage(BuildContext context) {
     return Positioned(
@@ -131,6 +161,8 @@ class TurnOnYourLocation extends StatelessWidget {
   }
 
   Widget buildTurnOnYourLocationText(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Positioned(
       top: responsiveHeight(context, 518),
       left: responsiveWidth(context, 48),
@@ -139,13 +171,12 @@ class TurnOnYourLocation extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-
             child: Text(
               AppLocalizations.of(context)!.locationTitle,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w700,
                 fontSize: responsiveHeight(context, 32),
-                color: Color(0xFF455A64),
+                color: theme.titleColor, // تم التعديل هون
                 letterSpacing: 0,
                 height: 1.0,
               ),
@@ -157,13 +188,15 @@ class TurnOnYourLocation extends StatelessWidget {
             width: responsiveWidth(context, 313),
             height: responsiveHeight(context, 70),
             alignment: Alignment.center,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-            child:  Text(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
               AppLocalizations.of(context)!.locationSubtitle,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w400,
                 fontSize: responsiveHeight(context, 16),
-                color: Color(0xFF455A64),
+                color: theme.secondaryTextColor, // وتم التعديل هون
               ),
               textAlign: TextAlign.center,
             ),
@@ -174,6 +207,8 @@ class TurnOnYourLocation extends StatelessWidget {
   }
 
   Widget buildYesTurnItOnButton(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Positioned(
       top: responsiveHeight(context, 668),
       left: responsiveWidth(context, 62),
@@ -183,7 +218,10 @@ class TurnOnYourLocation extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF25AE4B), Color(0xFF0F481F)],
+              colors: [
+                theme.primaryColor,
+                theme.primaryColor.withOpacity(0.7), // أو حط لون ثاني حسب الثيم
+              ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
@@ -198,17 +236,13 @@ class TurnOnYourLocation extends StatelessWidget {
                 borderRadius: BorderRadius.circular(69),
               ),
               backgroundColor: Colors.transparent,
-              foregroundColor: Colors.white,
+              foregroundColor: theme.buttonTextColor,
               elevation: 0,
             ),
             child: Text(
-              AppLocalizations.of(context)!.yesTurnOn,
+              AppLocalizations.of(context)!.yesTurnItOn,
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Inter',
-                height: 19.36 / 16,
-                letterSpacing: 0,
+                color: theme.buttonTextColor,
               ),
             ),
           ),

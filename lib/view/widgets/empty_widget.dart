@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../theme/app_theme_extensions.dart';
+
 class EmptyWidget extends StatelessWidget {
   final String imagePath;
   final String title;
@@ -16,6 +18,8 @@ class EmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +42,8 @@ class EmptyWidget extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 height: 1.3,
                 letterSpacing: -0.02,
-                color: const Color(0xFF111827),
+                // استخدام لون العنوان من الثيم بدلاً من اللون الثابت
+                color: theme.titleColor,
               ),
             ),
           ),
@@ -54,12 +59,12 @@ class EmptyWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 height: 1.4,
                 letterSpacing: -0.01,
-                color: const Color(0xFF6C7278),
+                // استخدام لون النص الثانوي من الثيم بدلاً من اللون الثابت
+                color: theme.secondaryTextColor,
               ),
             ),
           ),
         ],
       ),
     );
-  }
-}
+  }}

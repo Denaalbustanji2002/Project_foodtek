@@ -6,6 +6,7 @@ import 'package:foodtek_project/view/screens/onboarding_screens/welcome_screen.d
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../helper/responsive.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../authentication_screens/language_screen.dart';
 import '../authentication_screens/send_reset_link_forgot_password_screen.dart';
 
@@ -30,8 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Scaffold(
-      backgroundColor: Color(0xFF25AE4B),
+      backgroundColor:theme.splashScreenColor,
       body: Container(
         width: responsiveWidth(context, 430),
         height: responsiveHeight(context, 932),

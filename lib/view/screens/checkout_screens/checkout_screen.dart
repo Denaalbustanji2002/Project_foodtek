@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/notifications_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,15 +22,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
+            icon: Icon(Icons.notifications_outlined, color: theme.iconColor),
             onPressed: () {
               showNotificationsSheet(context);
             },
@@ -46,7 +49,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Text(
                 AppLocalizations.of(context)!.checkout,
                 style: GoogleFonts.inter(
-                  color: const Color(0xFF391713),
+                  color: theme.titleColor,
                   fontSize: responsiveHeight(context, 20),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
@@ -55,9 +58,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
               SizedBox(height: responsiveHeight(context, 24)),
               Text(
-               AppLocalizations.of(context)!.payWith,
+                AppLocalizations.of(context)!.payWith,
                 style: GoogleFonts.inter(
-                  color: const Color(0xFF0A0D13),
+                  color: theme.textColorPrimary,
                   fontSize: responsiveHeight(context, 18),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
@@ -75,7 +78,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     alignment: Alignment.center,
                     child: Icon(
                       Icons.share_location,
-                      color: Colors.green,
+                      color: theme.primaryColor,
                       size: responsiveHeight(context, 20),
                     ),
                   ),
@@ -89,7 +92,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 15),
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFF2F2E36),
+                            color: theme.textColorPrimary,
                             letterSpacing: 0.15,
                             height: 15 / 12,
                           ),
@@ -99,7 +102,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           style: TextStyle(
                             fontSize: responsiveHeight(context, 13),
                             fontWeight: FontWeight.w400,
-                            color: Color(0XFFB8B8B8),
+                            color: theme.secondaryTextColor,
                             letterSpacing: 0.15,
                             height: 16 / 12,
                           ),
@@ -116,7 +119,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     height: responsiveHeight(context, 20),
                     child: Icon(
                       Icons.location_on_outlined,
-                      color: Colors.green,
+                      color: theme.primaryColor,
                       size: responsiveHeight(context, 20),
                     ),
                   ),
@@ -130,7 +133,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 15),
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFF2F2E36),
+                            color: theme.textColorPrimary,
                             letterSpacing: 0.15,
                             height: 15 / 12,
                           ),
@@ -140,7 +143,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           style: TextStyle(
                             fontSize: responsiveHeight(context, 13),
                             fontWeight: FontWeight.w400,
-                            color: Color(0XFFB8B8B8),
+                            color: theme.secondaryTextColor,
                             letterSpacing: 0.15,
                             height: 16 / 12,
                           ),
@@ -151,9 +154,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   TextButton(
                     onPressed: () {},
                     child: Text(
-    AppLocalizations.of(context)!.change,                    style: GoogleFonts.inter(
+                      AppLocalizations.of(context)!.change,
+                      style: GoogleFonts.inter(
                         fontSize: responsiveHeight(context, 14),
-                        color: Color(0xFF25AE4B),
+                        color: theme.primaryColor,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.0,
                         height: 1.2,
@@ -168,7 +172,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 16),
                   fontWeight: FontWeight.w600,
-                  color: const Color(0xFF0A0D13),
+                  color: theme.textColorPrimary,
                   letterSpacing: 0.0,
                   height: 16 / 17,
                 ),
@@ -181,7 +185,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       width: responsiveWidth(context, 376),
                       height: responsiveHeight(context, 42),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0XFFD6D6D6)),
+                        border: Border.all(color: theme.borderColor),
                         borderRadius: Directionality.of(context) == TextDirection.rtl
                             ? BorderRadius.only(
                           topRight: Radius.circular(responsiveWidth(context, 10)),
@@ -191,7 +195,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           topLeft: Radius.circular(responsiveWidth(context, 10)),
                           bottomLeft: Radius.circular(responsiveWidth(context, 10)),
                         ),
-
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -202,7 +205,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                           hintText: AppLocalizations.of(context)!.enterYourPromo,
                           hintStyle: GoogleFonts.inter(
-                            color: Color(0XFF878787),
+                            color: theme.hintTextColor,
                             fontSize: responsiveHeight(context, 12),
                             fontWeight: FontWeight.w400,
                             letterSpacing: 0.0,
@@ -218,7 +221,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     height: responsiveHeight(context, 42),
                     width: responsiveWidth(context, 90),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF34B56F),
+                      color: theme.primaryColor,
                       borderRadius: Directionality.of(context) == TextDirection.rtl
                           ? BorderRadius.only(
                         topLeft: Radius.circular(responsiveWidth(context, 10)),
@@ -235,7 +238,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       child: Text(
                         AppLocalizations.of(context)!.add,
                         style: GoogleFonts.inter(
-                          color: Color(0XFFFFFFFF),
+                          color: theme.buttonTextColor,
                           fontSize: responsiveHeight(context, 12),
                           fontWeight: FontWeight.w400,
                           letterSpacing: 0.0,
@@ -248,9 +251,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
               SizedBox(height: responsiveHeight(context, 24)),
               Text(
-               AppLocalizations.of(context)!.payWith,
+                AppLocalizations.of(context)!.payWith,
                 style: GoogleFonts.inter(
-                  color: const Color(0xFF0A0D13),
+                  color: theme.textColorPrimary,
                   fontSize: responsiveHeight(context, 18),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
@@ -275,36 +278,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color:
-                                  isCardSelected
-                                      ? const Color(0xFF34B56F)
-                                      : Colors.grey,
+                              color: isCardSelected ? theme.primaryColor : theme.secondaryTextColor,
                               width: responsiveWidth(context, 2),
                             ),
-                            color: Colors.white,
+                            color: theme.backgroundColor,
                           ),
-                          child:
-                              isCardSelected
-                                  ? Center(
-                                    child: Container(
-                                      width: responsiveWidth(context, 9),
-                                      height: responsiveHeight(context, 9),
-                                      margin: const EdgeInsets.all(1),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color(0xFF34B56F),
-                                      ),
-                                    ),
-                                  )
-                                  : null,
+                          child: isCardSelected
+                              ? Center(
+                            child: Container(
+                              width: responsiveWidth(context, 9),
+                              height: responsiveHeight(context, 9),
+                              margin: const EdgeInsets.all(1),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: theme.primaryColor,
+                              ),
+                            ),
+                          )
+                              : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Text(
-                         AppLocalizations.of(context)!.card,
+                          AppLocalizations.of(context)!.card,
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 16),
                             fontWeight: FontWeight.w500,
-                            color: const Color(0xFF0A0D13),
+                            color: theme.textColorPrimary,
                           ),
                         ),
                       ],
@@ -326,36 +325,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color:
-                                  isCashSelected
-                                      ? const Color(0xFF34B56F)
-                                      : Colors.grey,
+                              color: isCashSelected ? theme.primaryColor : theme.secondaryTextColor,
                               width: responsiveWidth(context, 2),
                             ),
-                            color: Colors.white,
+                            color: theme.backgroundColor,
                           ),
-                          child:
-                              isCashSelected
-                                  ? Center(
-                                    child: Container(
-                                      width: responsiveWidth(context, 9),
-                                      height: responsiveHeight(context, 9),
-                                      margin: const EdgeInsets.all(1),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color(0xFF34B56F),
-                                      ),
-                                    ),
-                                  )
-                                  : null,
+                          child: isCashSelected
+                              ? Center(
+                            child: Container(
+                              width: responsiveWidth(context, 9),
+                              height: responsiveHeight(context, 9),
+                              margin: const EdgeInsets.all(1),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: theme.primaryColor,
+                              ),
+                            ),
+                          )
+                              : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Text(
-                         AppLocalizations.of(context)!.cash,
+                          AppLocalizations.of(context)!.cash,
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 16),
                             fontWeight: FontWeight.w500,
-                            color: const Color(0xFF0A0D13),
+                            color: theme.textColorPrimary,
                           ),
                         ),
                       ],
@@ -367,7 +362,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               Text(
                 AppLocalizations.of(context)!.cardType,
                 style: GoogleFonts.inter(
-                  color: Color(0xFF0A0D13),
+                  color: theme.textColorPrimary,
                   fontSize: responsiveHeight(context, 18),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
@@ -392,27 +387,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color:
-                                  isMastercardSelected
-                                      ? Color(0xFF34B56F)
-                                      : Colors.grey,
+                              color: isMastercardSelected ? theme.primaryColor : theme.secondaryTextColor,
                               width: 2,
                             ),
-                            color: Colors.white,
+                            color: theme.backgroundColor,
                           ),
-                          child:
-                              isMastercardSelected
-                                  ? Center(
-                                    child: Container(
-                                      width: responsiveWidth(context, 9),
-                                      height: responsiveHeight(context, 9),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color(0xFF34B56F),
-                                      ),
-                                    ),
-                                  )
-                                  : null,
+                          child: isMastercardSelected
+                              ? Center(
+                            child: Container(
+                              width: responsiveWidth(context, 9),
+                              height: responsiveHeight(context, 9),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: theme.primaryColor,
+                              ),
+                            ),
+                          )
+                              : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Container(
@@ -442,27 +433,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color:
-                                  isVisaSelected
-                                      ? Color(0xFF34B56F)
-                                      : Colors.grey,
+                              color: isVisaSelected ? theme.primaryColor : theme.secondaryTextColor,
                               width: 2,
                             ),
-                            color: Colors.white,
+                            color: theme.backgroundColor,
                           ),
-                          child:
-                              isVisaSelected
-                                  ? Center(
-                                    child: Container(
-                                      width: responsiveWidth(context, 9),
-                                      height: responsiveHeight(context, 9),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color(0xFF34B56F),
-                                      ),
-                                    ),
-                                  )
-                                  : null,
+                          child: isVisaSelected
+                              ? Center(
+                            child: Container(
+                              width: responsiveWidth(context, 9),
+                              height: responsiveHeight(context, 9),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: theme.primaryColor,
+                              ),
+                            ),
+                          )
+                              : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Container(
@@ -484,7 +471,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 height: responsiveHeight(context, 206),
                 width: responsiveWidth(context, 378),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF25AE4B),
+                  color: theme.primaryColor,
                   borderRadius: BorderRadius.circular(7),
                 ),
                 child: Padding(
@@ -497,7 +484,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             AppLocalizations.of(context)!.subTotal,
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontWeight: FontWeight.w400,
                               fontSize: responsiveHeight(context, 14),
                               letterSpacing: 0.5,
@@ -507,7 +494,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             '100 \$',
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontWeight: FontWeight.w400,
                               fontSize: responsiveHeight(context, 14),
                               letterSpacing: 0.5,
@@ -523,7 +510,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             AppLocalizations.of(context)!.deliveryCharge,
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontWeight: FontWeight.w400,
                               fontSize: responsiveHeight(context, 14),
                               letterSpacing: 0.5,
@@ -533,7 +520,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             '10 \$',
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontWeight: FontWeight.w400,
                               fontSize: responsiveHeight(context, 14),
                               letterSpacing: 0.5,
@@ -549,7 +536,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             AppLocalizations.of(context)!.discount,
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontWeight: FontWeight.w400,
                               fontSize: responsiveHeight(context, 14),
                               letterSpacing: 0.5,
@@ -559,7 +546,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             '10 \$',
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontWeight: FontWeight.w400,
                               fontSize: responsiveHeight(context, 14),
                               letterSpacing: 0.5,
@@ -575,7 +562,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             AppLocalizations.of(context)!.total,
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontSize: responsiveHeight(context, 18),
                               fontWeight: FontWeight.w700,
                               letterSpacing: 0.64,
@@ -585,7 +572,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Text(
                             '110\$',
                             style: GoogleFonts.inter(
-                              color: Color(0XFFFEFEFF),
+                              color: theme.buttonTextColor,
                               fontSize: responsiveHeight(context, 18),
                               fontWeight: FontWeight.w700,
                               letterSpacing: 0.64,
@@ -599,18 +586,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         width: responsiveWidth(context, 366.02),
                         height: responsiveHeight(context, 57),
                         decoration: BoxDecoration(
-                          color: Color(0XFFFEFEFF),
+                          color: theme.containerColor,
                           borderRadius: BorderRadius.circular(7),
                         ),
                         child: TextButton(
                           onPressed: () {
                             Navigator.pushNamed(context, '/addCard');
-
                           },
                           child: Text(
                             AppLocalizations.of(context)!.placeMyOrder,
                             style: GoogleFonts.inter(
-                              color: Color(0xFF34B56F),
+                              color: theme.primaryColor,
                               fontSize: responsiveHeight(context, 14),
                               fontWeight: FontWeight.w700,
                               letterSpacing: 0.5,
@@ -628,5 +614,4 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       ),
     );
-  }
-}
+  }}

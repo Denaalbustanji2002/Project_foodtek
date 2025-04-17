@@ -9,6 +9,7 @@ import '../../../cubits/user_cubit.dart';
 import '../../../helper/responsive.dart';
 import '../../../helper/secure_storage_helper.dart';
 import '../../../states/user_state.dart';
+import '../../../theme/app_theme_extensions.dart';
 import 'login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -62,8 +63,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Scaffold(
-      backgroundColor: const Color(0XFF25AE4B),
+      backgroundColor:theme.splashScreenColor,
       body: SafeArea(
         top: true,
         left: true,
@@ -148,7 +150,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         width: responsiveWidth(context, 343),
                         height: responsiveHeight(context, 417),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: theme.backgroundColor,
                           borderRadius: BorderRadius.circular(
                             responsiveWidth(context, 12),
                           ),
@@ -170,7 +172,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                       'assets/images/Vector.svg',
                                       fit: BoxFit.none,
                                       colorFilter: ColorFilter.mode(
-                                        Colors.black,
+                                        theme.iconColor,
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -196,7 +198,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                           fontWeight: FontWeight.w700,
                                           height: 1.3,
                                           letterSpacing: -0.02,
-                                          color: const Color(0xFF111827),
+                                          color: theme.textColorPrimary,
                                         ),
                                       ),
                                       SizedBox(
@@ -217,7 +219,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                               fontWeight: FontWeight.w500,
                                               height: 1.4,
                                               letterSpacing: -0.01,
-                                              color: const Color(0xFF6C7278),
+                                              color: theme.secondaryTextColor,
                                             ),
                                           ),
                                           SizedBox(
@@ -246,7 +248,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                                 fontWeight: FontWeight.w600,
                                                 height: 1.4,
                                                 letterSpacing: -0.01,
-                                                color: const Color(0xFF25AE4B),
+                                                color: theme.primaryColor,
                                               ),
                                             ),
                                           ),
@@ -269,7 +271,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                           context,
                                         )!.newPassword,
                                         style: GoogleFonts.plusJakartaSans(
-                                          color: const Color(0xFF6C7278),
+                                          color: theme.secondaryTextColor,
                                           fontSize: 12,
                                           letterSpacing: -0.02,
                                           height: 1.6,
@@ -281,17 +283,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                         width: responsiveWidth(context, 295),
                                         height: responsiveHeight(context, 46),
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: theme.containerColor,
                                           borderRadius: BorderRadius.circular(
                                             10,
                                           ),
                                           border: Border.all(
-                                            color: const Color(0xFFEDF1F3),
+                                            color: theme.borderColor,
                                             width: 1,
                                           ),
-                                          boxShadow: const [
+                                          boxShadow:  [
                                             BoxShadow(
-                                              color: Color(0x3DE4E5E7),
+                                              color: theme.shadowColor,
                                               offset: Offset(0, 1),
                                               blurRadius: 2,
                                             ),
@@ -306,7 +308,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                             fontSize: 14,
                                             height: 1.4,
                                             letterSpacing: -0.01,
-                                            color: const Color(0xFF1A1C1E),
+                                            color: theme.textFieldTextColor,
                                           ),
                                           decoration: InputDecoration(
                                             hintText:
@@ -319,7 +321,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                                 context,
                                                 14,
                                               ),
-                                              color: Colors.grey[500],
+                                              color: theme.hintTextColor,
                                             ),
                                             contentPadding:
                                                 EdgeInsets.symmetric(
@@ -345,7 +347,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                           context,
                                         )!.confirmNewPassword,
                                         style: GoogleFonts.plusJakartaSans(
-                                          color: const Color(0xFF6C7278),
+                                          color: theme.secondaryTextColor,
                                           fontSize: 12,
                                           letterSpacing: -0.02,
                                           height: 1.6,
@@ -357,18 +359,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                         width: responsiveWidth(context, 295),
                                         height: responsiveHeight(context, 46),
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: theme.containerColor,
                                           borderRadius: BorderRadius.circular(
                                             10,
                                           ),
                                           border: Border.all(
-                                            color: const Color(0xFFEDF1F3),
+                                            color: theme.borderColor,
                                             width: 1,
                                           ),
-                                          boxShadow: const [
+                                          boxShadow: [
                                             BoxShadow(
-                                              color: Color(0x3DE4E5E7),
-                                              offset: Offset(0, 1),
+                                              color: theme.shadowColor,
+                                              offset: const Offset(0, 1),
                                               blurRadius: 2,
                                             ),
                                           ],
@@ -382,7 +384,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                             fontSize: 14,
                                             height: 1.4,
                                             letterSpacing: -0.01,
-                                            color: const Color(0xFF1A1C1E),
+                                            color: theme.textFieldTextColor,
                                           ),
                                           decoration: InputDecoration(
                                             hintText:
@@ -395,7 +397,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                                 context,
                                                 14,
                                               ),
-                                              color: Colors.grey[500],
+                                              color: theme.hintTextColor,
                                             ),
                                             contentPadding:
                                                 EdgeInsets.symmetric(
@@ -514,9 +516,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color(
-                                              0xFF25AE4B,
-                                            ),
+                                            backgroundColor: theme.primaryColor,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(
@@ -544,7 +544,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                                 14,
                                               ),
                                               fontWeight: FontWeight.w500,
-                                              color: Colors.white,
+                                              color: theme.buttonTextColor,
                                             ),
                                           ),
                                         ),

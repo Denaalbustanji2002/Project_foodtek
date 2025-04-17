@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import '../../cubits/navigation_cubit.dart';
+import '../../theme/app_theme_extensions.dart';
 import 'app_tab.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -32,14 +33,17 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppThemeExtension>()!;
+
     return ValueListenableBuilder<String>(
       valueListenable: currentRouteNotifier,
       builder: (context, currentRoute, child) {
         return BottomAppBar(
-          color: const Color(0xFFDBF4D1),
+          color: appTheme.bottomNavBarBackgroundColor,
           notchMargin: 0,
           elevation: 5,
-          shadowColor: const Color(0xFFDBF4D1),
+          shadowColor: appTheme.bottomNavBarShadowColor,
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -50,6 +54,7 @@ class BottomNavBar extends StatelessWidget {
                 AppLocalizations.of(context)!.home,
                 AppTab.home,
                 currentRoute,
+                appTheme,
               ),
               _buildIcon(
                 context,
@@ -57,6 +62,7 @@ class BottomNavBar extends StatelessWidget {
                 AppLocalizations.of(context)!.favoriteNav,
                 AppTab.favorites,
                 currentRoute,
+                appTheme,
               ),
               SizedBox(width: responsiveWidth(context, 24)),
               _buildIcon(
@@ -67,6 +73,7 @@ class BottomNavBar extends StatelessWidget {
                 _getHistoryLabel(currentRoute, context),
                 AppTab.history,
                 currentRoute,
+                appTheme,
               ),
               _buildIcon(
                 context,
@@ -74,6 +81,7 @@ class BottomNavBar extends StatelessWidget {
                 AppLocalizations.of(context)!.profile,
                 AppTab.profile,
                 currentRoute,
+                appTheme,
               ),
             ],
           ),
@@ -93,6 +101,7 @@ class BottomNavBar extends StatelessWidget {
       String label,
       AppTab tab,
       String currentRoute,
+      AppThemeExtension appTheme,
       ) {
     final List<String> bottomRoutes = ['/', '/favorites', '/cartHistory', '/history', '/profile'];
     final bool isBottomScreen = bottomRoutes.contains(currentRoute);
@@ -146,8 +155,8 @@ class BottomNavBar extends StatelessWidget {
               Icon(
                 icon,
                 color: isSelected
-                    ? const Color(0xFF25AE4B)
-                    : const Color(0xFF484C52),
+                    ? appTheme.bottomNavBarSelectedIconColor
+                    : appTheme.bottomNavBarUnselectedIconColor,
               ),
               SizedBox(height: responsiveHeight(context, 6)),
               Text(
@@ -157,8 +166,8 @@ class BottomNavBar extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   height: 12 / 16,
                   color: isSelected
-                      ? const Color(0xFF25AE4B)
-                      : const Color(0xFF484C52),
+                      ? appTheme.bottomNavBarSelectedTextColor
+                      : appTheme.bottomNavBarUnselectedTextColor,
                 ),
               ),
             ],

@@ -3,6 +3,8 @@ import 'package:foodtek_project/helper/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../theme/app_theme_extensions.dart';
+
 class NotificationModel {
   final String title;
   final String message;
@@ -89,13 +91,15 @@ AppLocalizations.of(context)!.notifPromoMsg ,
   }
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.backgroundColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: theme.shadowColor.withOpacity(0.3),
             offset: Offset(0, -8),
             blurRadius: 17.1,
           ),
@@ -110,7 +114,7 @@ AppLocalizations.of(context)!.notifPromoMsg ,
             height: responsiveHeight(context, 5),
             margin: EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(
-              color: Color(0x3C3C434D),
+              color: theme.secondaryTextColor.withOpacity(0.3),
               borderRadius: BorderRadius.circular(2.8),
             ),
           ),
@@ -119,17 +123,28 @@ AppLocalizations.of(context)!.notifPromoMsg ,
             children: [
               IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.arrow_back_outlined),
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  color: theme.iconColor,
+                ),
               ),
               Text(
-               AppLocalizations.of(context)!.notifications,
+                AppLocalizations.of(context)!.notifications,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
-                  color: Color(0xFF000000),
+                  // استخدام لون العنوان من الثيم
+                  color: theme.titleColor,
                 ),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.more_vert,
+                  // استخدام لون الأيقونة من الثيم
+                  color: theme.iconColor,
+                ),
+              ),
             ],
           ),
           SizedBox(height: 10),
@@ -144,7 +159,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
             ],
           ),
           SizedBox(height: responsiveHeight(context, 16)),
-
           Expanded(
             child: ListView.builder(
               controller: widget.scrollController,
@@ -171,8 +185,10 @@ AppLocalizations.of(context)!.notifPromoMsg ,
       ),
     );
   }
-
   Widget buildTab(String text, {required bool isSelected}) {
+    // استخراج كائن الثيم
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -184,7 +200,8 @@ AppLocalizations.of(context)!.notifPromoMsg ,
           Text(
             text,
             style: GoogleFonts.inter(
-              color: isSelected ? Color(0xFF25AE4B) : Color(0xFF697386),
+              // استخدام primaryColor للنص المحدد وsecondaryTextColor للنص غير المحدد
+              color: isSelected ? theme.primaryColor : theme.secondaryTextColor,
               fontWeight: FontWeight.w500,
               fontSize: 18,
             ),
@@ -193,13 +210,12 @@ AppLocalizations.of(context)!.notifPromoMsg ,
           Container(
             height: 2,
             width: 40,
-            color: isSelected ? Colors.green : Colors.transparent,
+            color: isSelected ? theme.primaryColor : Colors.transparent,
           ),
         ],
       ),
     );
-  }
-}
+  }}
 
 class NotificationItem extends StatelessWidget {
   final String title;
@@ -216,8 +232,9 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Container(
-      color: Color(0xFFF1F6FC),
+      color: theme.containerColor,
       padding: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
       child: Stack(
         children: [
@@ -229,9 +246,9 @@ class NotificationItem extends StatelessWidget {
                 width: 8,
                 height: 8,
                 decoration: BoxDecoration(
-                  color: Color(0xFF00A0FF),
+                  color: theme.primaryColor,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Color(0xFF007BFF), width: 2),
+                  border: Border.all(color: theme.minMaxColor, width: 2),
                 ),
               ),
             ),
@@ -246,7 +263,7 @@ class NotificationItem extends StatelessWidget {
                     height: 14 / 20,
                     fontWeight: FontWeight.w500,
                     fontSize: responsiveHeight(context, 16),
-                    color: isRead ? Color(0xFF1A1F36) : Color(0xFF1A1F36),
+                    color: theme.titleColor,
                   ),
                 ),
                 SizedBox(height: responsiveHeight(context, 8)),
@@ -256,7 +273,7 @@ class NotificationItem extends StatelessWidget {
                     height: 14 / 20,
                     fontWeight: FontWeight.w400,
                     fontSize: responsiveHeight(context, 14),
-                    color: isRead ? Color(0xFF1A1F36) : Color(0xFF1A1F36),
+                    color: theme.textColorPrimary,
                   ),
                 ),
                 SizedBox(height: 8),
@@ -265,7 +282,7 @@ class NotificationItem extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFFA5ACB8),
+                    color: theme.secondaryTextColor,
                   ),
                 ),
               ],
@@ -278,6 +295,9 @@ class NotificationItem extends StatelessWidget {
 }
 
 void showNotificationsSheet(BuildContext context) {
+  // استخراج كائن الثيم
+  final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -294,11 +314,12 @@ void showNotificationsSheet(BuildContext context) {
         height: responsiveHeight(context, 700),
         margin: EdgeInsets.only(top: 230),
         decoration: BoxDecoration(
-          color: Colors.white,
+          // استخدام لون أغمق مناسب للدارك مود
+          color: theme.containerColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: theme.shadowColor.withOpacity(0.3),
               offset: Offset(0, -8),
               blurRadius: 17.1,
             ),
@@ -309,4 +330,3 @@ void showNotificationsSheet(BuildContext context) {
     ),
   );
 }
-

@@ -4,13 +4,16 @@ import 'package:foodtek_project/helper/responsive.dart';
 import 'package:foodtek_project/view/screens/ordering_screens/order_details_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../cubits/language_cubit.dart';
+import '../../../cubits/theme_cubit.dart'; // Import the theme cubit
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../cubits/navigation_cubit.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/app_tab.dart';
 
 class ProfileScreen extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
+
   const ProfileScreen({super.key, required this.navigatorKey});
 
   @override
@@ -19,16 +22,21 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String selectedCategory = 'all';
+
   @override
   Widget build(BuildContext context) {
+    // Get the current theme state
+    final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
+    final isDarkMode = context.watch<ThemeCubit>().isDarkMode;
+
     return Scaffold(
-      backgroundColor: Color(0XFFFFFFFF),
+      backgroundColor: themeExtension.backgroundColor,
       appBar: AppBar(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: themeExtension.appBarColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Color(0xFF391713),
+          color: themeExtension.titleColor,
           iconSize: responsiveHeight(context, 20),
           onPressed: () {
             Navigator.pushReplacement(
@@ -43,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
-            color: Color(0xFF391713),
+            color: themeExtension.titleColor,
             letterSpacing: 0.0,
             height: 1.0,
           ),
@@ -56,11 +64,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         physics: ClampingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: [
-          _buildUserProfileHeader(context),
+          _buildUserProfileHeader(context, themeExtension),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Card(
-              color: Color(0XFFFFFFFF),
+              color: themeExtension.containerColor,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -86,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     trailing: Text(
                       'عربية',
                       style: GoogleFonts.cairo(
-                        color: Color(0XFF1D1D1D),
+                        color: themeExtension.labelTextColor,
                         fontSize: responsiveHeight(context, 14),
                         fontWeight: FontWeight.w500,
                       ),
@@ -94,6 +102,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       _showLanguageDialog(context, widget.navigatorKey);
                     },
+                  ),
+                  _buildThemeToggleMenuItem(
+                    context: context,
+                    isDarkMode: isDarkMode,
+                    themeExtension: themeExtension,
+                    navigatorKey: widget.navigatorKey,
                   ),
                   _buildProfileMenuItem(
                     context: context,
@@ -114,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Card(
-              color: Color(0XFFFFFFFF),
+              color: themeExtension.containerColor,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -141,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Card(
-              color: Color(0XFFFFFFFF),
+              color: themeExtension.containerColor,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -165,7 +179,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildUserProfileHeader(BuildContext context) {
+  Widget _buildThemeToggleMenuItem({
+    required BuildContext context,
+    required bool isDarkMode,
+    required AppThemeExtension themeExtension,
+    required GlobalKey<NavigatorState> navigatorKey,
+  }) {
+    return ListTile(
+      dense: true,
+      visualDensity: VisualDensity.compact,
+      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+      minLeadingWidth: 24,
+      leading: Icon(
+        isDarkMode ? Icons.dark_mode : Icons.light_mode,
+        color: themeExtension.iconColor,
+        size: 20,
+      ),
+      title: Text(
+        isDarkMode
+            ? AppLocalizations.of(context)?.darkMode ?? 'Dark Mode'
+            : AppLocalizations.of(context)?.lightMode ?? 'Light Mode',
+        style: GoogleFonts.inter(
+          color: themeExtension.titleColor,
+          fontSize: responsiveHeight(context, 14),
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: Transform.scale(
+        scale: 0.7,
+        child: Switch(
+          activeColor: Color(0XFFFFFFFF),
+          activeTrackColor: Color(0XFF09CA67),
+          inactiveTrackColor: Color(0XFFAFAFAF),
+          inactiveThumbColor: Color(0XFFFFFFFF),
+          value: isDarkMode,
+          onChanged: (bool newValue) async {
+            // تأخير قليل للسماح للواجهة بالاستجابة
+            await Future.delayed(Duration(milliseconds: 100));
+
+            // تبديل السمة
+            context.read<ThemeCubit>().toggleTheme();
+
+            // تغيير علامة التبويب إلى الصفحة الرئيسية
+            context.read<NavigationCubit>().changeTab(AppTab.home);
+
+            // الانتقال إلى الصفحة الرئيسية
+            navigatorKey.currentState!.pushNamedAndRemoveUntil(
+              '/',
+              (route) => false,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserProfileHeader(
+    BuildContext context,
+    AppThemeExtension themeExtension,
+  ) {
+    final brightness =
+        Theme.of(
+          context,
+        ).brightness; // الحصول على Brightness من Theme.of(context)
+
     return Padding(
       padding: EdgeInsets.all(12.0),
       child: Column(
@@ -173,7 +250,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           CircleAvatar(
             radius: 36,
-            backgroundColor: Colors.grey.shade200,
+            backgroundColor:
+                brightness == Brightness.dark
+                    ? Colors.grey.shade800
+                    : Colors.grey.shade200,
             child: Image.asset(
               "assets/images/profile_picture.png",
               fit: BoxFit.cover,
@@ -189,7 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: GoogleFonts.inter(
                   fontSize: responsiveHeight(context, 16),
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF1B1B1B),
+                  color: themeExtension.titleColor,
                   letterSpacing: 0.0,
                   height: 1.0,
                 ),
@@ -198,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 'ahmad1709@gmail.com',
                 style: GoogleFonts.inter(
-                  color: Colors.grey,
+                  color: themeExtension.labelTextColor,
                   fontSize: responsiveHeight(context, 14),
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.0,
@@ -215,6 +295,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildSectionTitle(String title, BuildContext context) {
     bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
+    // احصل على الألوان من AppThemeExtension
+    final themeExtension = Theme.of(context).extension<AppThemeExtension>();
+
+    // تأكد من أن themeExtension ليس null
+    final theme = themeExtension ?? AppThemeExtension.light;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
       child: Align(
@@ -223,7 +309,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title,
           textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           style: GoogleFonts.inter(
-            color: Color(0xFF1B1B1B),
+            color: themeExtension?.titleColor ?? Colors.black,
+            // استخدم color من AppThemeExtension
             fontWeight: FontWeight.w500,
             fontSize: responsiveHeight(context, 16),
             letterSpacing: 0.0,
@@ -241,16 +328,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Widget? trailing,
     VoidCallback? onTap,
   }) {
+    final theme = Theme.of(context);
+    final themeExtension =
+        theme.extension<AppThemeExtension>(); // إضافة هذه السطر
+
     return ListTile(
       dense: true,
       visualDensity: VisualDensity.compact,
       contentPadding: EdgeInsets.symmetric(horizontal: 16),
       minLeadingWidth: 24,
-      leading: Icon(icon, color: Color(0XFF1D1D1D), size: 20),
+      leading: Icon(
+        icon,
+        color: themeExtension?.iconColor ?? Colors.black,
+        size: 20,
+      ),
+      // استخدام themeExtension
       title: Text(
         title,
         style: GoogleFonts.inter(
-          color: Color(0XFF1D1D1D),
+          color: themeExtension?.titleColor ?? Colors.black,
+          // استخدام themeExtension
           fontSize: responsiveHeight(context, 14),
           fontWeight: FontWeight.w500,
         ),
@@ -265,15 +362,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required String title,
     required bool value,
   }) {
+    final theme = Theme.of(context);
+    final themeExtension =
+        theme.extension<AppThemeExtension>(); // إضافة هذه السطر
+
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 12),
-      leading: Icon(icon, color: Color(0XFF1D1D1D), size: 20),
+      leading: Icon(
+        icon,
+        color: themeExtension?.iconColor ?? Colors.black,
+        size: 20,
+      ),
+      // استخدام themeExtension
       title: Text(
         title,
         style: GoogleFonts.inter(
           fontSize: 14,
           fontWeight: FontWeight.w500,
-          color: Color(0XFF1D1D1D),
+          color:
+              themeExtension?.titleColor ??
+              Colors.black, // استخدام themeExtension
         ),
       ),
       trailing: Transform.scale(
@@ -309,59 +417,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
       BuildContext parentContext,
       GlobalKey<NavigatorState> navigatorKey,
       ) {
+    final themeExtension = Theme.of(parentContext).extension<AppThemeExtension>();
+
     showDialog(
       context: parentContext,
-      builder: (context) {
+      builder: (dialogContext) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.chooseLanguage),
+          backgroundColor: themeExtension?.containerColor ?? Colors.white,
+          title: Text(
+            AppLocalizations.of(dialogContext)!.chooseLanguage,
+            style: TextStyle(color: themeExtension?.titleColor ?? Colors.black),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // ===== Arabic Option =====
               ListTile(
-                title: Text(AppLocalizations.of(context)!.arabic),
-                onTap: () async {
-                  print("Arabic language selected");
-                  Navigator.of(context, rootNavigator: true).pop();
-                  await Future.delayed(Duration(milliseconds: 100));
-                  await parentContext.read<LanguageCubit>().changeLang(
-                    langCode: 'ar',
-                  );
-                  print("Language changed to Arabic");
+                title: Text(
+                  AppLocalizations.of(dialogContext)!.arabic,
+                  style: TextStyle(color: themeExtension?.titleColor ?? Colors.black),
+                ),
+                onTap: () {
+                  final langCubit = parentContext.read<LanguageCubit>();
+                  final navCubit  = parentContext.read<NavigationCubit>();
 
-                  setState(() {
-                    selectedCategory = AppLocalizations.of(context)!.all;
-                    print("Selected category set to: $selectedCategory");
+                  Navigator.of(dialogContext).pop();
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) async {
+                    if (!parentContext.mounted) return;
+
+                    await langCubit.changeLang(langCode: 'ar');
+                    navCubit.changeTab(AppTab.home);
+                    navigatorKey.currentState!
+                        .pushNamedAndRemoveUntil('/', (route) => false);
                   });
-
-                  parentContext.read<NavigationCubit>().changeTab(AppTab.home);
-                  print("NavigationCubit changed to home tab");
-
-                  navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                    '/',
-                        (route) => false,
-                  );
-                  print("Navigated back to home");
                 },
               ),
+
+              // ===== English Option =====
               ListTile(
-                title: Text(AppLocalizations.of(context)!.english),
-                onTap: () async {
-                  print("English language selected");
-                  Navigator.of(context, rootNavigator: true).pop();
-                  await Future.delayed(Duration(milliseconds: 100));
-                  await parentContext.read<LanguageCubit>().changeLang(
-                    langCode: 'en',
-                  );
-                  print("Language changed to English");
+                title: Text(
+                  AppLocalizations.of(dialogContext)!.english,
+                  style: TextStyle(color: themeExtension?.titleColor ?? Colors.black),
+                ),
+                onTap: () {
+                  final langCubit = parentContext.read<LanguageCubit>();
+                  final navCubit  = parentContext.read<NavigationCubit>();
 
-                  parentContext.read<NavigationCubit>().changeTab(AppTab.home);
-                  print("NavigationCubit changed to home tab");
+                  Navigator.of(dialogContext).pop();
 
-                  navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                    '/',
-                        (route) => false,
-                  );
-                  print("Navigated back to home");
+                  WidgetsBinding.instance.addPostFrameCallback((_) async {
+                    if (!parentContext.mounted) return;
+
+                    await langCubit.changeLang(langCode: 'en');
+                    navCubit.changeTab(AppTab.home);
+                    navigatorKey.currentState!
+                        .pushNamedAndRemoveUntil('/', (route) => false);
+                  });
                 },
               ),
             ],
@@ -370,5 +482,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
-
 }

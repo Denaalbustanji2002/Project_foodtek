@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/notifications_bottom_sheet.dart';
 import '../location_screen/delivery_tracking_screen.dart';
 import '../ordering_screens/cart_history_screen.dart';
@@ -32,15 +33,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>() ?? AppThemeExtension.light;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
+            icon: Icon(Icons.notifications_outlined, color: theme.iconColor),
             onPressed: () {
               showNotificationsSheet(context);
             },
@@ -55,9 +58,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
             children: [
               SizedBox(height: responsiveHeight(context, 26)),
               Text(
-               AppLocalizations.of(context)!.addCard,
+                AppLocalizations.of(context)!.addCard,
                 style: GoogleFonts.inter(
-                  color: const Color(0xFF391713),
+                  color: theme.titleColor,
                   fontSize: responsiveHeight(context, 20),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
@@ -72,7 +75,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               Text(
                 AppLocalizations.of(context)!.name,
                 style: GoogleFonts.plusJakartaSans(
-                  color: Color(0XFF6C7278),
+                  color: theme.labelTextColor,
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
                   letterSpacing: -0.02,
@@ -84,15 +87,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 width: responsiveWidth(context, 368),
                 height: responsiveHeight(context, 46),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.containerColor,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: const Color(0xFFEDF1F3),
+                    color: theme.borderColor,
                     width: 1,
                   ),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
-                      color: Color(0x3DE4E5E7),
+                      color: theme.shadowColor,
                       offset: Offset(0, 1),
                       blurRadius: 2,
                     ),
@@ -103,7 +106,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
-                    color: Color(0XFF1A1C1E),
+                    color: theme.textFieldTextColor,
                     height: 1.4,
                     letterSpacing: -0.01,
                   ),
@@ -112,7 +115,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     hintStyle: GoogleFonts.inter(
                       fontWeight: FontWeight.w400,
                       fontSize: responsiveHeight(context, 14),
-                      color: Colors.grey[500],
+                      color: theme.hintTextColor,
                     ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: responsiveWidth(context, 13),
@@ -128,7 +131,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               Text(
                 AppLocalizations.of(context)!.cardNumber,
                 style: GoogleFonts.plusJakartaSans(
-                  color: Color(0XFF6C7278),
+                  color: theme.labelTextColor,
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
                   letterSpacing: -0.02,
@@ -140,15 +143,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 width: responsiveWidth(context, 368),
                 height: responsiveHeight(context, 46),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.containerColor,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: const Color(0xFFEDF1F3),
+                    color: theme.borderColor,
                     width: 1,
                   ),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
-                      color: Color(0x3DE4E5E7),
+                      color: theme.shadowColor,
                       offset: Offset(0, 1),
                       blurRadius: 2,
                     ),
@@ -163,7 +166,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
-                          color: Color(0XFF1A1C1E),
+                          color: theme.textFieldTextColor,
                           height: 1.4,
                           letterSpacing: -0.01,
                         ),
@@ -172,7 +175,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           hintStyle: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: responsiveHeight(context, 14),
-                            color: Colors.grey[500],
+                            color: theme.hintTextColor,
                           ),
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: responsiveWidth(context, 13),
@@ -199,7 +202,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ),
               ),
 
-
               SizedBox(height: responsiveHeight(context, 16)),
 
               Row(
@@ -211,7 +213,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         Text(
                           AppLocalizations.of(context)!.expiry,
                           style: GoogleFonts.plusJakartaSans(
-                            color: Color(0XFF6C7278),
+                            color: theme.labelTextColor,
                             fontSize: responsiveHeight(context, 12),
                             fontWeight: FontWeight.w500,
                             letterSpacing: -0.02,
@@ -223,15 +225,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           width: responsiveWidth(context, 176),
                           height: responsiveHeight(context, 46),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: theme.containerColor,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: const Color(0xFFEDF1F3),
+                              color: theme.borderColor,
                               width: 1,
                             ),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
-                                color: Color(0x3DE4E5E7),
+                                color: theme.shadowColor,
                                 offset: Offset(0, 1),
                                 blurRadius: 2,
                               ),
@@ -243,7 +245,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
-                              color: Color(0XFF1A1C1E),
+                              color: theme.textFieldTextColor,
                               height: 1.4,
                               letterSpacing: -0.01,
                             ),
@@ -252,7 +254,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               hintStyle: GoogleFonts.inter(
                                 fontWeight: FontWeight.w400,
                                 fontSize: responsiveHeight(context, 14),
-                                color: Colors.grey[500],
+                                color: theme.hintTextColor,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: responsiveWidth(context, 13),
@@ -273,7 +275,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         Text(
                           AppLocalizations.of(context)!.cvc,
                           style: GoogleFonts.plusJakartaSans(
-                            color: Color(0XFF6C7278),
+                            color: theme.labelTextColor,
                             fontSize: responsiveHeight(context, 12),
                             fontWeight: FontWeight.w500,
                             letterSpacing: -0.02,
@@ -285,15 +287,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           width: responsiveWidth(context, 176),
                           height: responsiveHeight(context, 46),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: theme.containerColor,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: const Color(0xFFEDF1F3),
+                              color: theme.borderColor,
                               width: 1,
                             ),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
-                                color: Color(0x3DE4E5E7),
+                                color: theme.shadowColor,
                                 offset: Offset(0, 1),
                                 blurRadius: 2,
                               ),
@@ -305,7 +307,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
-                              color: Color(0XFF1A1C1E),
+                              color: theme.textFieldTextColor,
                               height: 1.4,
                               letterSpacing: -0.01,
                             ),
@@ -314,7 +316,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               hintStyle: GoogleFonts.inter(
                                 fontWeight: FontWeight.w400,
                                 fontSize: responsiveHeight(context, 14),
-                                color: Colors.grey[500],
+                                color: theme.hintTextColor,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: responsiveWidth(context, 13),
@@ -336,7 +338,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 child: Text(
                   AppLocalizations.of(context)!.weWillSendYou,
                   style: GoogleFonts.inter(
-                    color: Color(0XFF929DA9),
+                    color: theme.secondaryTextColor,
                     fontSize: responsiveHeight(context, 12),
                     fontWeight: FontWeight.w400,
                     letterSpacing: 0.02,
@@ -357,10 +359,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       Navigator.pushNamed(context, '/orderDone');
-
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF25AE4B),
+                      backgroundColor: theme.primaryColor,
                       padding: EdgeInsets.symmetric(
                         horizontal: responsiveWidth(context, 22),
                         vertical: responsiveHeight(context, 18),
@@ -379,7 +380,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           style: GoogleFonts.inter(
                             fontSize: responsiveHeight(context, 18),
                             fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                            color: theme.buttonTextColor,
                             height: 1.0,
                             letterSpacing: 0.0,
                           ),
@@ -394,5 +395,4 @@ class _AddCardScreenState extends State<AddCardScreen> {
         ),
       ),
     );
-  }
-}
+  }}

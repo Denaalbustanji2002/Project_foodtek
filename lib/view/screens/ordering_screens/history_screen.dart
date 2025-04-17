@@ -6,6 +6,7 @@ import 'package:foodtek_project/view/widgets/spin_kit_hour_glass_widget.dart';
 import '../../../cubits/history_cubit.dart';
 import '../../../helper/responsive.dart';
 import '../../../states/history_state.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/header_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,11 +28,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         toolbarHeight: kToolbarHeight + 30,
         title: Padding(
@@ -74,6 +77,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Widget _buildHistoryItem(Map<String, dynamic> item) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     String tr(String key) => AppLocalizations.of(context)!.getTranslation(key);
 
     return Slidable(
@@ -84,11 +88,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
         children: [
           CustomSlidableAction(
             onPressed: (context) => showDeleteConfirmationDialog(context, item),
-            backgroundColor: const Color(0xFFFDAC1D),
+            backgroundColor: theme.deleteButtonColor,
             child: Icon(
               Icons.delete_outline,
               size: responsiveHeight(context, 25),
-              color: Colors.white,
+              color: theme.buttonTextColor,
             ),
           ),
         ],
@@ -96,10 +100,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
-          side: const BorderSide(color: Color(0xFFDBF4D1), width: 1),
+          side: BorderSide(color: theme.borderColor, width: 1),
         ),
         elevation: 0,
-        color: Colors.white,
+        color: theme.containerColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
@@ -120,10 +124,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             children: [
                               Text(
                                 tr(item['title']),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black,
+                                  color: theme.textColorPrimary,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -131,16 +135,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 tr(item['restaurant']),
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey.shade600,
+                                  color: theme.secondaryTextColor,
                                 ),
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 item['price'],
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF25AE4B),
+                                  color: theme.primaryColor,
                                 ),
                               ),
                             ],
@@ -152,18 +156,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             SizedBox(height: responsiveHeight(context, 16)),
                             Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.access_time,
                                   size: 14,
-                                  color: Colors.green,
+                                  color: theme.primaryColor,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   item['date'],
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700,
-                                    color: Color(0xFF3B3B3B),
+                                    color: theme.titleColor,
                                   ),
                                 ),
                               ],
@@ -171,17 +175,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.replay,
                                   size: 14,
-                                  color: Colors.green,
+                                  color: theme.primaryColor,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   tr(item['reorder'] ?? 'btn_reorder'),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.green,
+                                    color: theme.primaryColor,
                                   ),
                                 ),
                               ],
@@ -201,6 +205,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Widget _buildHistoryItemImage(Map<String, dynamic> item) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     final imagePath = item['image'] ?? '';
 
     return ClipRRect(
@@ -210,20 +215,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
         width: 65,
         height: 65,
         fit: BoxFit.cover,
-        errorBuilder:
-            (context, error, stackTrace) => Container(
-              width: 65,
-              height: 65,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+        errorBuilder: (context, error, stackTrace) => Container(
+          width: 65,
+          height: 65,
+          decoration: BoxDecoration(
+            color: theme.disabledColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildLoadMoreButton(HistoryLoaded state) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
     final isAllLoaded =
         state.visibleHistoryItems.length >= state.allHistoryItems.length;
 
@@ -236,7 +241,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: Text(
         AppLocalizations.of(context)!.loadMore,
         style: TextStyle(
-          color: Color(0xFF25AE4B),
+          color: theme.primaryColor,
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),

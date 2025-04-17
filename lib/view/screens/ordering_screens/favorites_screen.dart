@@ -3,12 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
 import '../../../models/favorite_model.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/Search_bar_widget.dart';
 import 'package:foodtek_project/view/widgets/header_widget.dart';
 
 class FavoritesScreen extends StatefulWidget {
-
-   FavoritesScreen({Key? key}) : super(key: key);
+  FavoritesScreen({Key? key}) : super(key: key);
 
   @override
   State<FavoritesScreen> createState() => _FavoritesScreenState();
@@ -62,12 +62,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         toolbarHeight: kToolbarHeight + 20,
         title: Padding(
@@ -88,14 +89,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 style: GoogleFonts.inter(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black,
+                  color: theme.titleColor,
                   height: 1.0,
                   letterSpacing: 0,
                 ),
                 textAlign: TextAlign.start,
               ),
             ),
-
             const SizedBox(height: 16),
             Expanded(
               child:
@@ -110,24 +110,29 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   Widget _buildEmptyFavorites(AppLocalizations local) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.favorite_border, size: 70, color: Colors.grey[400]),
+          Icon(Icons.favorite_border, size: 70, color: theme.disabledColor),
           const SizedBox(height: 16),
           Text(
             local.noFavoritesYet,
             style: GoogleFonts.poppins(
               fontSize: 20,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600],
+              color: theme.secondaryTextColor,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             local.noFavoritesYet,
-            style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey[500]),
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: theme.hintTextColor,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -160,6 +165,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     int index,
     AppLocalizations local,
   ) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Column(
       children: [
         Stack(
@@ -170,9 +177,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               height: responsiveHeight(context, 200),
               margin: EdgeInsets.only(top: 44.5),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.containerColor,
                 borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Color(0xFFDBF4D1), width: 1),
+                border: Border.all(
+                  color: theme.mildGreenColor,
+                  width: 1.5,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,7 +201,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             fontSize: responsiveHeight(context, 14),
                             height: 15 / 14,
                             letterSpacing: 0.0,
-                            color: Color(0xFF24262F),
+                            color: theme.titleColor,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -204,7 +214,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             fontWeight: FontWeight.w300,
                             fontSize: responsiveHeight(context, 10),
                             height: 12 / 10,
-                            color: Color(0xFF969AB0),
+                            color: theme.secondaryTextColor,
                           ),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
@@ -216,7 +226,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             fontWeight: FontWeight.w600,
                             fontSize: responsiveHeight(context, 14),
                             height: 15 / 14,
-                            color: Color(0xFF24262F),
+                            color: theme.titleColor,
                           ),
                         ),
                       ],
@@ -237,8 +247,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF25AE4B),
-                      foregroundColor: Colors.white,
+                      backgroundColor: theme.primaryColor,
+                      foregroundColor: theme.buttonTextColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -251,7 +261,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         fontSize: responsiveHeight(context, 10),
                         height: 15 / 10,
                         letterSpacing: 0.0,
-                        color: Color(0xFFFFFFFF),
+                        color: theme.buttonTextColor,
                       ),
                     ),
                   ),
@@ -276,15 +286,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFFDBF4D1),
-                    border: Border.all(color: Color(0xFFDBF4D1), width: 2),
+                    color: theme.mildGreenColor,
+                    border: Border.all(color: theme.mildGreenColor, width: 2),
                   ),
                   width: responsiveWidth(context, 35),
                   height: responsiveHeight(context, 35),
                   child: Icon(
                     Icons.favorite,
                     size: responsiveHeight(context, 13),
-                    color: Color(0xFFFF4444),
+                    color: theme.spicyRedColor,
                   ),
                 ),
               ),
@@ -299,10 +309,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   height: responsiveHeight(context, 89),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFFEEEEEE),
+                    color: theme.disabledColor,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: theme.shadowColor,
                         blurRadius: 4,
                         offset: Offset(0, 2),
                       ),
@@ -330,6 +340,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     String message, {
     required VoidCallback onConfirm,
   }) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     showDialog(
       context: context,
       builder: (context) {
@@ -342,7 +354,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             height: 154,
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.containerColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -351,13 +363,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 Text(
                   message,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
                     height: 1.4,
                     letterSpacing: -0.01,
-                    color: Color(0xFF6C7278),
+                    color: theme.secondaryTextColor,
                   ),
                 ),
                 Row(
@@ -370,14 +382,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           onConfirm();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF25AE4B),
-                          shadowColor: const Color(0x7A253EA7),
+                          backgroundColor: theme.primaryColor,
+                          shadowColor: theme.shadowColor,
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(
+                            side: BorderSide(
                               width: 1,
-                              color: Color(0xFF85DE9E),
+                              color: theme.borderColor!,
                             ),
                           ),
                           padding: const EdgeInsets.symmetric(
@@ -388,13 +400,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         child: Text(
                           AppLocalizations.of(context)!.yes,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                             height: 1.4,
                             letterSpacing: -0.01,
-                            color: Color(0xFFEDF1F3),
+                            color: theme.buttonTextColor,
                           ),
                         ),
                       ),

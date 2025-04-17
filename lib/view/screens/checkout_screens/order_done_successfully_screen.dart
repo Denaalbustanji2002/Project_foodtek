@@ -3,6 +3,7 @@ import 'package:foodtek_project/view/widgets/order_done_successfully_animation_w
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import '../../../helper/responsive.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/notifications_bottom_sheet.dart';
 import '../location_screen/delivery_tracking_screen.dart';
 import '../ordering_screens/cart_history_screen.dart';
@@ -23,15 +24,17 @@ class _OrderDoneSuccessfullyScreenState
 
   @override
   Widget build(BuildContext context) {
+    final themeExtension = Theme.of(context).extension<AppThemeExtension>() ?? AppThemeExtension.light;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeExtension.scaffoldBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: themeExtension.appBarColor,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
+            icon: Icon(Icons.notifications_outlined, color: themeExtension.iconColor),
             onPressed: () {
               showNotificationsSheet(context);
             },
@@ -48,7 +51,7 @@ class _OrderDoneSuccessfullyScreenState
               Text(
                 AppLocalizations.of(context)!.checkout,
                 style: GoogleFonts.inter(
-                  color: const Color(0xFF391713),
+                  color: themeExtension.titleColor,
                   fontSize: responsiveHeight(context, 20),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
@@ -73,7 +76,7 @@ class _OrderDoneSuccessfullyScreenState
                       style: GoogleFonts.inter(
                         fontSize: responsiveWidth(context, 24),
                         fontWeight: FontWeight.w700,
-                        color: Color(0XFF263238),
+                        color: themeExtension.textColorPrimary,
                         letterSpacing: -0.02,
                         height: 1.3,
                       ),
@@ -82,9 +85,10 @@ class _OrderDoneSuccessfullyScreenState
                     SizedBox(height: responsiveHeight(context, 12)),
 
                     Text(
-                      AppLocalizations.of(context)!.youWillGetYourOrder,                      style: GoogleFonts.inter(
+                      AppLocalizations.of(context)!.youWillGetYourOrder,
+                      style: GoogleFonts.inter(
                         fontSize: responsiveWidth(context, 20),
-                        color: Color(0XFF263238),
+                        color: themeExtension.secondaryTextColor,
                         letterSpacing: -0.01,
                         height: 1.4,
                       ),
@@ -108,7 +112,7 @@ class _OrderDoneSuccessfullyScreenState
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF25AE4B),
+                      backgroundColor: themeExtension.primaryColor,
                       padding: EdgeInsets.symmetric(
                         horizontal: responsiveWidth(context, 22),
                         vertical: responsiveHeight(context, 18),
@@ -122,7 +126,7 @@ class _OrderDoneSuccessfullyScreenState
                       style: GoogleFonts.inter(
                         fontSize: responsiveHeight(context, 18),
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: themeExtension.buttonTextColor,
                         height: 1.0,
                         letterSpacing: 0.0,
                       ),
@@ -135,5 +139,4 @@ class _OrderDoneSuccessfullyScreenState
         ),
       ),
     );
-  }
-}
+  }}

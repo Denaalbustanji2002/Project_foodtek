@@ -7,6 +7,7 @@
   "deliverySubtitle": "اطلب طعامك المفضل بيدك ومن مكان راحتك",
   "chooseFoodTitle": "اختر طعامك",
   "chooseFoodSubtitle": "اطلب طعامك المفضل بسهولة وراحة تامة",
+  "yesTurnItOn": "نعم، قم بتشغيله",
   "locationTitle": "قم بتشغيل الموقع",
   "locationSubtitle": "للمتابعة، اسمح لجهازك بتشغيل الموقع، والذي يستخدم خدمة المواقع من Google",
   "yesTurnOn": "نعم، قم بتشغيله",
@@ -296,6 +297,7 @@
   "restaurantHotCoolSpot": "ركن الحار والبارد",
   "restaurantItaliano": "إيتاليانو",
   "restaurantTokyoSushi": "طوكيو سوشي",
-  "btnReorder": "إعادة الطلب"
-
+  "btnReorder": "إعادة الطلب",
+  "darkMode": "الوضع الداكن",
+  "lightMode": "الوضع الفاتح"
 }

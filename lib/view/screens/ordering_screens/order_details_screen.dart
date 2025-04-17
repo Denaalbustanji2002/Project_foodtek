@@ -1,41 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
-import '../location_screen/delivery_tracking_screen.dart';
+import '../../../theme/app_theme_extensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
-
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-
+    final colors = Theme.of(context).extension<AppThemeExtension>()!;
     return Scaffold(
-      appBar: _buildAppBar(context),
-      body: _buildBody(context),
+      appBar: _buildAppBar(context, colors),
+      body: _buildBody(context, colors),
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context,  AppThemeExtension colors) {
     return AppBar(
       leading: SizedBox(
         width: 30,
         child: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Color(0xFF391713),
+          color: colors.textColorPrimary,
           iconSize: responsiveHeight(context, 20),
           padding: EdgeInsets.zero,
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => DeliveryTrackingScreen()),
-            );
+            Navigator.pushReplacementNamed(context, '/deliveryTracking');
           },
         ),
       ),
@@ -46,38 +40,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         style: GoogleFonts.inter(
           fontSize: responsiveHeight(context, 20),
           fontWeight: FontWeight.w600,
-          color: Color(0xFF391713),
+          color: colors.textColorPrimary,
         ),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context,  AppThemeExtension colors) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildOrderInfo(),
+          _buildOrderInfo(colors),
           SizedBox(height: 20),
-          _buildTrackingSteps(),
+          _buildTrackingSteps(colors),
           SizedBox(height: 20),
-          _buildDeliveryHeroCard(context),
+          _buildDeliveryHeroCard(context, colors),
           SizedBox(height: 20),
-          _buildLocationDetails(context),
+          _buildLocationDetails(context, colors),
           SizedBox(height: 100),
-          _buildLiveTrackButton(context),
+          _buildLiveTrackButton(context, colors),
         ],
       ),
     );
   }
 
-  Widget _buildOrderInfo() {
+  Widget _buildOrderInfo( AppThemeExtension colors) {
     return Row(
       children: [
         _buildIconContainer("assets/icons/takeaway_icon.png"),
         SizedBox(width: 10),
-        _buildOrderDetails(),
+        _buildOrderDetails(colors),
       ],
     );
   }
@@ -94,78 +88,54 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildOrderDetails() {
+  Widget _buildOrderDetails( AppThemeExtension colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-      AppLocalizations.of(
-      context,
-    )!.orderId,
+          AppLocalizations.of(context)!.orderId,
           style: GoogleFonts.inter(
             fontWeight: FontWeight.w600,
             fontSize: 16,
-            color: Color(0xFF391713),
+            color: colors.textColorPrimary,
           ),
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          child: Text(AppLocalizations.of(
-            context,
-          )!.orderIdNumber,
+          child: Text(
+            AppLocalizations.of(context)!.orderIdNumber,
             style: GoogleFonts.inter(
               fontSize: 10,
-              color: Color(0xFF878787),
+              color: colors.secondaryTextColor,
               fontWeight: FontWeight.w500,
-              height: 1.0,
-              letterSpacing: 0.0,
             ),
           ),
         ),
         Text(
-          AppLocalizations.of(
-            context,
-          )!.orderDistance,
+          AppLocalizations.of(context)!.orderDistance,
           style: GoogleFonts.inter(
             fontSize: 12,
-            color: Color(0xFF263238),
+            color: colors.secondaryTextColor,
             fontWeight: FontWeight.w500,
-            height: 1.0,
-            letterSpacing: -0.01,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildTrackingSteps() {
+  Widget _buildTrackingSteps( AppThemeExtension colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTrackingStep(AppLocalizations.of( context)!.orderReceived, Icons.check, true, false),
-        _buildTrackingStep(
-          AppLocalizations.of( context)!.cookingYourOrder,
-          Icons.kitchen_outlined,
-          true,
-          false,
-        ),
-        _buildTrackingStep(
-          AppLocalizations.of( context)!.courierIsPickingUp,
-          Icons.person,
-          true,
-          false,
-        ),
-        _buildTrackingStep(AppLocalizations.of( context)!.orderDelivered, Icons.home, false, true),
+        _buildTrackingStep(AppLocalizations.of(context)!.orderReceived, Icons.check, true, false, colors),
+        _buildTrackingStep(AppLocalizations.of(context)!.cookingYourOrder, Icons.kitchen_outlined, true, false, colors),
+        _buildTrackingStep(AppLocalizations.of(context)!.courierIsPickingUp, Icons.person, true, false, colors),
+        _buildTrackingStep(AppLocalizations.of(context)!.orderDelivered, Icons.home, false, true, colors),
       ],
     );
   }
 
-  Widget _buildTrackingStep(
-    String text,
-    IconData icon,
-    bool isCompleted,
-    bool isLast,
-  ) {
+  Widget _buildTrackingStep(String text, IconData icon, bool isCompleted, bool isLast,  AppThemeExtension colors) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -175,7 +145,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               width: 30,
               height: 30,
               decoration: BoxDecoration(
-                color: isCompleted ? Color(0xFF25AE4B) : Color(0xFFF7F7F7),
+                color: isCompleted ? colors.primaryColor : colors.disabledColor,
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -188,7 +158,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               Container(
                 width: 2,
                 height: 20,
-                color: isCompleted ? Color(0xFF25AE4B) : Color(0xFFF7F7F7),
+                color: isCompleted ? colors.primaryColor : colors.disabledColor,
               ),
           ],
         ),
@@ -196,15 +166,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         Text(
           text,
           style: TextStyle(
-            color: isCompleted ? Color(0xFF1C1B1F) : Color(0xFF1C1B1F),
-            fontWeight: isCompleted ? FontWeight.w600 : FontWeight.w600,
+            color: colors.textColorPrimary,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildDeliveryHeroCard(BuildContext context) {
+  Widget _buildDeliveryHeroCard(BuildContext context,  AppThemeExtension colors) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
@@ -216,24 +186,21 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalizations.of( context)!.yourDeliveryHero,
+                  AppLocalizations.of(context)!.yourDeliveryHero,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Color(0xFF878787),
+                    color: colors.secondaryTextColor,
                     fontWeight: FontWeight.w500,
-                    height: 1.4,
-                    letterSpacing: -0.01,
                   ),
                 ),
-
                 Row(
                   children: [
                     Text(
-                      AppLocalizations.of( context)!.aleksandrV,
+                      AppLocalizations.of(context)!.aleksandrV,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xFF2F2E36),
+                        color: colors.textColorPrimary,
                       ),
                     ),
                     SizedBox(width: 6),
@@ -243,7 +210,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xFFB8B8B8),
+                        color: colors.secondaryTextColor,
                       ),
                     ),
                   ],
@@ -252,16 +219,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.phone, color: Colors.green),
+            icon: Icon(Icons.phone, color: colors.primaryColor),
             onPressed: () {},
           ),
           IconButton(
             icon: Icon(Icons.chat_rounded, color: Colors.orangeAccent),
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                '/chat',
-              );
+              Navigator.pushNamed(context, '/chat');
             },
           ),
         ],
@@ -269,40 +233,30 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildLocationDetails(BuildContext context) {
+  Widget _buildLocationDetails(BuildContext context,  AppThemeExtension colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            SizedBox(width: 5),
-            Expanded(
-              child: Text(
-                AppLocalizations.of( context)!.yourLocation,
-                style: GoogleFonts.inter(
-                  fontSize: responsiveHeight(context, 12),
-                  fontWeight: FontWeight.w500,
-                  color: Color(0XFF878787),
-                  letterSpacing: -0.01,
-                  height: 1.4,
-                ),
-              ),
-            ),
-          ],
+        Text(
+          AppLocalizations.of(context)!.yourLocation,
+          style: GoogleFonts.inter(
+            fontSize: responsiveHeight(context, 12),
+            fontWeight: FontWeight.w500,
+            color: colors.secondaryTextColor,
+          ),
         ),
         SizedBox(height: responsiveHeight(context, 8)),
         Row(
           children: [
-            Icon(Icons.location_on_outlined, color: Color(0xFF25AE4B)),
+            Icon(Icons.location_on_outlined, color: colors.primaryColor),
             SizedBox(width: 4),
             Expanded(
               child: Text(
-               AppLocalizations.of( context)!.addressLine,
+                AppLocalizations.of(context)!.addressLine,
                 style: GoogleFonts.inter(
-                  color: Color(0XFF878787),
+                  color: colors.secondaryTextColor,
                   fontSize: responsiveHeight(context, 14),
                   fontWeight: FontWeight.w600,
-                  height: 1.2,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -314,7 +268,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildLiveTrackButton(BuildContext context) {
+  Widget _buildLiveTrackButton(BuildContext context,  AppThemeExtension colors) {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
@@ -326,10 +280,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           clipBehavior: Clip.hardEdge,
           child: InkWell(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/deliveryTracking',
-              );
+              Navigator.pushNamed(context, '/deliveryTracking');
             },
             borderRadius: BorderRadius.circular(10),
             splashColor: Colors.transparent,
@@ -337,11 +288,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: const Color(0xFF85DE9E), width: 1),
-                gradient: const LinearGradient(
+                border: Border.all(color: colors.primaryColor.withOpacity(0.5), width: 1),
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
+                  colors: [colors.primaryColor, colors.primaryColor],
                 ),
                 boxShadow: const [
                   BoxShadow(
@@ -358,10 +309,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                     fontSize: responsiveHeight(context, 14),
-                    height: 1.4,
-                    letterSpacing: -0.01,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),

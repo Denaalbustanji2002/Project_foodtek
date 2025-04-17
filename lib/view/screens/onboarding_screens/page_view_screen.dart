@@ -3,6 +3,7 @@ import 'package:foodtek_project/view/screens/onboarding_screens/turn_on_your_loc
 import 'package:foodtek_project/view/screens/onboarding_screens/welcome_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../helper/responsive.dart';
+import '../../../theme/app_theme_extensions.dart';
 import '../authentication_screens/login_screen.dart';
 import 'choose_your_food_screen.dart';
 import 'get_delivery_screen.dart';
@@ -21,8 +22,10 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           Expanded(
@@ -70,6 +73,9 @@ class _PageViewScreenState extends State<PageViewScreen> {
   }
 
   Widget buildSkipButton(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppThemeExtension>();
+
     return SizedBox(
       width: 107,
       child: TextButton(
@@ -86,7 +92,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
               fontFamily: "Poppins",
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: Color(0XFF455A64),
+              color: appTheme?.secondaryTextColor ?? Color(0XFF455A64),
               height: 1.00,
               letterSpacing: 0,
             ),
@@ -96,9 +102,9 @@ class _PageViewScreenState extends State<PageViewScreen> {
       ),
     );
   }
+  Widget buildPageIndicator(BuildContext context, PageController pageController) {
+    final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
 
-  Widget buildPageIndicator(BuildContext context,
-      PageController pageController) {
     return SizedBox(
       width: responsiveWidth(context, 46),
       height: responsiveHeight(context, 10),
@@ -113,19 +119,23 @@ class _PageViewScreenState extends State<PageViewScreen> {
           dotHeight: 10.0,
           paintStyle: PaintingStyle.fill,
           strokeWidth: 1.5,
-          dotColor: Colors.grey,
-          activeDotColor: Color(0XFF25AE4B),
+          dotColor: themeExtension.secondaryTextColor,
+          activeDotColor: themeExtension.primaryColor,
         ),
       ),
     );
   }
 
-  Widget buildForwardButton(BuildContext context,
-      PageController pageController) {
+  Widget buildForwardButton(BuildContext context, PageController pageController) {
+    final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
+
     return SizedBox(
       width: responsiveWidth(context, 107),
       child: IconButton(
-        icon: Icon(Icons.arrow_forward),
+        icon: Icon(
+          Icons.arrow_forward,
+          color: themeExtension.iconColor,
+        ),
         onPressed: () {
           if (pageController.page == 2) {
             Navigator.pushReplacement(

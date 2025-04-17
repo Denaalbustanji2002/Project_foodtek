@@ -1,58 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
-import '../../../helper/validation.dart';
+import '../../../theme/app_theme_extensions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreenDetails extends StatefulWidget {
+  const ProfileScreenDetails({super.key});
+
   @override
-  _ProfileScreenDetailsState createState() => _ProfileScreenDetailsState();
+  State<ProfileScreenDetails> createState() => _ProfileScreenDetailsState();
 }
 
 class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
-  final TextEditingController userNameTextEditingController =
-      TextEditingController();
-  final TextEditingController emailTextEditingController =
-      TextEditingController();
-  final TextEditingController phoneTextEditingController =
-      TextEditingController();
-  final TextEditingController passwordTextEditingController =
-      TextEditingController();
-  final TextEditingController addressTextEditingController =
-      TextEditingController();
-  Validation validation = Validation();
+  late TextEditingController _userNameController;
+  late TextEditingController _emailController;
+  late TextEditingController _phoneController;
+  late TextEditingController _passwordController;
+  late TextEditingController _addressController;
+  bool _obscurePassword = true;
 
   @override
   void initState() {
     super.initState();
-    userNameTextEditingController.text = 'Ahmad Daboor';
-    emailTextEditingController.text = 'Loisbecket@gmail.com';
-    phoneTextEditingController.text = '079765394';
-    addressTextEditingController.text = '123 Al-Madina Street, Abdali,..';
+    _userNameController = TextEditingController(text: 'Ahmad Daboor');
+    _emailController = TextEditingController(text: 'ahmad1709@gmail.com');
+    _phoneController = TextEditingController(text: '079765394');
+    _passwordController = TextEditingController();
+    _addressController = TextEditingController(text: '123 Al-Madina Street, Abdali,..');
+  }
+
+  @override
+  void dispose() {
+    _userNameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _addressController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: theme.appBarColor,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Color(0xFF391713),
+          icon: Icon(Icons.arrow_back, color: theme.iconColor),
           iconSize: responsiveHeight(context, 20),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         toolbarHeight: 50,
         title: Text(
-          AppLocalizations.of(context)!.profile,
-          style: GoogleFonts.inter(
+            AppLocalizations.of(context)!.profile,
+           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 20),
             fontWeight: FontWeight.w600,
-            color: Color(0xFF391713),
+            color: theme.titleColor,
             letterSpacing: 0.0,
             height: 1.0,
           ),
@@ -61,26 +68,26 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
         leadingWidth: responsiveWidth(context, 40),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildUserProfileHeader(context),
+            _buildUserProfileHeader(context, theme),
             SizedBox(height: responsiveHeight(context, 20)),
             Center(
               child: Container(
                 width: responsiveWidth(context, 380),
                 height: responsiveHeight(context, 416),
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Color(0XFFFFFFFF),
+                  color: theme.containerColor,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Color(0xFFF5F5F5), width: 1),
+                  border: Border.all(color: theme.borderColor, width: 1),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x1F000000),
+                      color: theme.shadowColor,
                       blurRadius: 15,
-                      offset: Offset(0, 0),
+                      offset: const Offset(0, 0),
                     ),
                   ],
                 ),
@@ -88,29 +95,31 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                   children: [
                     _buildInputField(
                       AppLocalizations.of(context)!.username,
-                      userNameTextEditingController,
+                      _userNameController,
+                      theme: theme,
                     ),
                     SizedBox(height: responsiveHeight(context, 9)),
                     _buildInputField(
                       AppLocalizations.of(context)!.email,
-                      emailTextEditingController,
+                      _emailController,
+                      theme: theme,
                     ),
                     SizedBox(height: responsiveHeight(context, 9)),
                     _buildInputField(
                       AppLocalizations.of(context)!.phoneNumber,
-                      phoneTextEditingController,
+                      _phoneController,
+                      theme: theme,
                     ),
                     SizedBox(height: responsiveHeight(context, 9)),
-                    passwordInputField(
+                    _buildPasswordField(
                       AppLocalizations.of(context)!.password,
-                      '*',
-                      obscureText: true,
+                      theme,
                     ),
                     SizedBox(height: responsiveHeight(context, 9)),
                     _buildInputField(
                       AppLocalizations.of(context)!.address,
-                      addressTextEditingController,
-                      maxLines: 2,
+                      _addressController,
+                      theme: theme,
                     ),
                   ],
                 ),
@@ -118,10 +127,12 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
             ),
             SizedBox(height: responsiveHeight(context, 50)),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Function to update profile
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -134,15 +145,15 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
+                    colors: [theme.primaryColor, theme.primaryColor],
                   ),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFFFFFFFF),
+                      color: theme.shadowColor,
                       spreadRadius: 1,
                       blurRadius: 10,
-                      offset: Offset(0, 1),
+                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),
@@ -150,13 +161,12 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
                   alignment: Alignment.center,
                   child: Text(
                     AppLocalizations.of(context)!.update,
-                    style: TextStyle(
-                      fontFamily: 'Inter',
+                    style: GoogleFonts.inter(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       letterSpacing: -1,
                       height: 1.4,
-                      color: Colors.white,
+                      color: theme.buttonTextColor,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -170,18 +180,18 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
   }
 
   Widget _buildInputField(
-    String label,
-    TextEditingController controller, {
-    bool obscureText = false,
-    int maxLines = 1,
-  }) {
+      String label,
+      TextEditingController controller, {
+        required AppThemeExtension theme,
+        int maxLines = 1,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: GoogleFonts.plusJakartaSans(
-            color: Color(0xFF6C7278),
+            color: theme.labelTextColor,
             fontSize: responsiveHeight(context, 12),
             fontWeight: FontWeight.w500,
             height: 1.6,
@@ -191,27 +201,26 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
         SizedBox(height: responsiveHeight(context, 2)),
         Container(
           width: responsiveWidth(context, 356),
-          height: responsiveHeight(context, 46),
+          height: maxLines == 1 ? responsiveHeight(context, 46) : responsiveHeight(context, 70),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.backgroundColor,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Color(0xFFEDF1F3), width: 1),
+            border: Border.all(color: theme.borderColor, width: 1),
             boxShadow: [
               BoxShadow(
-                color: Color(0x3DE4E5E7),
-                offset: Offset(0, 1),
+                color: theme.shadowColor.withOpacity(0.2),
+                offset: const Offset(0, 1),
                 blurRadius: 2,
               ),
             ],
           ),
           child: TextField(
             controller: controller,
-            obscureText: obscureText,
             maxLines: maxLines,
             style: GoogleFonts.inter(
               fontWeight: FontWeight.w500,
               fontSize: responsiveHeight(context, 14),
-              color: Color(0XFF1A1C1E),
+              color: theme.textFieldTextColor,
               height: 1.4,
               letterSpacing: -0.01,
             ),
@@ -220,7 +229,7 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
               hintStyle: GoogleFonts.plusJakartaSans(
                 fontWeight: FontWeight.w400,
                 fontSize: responsiveHeight(context, 14),
-                color: Colors.grey[500],
+                color: theme.hintTextColor,
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: responsiveWidth(context, 13),
@@ -234,18 +243,14 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
     );
   }
 
-  Widget passwordInputField(
-    String? hintText,
-    String obscuringCharacter, {
-    required bool obscureText,
-  }) {
+  Widget _buildPasswordField(String label, AppThemeExtension theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context)!.password,
+          label,
           style: GoogleFonts.plusJakartaSans(
-            color: const Color(0xFF6C7278),
+            color: theme.labelTextColor,
             fontSize: responsiveHeight(context, 12),
             letterSpacing: -0.02,
             height: 1.6,
@@ -257,35 +262,34 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           width: responsiveWidth(context, 356),
           height: responsiveHeight(context, 46),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.backgroundColor,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFEDF1F3), width: 1),
-            boxShadow: const [
+            border: Border.all(color: theme.borderColor, width: 1),
+            boxShadow: [
               BoxShadow(
-                color: Color(0x3DE4E5E7),
-                offset: Offset(0, 1),
+                color: theme.shadowColor.withOpacity(0.2),
+                offset: const Offset(0, 1),
                 blurRadius: 2,
               ),
             ],
           ),
           child: TextField(
-            obscureText: validation.obscureTextPassword,
-            obscuringCharacter: obscuringCharacter,
-            controller: validation.passwordTextEditingController,
+            obscureText: _obscurePassword,
+            obscuringCharacter: '*',
+            controller: _passwordController,
             style: GoogleFonts.inter(
               fontWeight: FontWeight.w700,
               fontSize: 14,
               height: 1.4,
               letterSpacing: -0.01,
-              color: const Color(0xFF1A1C1E),
+              color: theme.textFieldTextColor,
             ),
             decoration: InputDecoration(
-              hintText:
-                  hintText ?? AppLocalizations.of(context)!.enterYourPassword,
+              hintText: AppLocalizations.of(context)?.enterYourPassword ?? 'أدخل كلمة المرور',
               hintStyle: GoogleFonts.inter(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: Colors.grey[500],
+                color: theme.hintTextColor,
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: responsiveWidth(context, 13),
@@ -294,15 +298,13 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
-                  validation.obscureTextPassword
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  color: const Color(0XFFACB5BB),
+                  _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                  color: theme.iconColor.withOpacity(0.6),
                   size: 12,
                 ),
                 onPressed: () {
                   setState(() {
-                    validation.changeObscureTextPassword();
+                    _obscurePassword = !_obscurePassword;
                   });
                 },
               ),
@@ -313,13 +315,17 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
     );
   }
 
-  Widget _buildUserProfileHeader(BuildContext context) {
+  Widget _buildUserProfileHeader(BuildContext context, AppThemeExtension theme) {
+    final brightness = Theme.of(context).brightness;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CircleAvatar(
           radius: 36,
-          backgroundColor: Colors.grey.shade200,
+          backgroundColor: brightness == Brightness.dark
+              ? Colors.grey.shade800
+              : Colors.grey.shade200,
           child: Image.asset(
             "assets/images/profile_picture.png",
             fit: BoxFit.cover,
@@ -331,29 +337,19 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 16),
             fontWeight: FontWeight.w500,
-            color: Color(0xFF1B1B1B),
+            color: theme.titleColor,
           ),
         ),
         SizedBox(height: 2),
         Text(
           'ahmad1709@gmail.com',
           style: GoogleFonts.inter(
-            color: Colors.grey,
+            color: theme.labelTextColor,
             fontSize: responsiveHeight(context, 14),
             fontWeight: FontWeight.w400,
           ),
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    userNameTextEditingController.dispose();
-    emailTextEditingController.dispose();
-    phoneTextEditingController.dispose();
-    passwordTextEditingController.dispose();
-    addressTextEditingController.dispose();
-    super.dispose();
   }
 }

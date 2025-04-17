@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../theme/app_theme_extensions.dart';
+
 class LocationScreen extends StatefulWidget {
   @override
   _LocationScreenState createState() => _LocationScreenState();
@@ -16,6 +18,8 @@ class _LocationScreenState extends State<LocationScreen> {
   TextEditingController searchTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
+
     return SafeArea(
       top: true,
       left: true,
@@ -38,7 +42,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   setState(() {
                     selectedLocation = position;
                     selectedAddress =
-                        "Selected location (${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)})";
+                    "Selected location (${position.latitude.toStringAsFixed(4)}, ${position.longitude.toStringAsFixed(4)})";
                   });
                 },
                 markers: {
@@ -59,7 +63,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   Directionality.of(context) == TextDirection.rtl
                       ? Icons.arrow_forward
                       : Icons.arrow_back,
-                  color: Colors.black,
+                  color: themeExtension.textColorPrimary,
                   size: responsiveHeight(context, 24),
                 ),
                 onPressed: () {
@@ -74,9 +78,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 width: responsiveWidth(context, 327),
                 height: responsiveHeight(context, 42),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: themeExtension.backgroundColor,
                   borderRadius: BorderRadius.circular(40),
-                  border: Border.all(color: Color(0xFFD6D6D6), width: 1),
+                  border: Border.all(color: themeExtension.borderColor, width: 1),
                 ),
                 child: TextField(
                   controller: searchTextEditingController,
@@ -85,7 +89,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     hintStyle: GoogleFonts.inter(
                       fontSize: responsiveHeight(context, 12),
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF878787),
+                      color: themeExtension.secondaryTextColor,
                       letterSpacing: 0.0,
                     ),
                     contentPadding: EdgeInsets.symmetric(
@@ -99,7 +103,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       ),
                       child: Icon(
                         Icons.search,
-                        color: Color(0xFF25AE4B),
+                        color: themeExtension.primaryColor,
                         size: responsiveHeight(context, 18),
                       ),
                     ),
@@ -112,7 +116,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: themeExtension.backgroundColor,
                   ),
                   onSubmitted: (value) {
                     _performLocationSearch(value);
@@ -129,7 +133,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 height: responsiveHeight(context, 154),
                 padding: EdgeInsets.all(responsiveHeight(context, 24)),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: themeExtension.containerColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -141,7 +145,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       style: GoogleFonts.inter(
                         fontSize: responsiveHeight(context, 12),
                         fontWeight: FontWeight.w500,
-                        color: const Color(0XFF878787),
+                        color: themeExtension.secondaryTextColor,
                         letterSpacing: -0.01,
                         height: 1.4,
                       ),
@@ -156,7 +160,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           alignment: Alignment.center,
                           child: Icon(
                             Icons.location_on_outlined,
-                            color: const Color(0xFF4CAF50),
+                            color: themeExtension.primaryColor,
                             size: responsiveHeight(context, 18.46),
                           ),
                         ),
@@ -167,7 +171,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             style: GoogleFonts.inter(
                               fontSize: responsiveHeight(context, 12),
                               fontWeight: FontWeight.w600,
-                              color: const Color(0XFF6C7278),
+                              color: themeExtension.secondaryTextColor,
                               letterSpacing: -0.01,
                               height: 1.4,
                             ),
@@ -193,18 +197,18 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
                             elevation: MaterialStateProperty.all(0),
                             backgroundColor: MaterialStateProperty.all(
-                              const Color(0xFF25AE4B),
+                              themeExtension.primaryColor,
                             ),
                           ),
                           child: Text(
-                           AppLocalizations.of(context)!.setLocation,
+                            AppLocalizations.of(context)!.setLocation,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               fontSize: responsiveHeight(context, 12),
                               height: 1.4,
                               letterSpacing: -0.01,
-                              color: Colors.white,
+                              color: themeExtension.buttonTextColor,
                             ),
                           ),
                         ),
@@ -219,7 +223,6 @@ class _LocationScreenState extends State<LocationScreen> {
       ),
     );
   }
-
   void _performLocationSearch(String searchQuery) {
     print('Searching for location: $searchQuery');
   }

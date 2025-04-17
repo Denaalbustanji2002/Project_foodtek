@@ -8,11 +8,12 @@ import 'package:pinput/pinput.dart';
 import '../../cubits/user_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../states/user_state.dart';
+import '../../theme/app_theme_extensions.dart';
 import '../screens/authentication_screens/reset_password_screen.dart';
 
 class VerificationCodeWidget extends StatefulWidget {
   final String email;
-  const VerificationCodeWidget({required this.email,Key? key})
+  const VerificationCodeWidget({required this.email, Key? key})
       : super(key: key);
 
   @override
@@ -20,7 +21,6 @@ class VerificationCodeWidget extends StatefulWidget {
 }
 
 class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
-
   Validation validation = Validation();
 
   @override
@@ -31,21 +31,27 @@ class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appTheme = theme.extension<AppThemeExtension>();
+
     final defaultPinTheme = PinTheme(
       width: responsiveWidth(context, 50.5),
       height: responsiveHeight(context, 46),
       textStyle: TextStyle(
         fontSize: responsiveHeight(context, 16),
-        color: Colors.black,
+        color: appTheme?.textColorPrimary ?? Colors.black,
         fontWeight: FontWeight.w500,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: const Color(0xFFEDF1F3), width: 1),
+        color: appTheme?.containerColor ?? Colors.white,
+        border: Border.all(
+            color: appTheme?.borderColor ?? const Color(0xFFEDF1F3),
+            width: 1
+        ),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: const Color(0x3DE4E5E7),
+            color: appTheme?.shadowColor ?? const Color(0x3DE4E5E7),
             offset: const Offset(0, 1),
             blurRadius: 2,
           ),
@@ -55,12 +61,15 @@ class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
 
     final focusedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration!.copyWith(
-        border: Border.all(color: Colors.blue, width: 2),
+        border: Border.all(
+            color: appTheme?.primaryColor ?? Colors.blue,
+            width: 2
+        ),
       ),
     );
 
     return BlocConsumer<UserCubit, UserState>(
-      listener: (context, state)async {
+      listener: (context, state) async {
         if (state is VerifyOtpSuccessState) {
           Navigator.pushReplacement(
             context,
@@ -104,7 +113,7 @@ class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
                   fontWeight: FontWeight.w500,
                   fontSize: responsiveHeight(context, 12),
                   letterSpacing: -0.01,
-                  color: const Color(0xFF6C7278),
+                  color: appTheme?.secondaryTextColor ?? const Color(0xFF6C7278),
                   height: 1.4,
                 ),
                 textAlign: TextAlign.center,
@@ -126,15 +135,18 @@ class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
                 height: responsiveHeight(context, 48),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFF25AE4B), Color(0xFF25AE4B)],
+                    colors: [
+                      appTheme?.primaryColor ?? const Color(0xFF25AE4B),
+                      appTheme?.primaryColor ?? const Color(0xFF25AE4B)
+                    ],
                   ),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
-                      color: Color(0x7A253EA7),
-                      offset: Offset(0, 1),
+                      color: appTheme?.shadowColor ?? const Color(0x7A253EA7),
+                      offset: const Offset(0, 1),
                       blurRadius: 2,
                     ),
                   ],
@@ -168,7 +180,7 @@ class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
                     style: GoogleFonts.inter(
                       fontSize: responsiveHeight(context, 14),
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: appTheme?.buttonTextColor ?? Colors.white,
                       letterSpacing: -0.01,
                       height: 1.4,
                     ),
