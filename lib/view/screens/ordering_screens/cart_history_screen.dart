@@ -496,9 +496,13 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         motion: const ScrollMotion(),
         children: [
           CustomSlidableAction(
+<<<<<<< HEAD
             onPressed:
                 (context) =>
                     showDeleteConfirmationDialog(context, item, "history"),
+=======
+            onPressed: (context) => showDeleteConfirmationDialog(context, item, "history"),
+>>>>>>> dena/esra_branch
             backgroundColor: theme.deleteButtonColor,
             child: Icon(
               Icons.delete_outline,
@@ -635,6 +639,7 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
         width: 65,
         height: 65,
         fit: BoxFit.cover,
+<<<<<<< HEAD
         errorBuilder:
             (context, error, stackTrace) => Container(
               width: 65,
@@ -650,6 +655,20 @@ class _CartHistoryScreenState extends State<CartHistoryScreen>
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
+=======
+        errorBuilder: (context, error, stackTrace) => Container(
+          width: 65,
+          height: 65,
+          decoration: BoxDecoration(
+            color: item['title'] == AppLocalizations.of(context)!.chickenBurger
+                ? theme.titleColor
+                : item['title'] == AppLocalizations.of(context)!.onionPizza
+                ? theme.titleColor
+                : theme.titleColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+>>>>>>> dena/esra_branch
       ),
     );
   }

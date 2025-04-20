@@ -17,6 +17,10 @@ class ThemeCubit extends Cubit<ThemeState> {
     final newState =
         state == ThemeState.light ? ThemeState.dark : ThemeState.light;
     emit(newState);
+<<<<<<< HEAD
+=======
+
+>>>>>>> dena/esra_branch
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDarkMode', newState == ThemeState.dark);
   }

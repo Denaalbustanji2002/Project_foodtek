@@ -16,7 +16,15 @@ class HeaderWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Row(
         children: [
+<<<<<<< HEAD
           Icon(Icons.pin_drop_outlined, color: theme.primaryColor, size: 20),
+=======
+          Icon(
+            Icons.pin_drop_outlined,
+            color: theme.primaryColor,
+            size: 20,
+          ),
+>>>>>>> dena/esra_branch
           const SizedBox(width: 10),
           Expanded(
             child: InkWell(

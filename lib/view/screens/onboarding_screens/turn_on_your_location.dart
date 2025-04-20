@@ -133,8 +133,14 @@ class TurnOnYourLocation extends StatelessWidget {
 
   Widget buildMapImage(BuildContext context) {
     final isDark = context.watch<ThemeCubit>().isDarkMode;
+<<<<<<< HEAD
     final imagePath =
         isDark ? "assets/images/dark_map.jpg" : "assets/images/light_map.png";
+=======
+    final imagePath = isDark
+        ? "assets/images/dark_map.jpg"
+        : "assets/images/light_map.png";
+>>>>>>> dena/esra_branch
 
     return Positioned(
       top: 0,

@@ -575,12 +575,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildFoodItem(
+<<<<<<< HEAD
     String name,
     String description,
     String rating,
     String price,
     String imagePath,
   ) {
+=======
+      String name,
+      String description,
+      String rating,
+      String price,
+      String imagePath,
+      ) {
+>>>>>>> dena/esra_branch
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return InkWell(
@@ -605,7 +614,11 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 209,
         margin: const EdgeInsets.only(right: 10, bottom: 10),
         decoration: BoxDecoration(
+<<<<<<< HEAD
           color: theme.containerColor,
+=======
+          color: theme.containerColor, 
+>>>>>>> dena/esra_branch
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: theme.borderColor, width: 1),
         ),
@@ -630,7 +643,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
+<<<<<<< HEAD
                   color: theme.textColorPrimary,
+=======
+                  color: theme.textColorPrimary, 
+>>>>>>> dena/esra_branch
                   height: 1.0,
                   letterSpacing: -0.03,
                 ),
@@ -644,7 +661,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 description,
                 style: GoogleFonts.inter(
                   fontSize: 12,
+<<<<<<< HEAD
                   color: theme.secondaryTextColor,
+=======
+                  color: theme.secondaryTextColor, 
+>>>>>>> dena/esra_branch
                   fontWeight: FontWeight.w400,
                 ),
                 textAlign: TextAlign.start,
@@ -662,12 +683,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
+<<<<<<< HEAD
                       color: theme.primaryColor,
+=======
+                      color: theme.primaryColor, 
+>>>>>>> dena/esra_branch
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
+<<<<<<< HEAD
                       color: theme.primaryColor,
+=======
+                      color: theme.primaryColor, 
+>>>>>>> dena/esra_branch
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(Icons.add, color: Colors.white, size: 24),
@@ -698,7 +727,11 @@ class _HomeScreenState extends State<HomeScreen> {
           height: responsiveHeight(context, 252),
           margin: EdgeInsets.only(top: 44.5),
           decoration: BoxDecoration(
+<<<<<<< HEAD
             color: theme.containerColor,
+=======
+            color: theme.containerColor, 
+>>>>>>> dena/esra_branch
             borderRadius: BorderRadius.circular(25),
             border: Border.all(color: theme.borderColor, width: 1),
           ),
@@ -719,7 +752,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: responsiveHeight(context, 14),
                         height: 15 / 14,
                         letterSpacing: 0.0,
+<<<<<<< HEAD
                         color: theme.textColorPrimary,
+=======
+                        color: theme.textColorPrimary, 
+>>>>>>> dena/esra_branch
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -732,7 +769,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w300,
                         fontSize: responsiveHeight(context, 10),
                         height: 12 / 10,
+<<<<<<< HEAD
                         color: theme.secondaryTextColor,
+=======
+                        color: theme.secondaryTextColor, 
+>>>>>>> dena/esra_branch
                       ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -744,7 +785,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w600,
                         fontSize: responsiveHeight(context, 14),
                         height: 15 / 14,
+<<<<<<< HEAD
                         color: theme.textColorPrimary,
+=======
+                        color: theme.textColorPrimary, 
+>>>>>>> dena/esra_branch
                       ),
                     ),
                   ],
@@ -766,7 +811,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
+<<<<<<< HEAD
                   backgroundColor: theme.primaryColor,
+=======
+                  backgroundColor: theme.primaryColor, 
+>>>>>>> dena/esra_branch
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
@@ -803,7 +852,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+<<<<<<< HEAD
                 color: theme.backgroundColor,
+=======
+                color: theme.backgroundColor, 
+>>>>>>> dena/esra_branch
                 border: Border.all(color: theme.borderColor, width: 2),
               ),
               width: responsiveWidth(context, 35),
@@ -812,10 +865,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 favoriteItems.any((item) => item['name'] == name)
                     ? Icons.favorite
                     : Icons.favorite_border_rounded,
+<<<<<<< HEAD
                 color:
                     favoriteItems.any((item) => item['name'] == name)
                         ? Colors.red
                         : theme.iconColor,
+=======
+                color: favoriteItems.any((item) => item['name'] == name)
+                    ? Colors.red
+                    : theme.iconColor, 
+>>>>>>> dena/esra_branch
                 size: responsiveHeight(context, 13),
               ),
             ),
@@ -832,7 +891,11 @@ class _HomeScreenState extends State<HomeScreen> {
               height: responsiveHeight(context, 89),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+<<<<<<< HEAD
                 color: theme.shadowColor,
+=======
+                color: theme.shadowColor, 
+>>>>>>> dena/esra_branch
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),

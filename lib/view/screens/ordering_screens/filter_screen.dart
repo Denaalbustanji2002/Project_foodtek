@@ -89,7 +89,11 @@ class _FilterScreenState extends State<FilterScreen> {
         title,
         style: GoogleFonts.inter(
           fontSize: responsiveHeight(context, 14),
+<<<<<<< HEAD
           color: theme.secondaryTextColor,
+=======
+          color: theme.secondaryTextColor,  
+>>>>>>> dena/esra_branch
           fontWeight: FontWeight.w600,
           letterSpacing: 0.0,
           height: 14 / 17,
@@ -113,7 +117,11 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
+<<<<<<< HEAD
                   border: Border.all(color: theme.borderColor),
+=======
+                  border: Border.all(color: theme.borderColor),  
+>>>>>>> dena/esra_branch
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -121,7 +129,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
+<<<<<<< HEAD
                     color: theme.minMaxColor,
+=======
+                    color: theme.minMaxColor,  
+>>>>>>> dena/esra_branch
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -136,7 +148,11 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
+<<<<<<< HEAD
                   border: Border.all(color: theme.borderColor),
+=======
+                  border: Border.all(color: theme.borderColor),  
+>>>>>>> dena/esra_branch
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -144,7 +160,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
+<<<<<<< HEAD
                     color: theme.minMaxColor,
+=======
+                    color: theme.minMaxColor,  
+>>>>>>> dena/esra_branch
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -168,7 +188,11 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$0',
                       style: GoogleFonts.inter(
+<<<<<<< HEAD
                         color: theme.primaryColor,
+=======
+                        color: theme.primaryColor,  
+>>>>>>> dena/esra_branch
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -177,7 +201,11 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$10B',
                       style: TextStyle(
+<<<<<<< HEAD
                         color: theme.primaryColor,
+=======
+                        color: theme.primaryColor,  
+>>>>>>> dena/esra_branch
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
@@ -192,10 +220,17 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
+<<<<<<< HEAD
                     activeTrackColor: theme.primaryColor,
                     inactiveTrackColor: theme.primaryColor.withOpacity(0.2),
                     thumbColor: theme.primaryColor,
                     overlayColor: theme.primaryColor.withOpacity(0.1),
+=======
+                    activeTrackColor: theme.primaryColor,  
+                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2),  
+                    thumbColor: theme.primaryColor,  
+                    overlayColor: theme.primaryColor.withOpacity(0.1),  
+>>>>>>> dena/esra_branch
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 6,
                     ),
@@ -235,7 +270,11 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
+<<<<<<< HEAD
                   border: Border.all(color: theme.borderColor),
+=======
+                  border: Border.all(color: theme.borderColor),  
+>>>>>>> dena/esra_branch
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -243,7 +282,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
+<<<<<<< HEAD
                     color: theme.minMaxColor,
+=======
+                    color: theme.minMaxColor,  
+>>>>>>> dena/esra_branch
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -258,7 +301,11 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
+<<<<<<< HEAD
                   border: Border.all(color: theme.borderColor),
+=======
+                  border: Border.all(color: theme.borderColor),  
+>>>>>>> dena/esra_branch
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -266,7 +313,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
+<<<<<<< HEAD
                     color: theme.minMaxColor,
+=======
+                    color: theme.minMaxColor,  
+>>>>>>> dena/esra_branch
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -290,7 +341,11 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$0',
                       style: GoogleFonts.inter(
+<<<<<<< HEAD
                         color: theme.primaryColor,
+=======
+                        color: theme.primaryColor,  
+>>>>>>> dena/esra_branch
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -299,7 +354,11 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$50',
                       style: GoogleFonts.inter(
+<<<<<<< HEAD
                         color: theme.primaryColor,
+=======
+                        color: theme.primaryColor,  
+>>>>>>> dena/esra_branch
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -313,10 +372,17 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
+<<<<<<< HEAD
                     activeTrackColor: theme.primaryColor,
                     inactiveTrackColor: theme.primaryColor.withOpacity(0.2),
                     thumbColor: theme.primaryColor,
                     overlayColor: theme.primaryColor.withOpacity(0.1),
+=======
+                    activeTrackColor: theme.primaryColor,  
+                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2),  
+                    thumbColor: theme.primaryColor,  
+                    overlayColor: theme.primaryColor.withOpacity(0.1),  
+>>>>>>> dena/esra_branch
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 3,
                     ),

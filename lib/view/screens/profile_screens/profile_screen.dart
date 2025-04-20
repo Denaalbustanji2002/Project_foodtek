@@ -213,8 +213,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           value: isDarkMode,
           onChanged: (bool newValue) async {
             await Future.delayed(Duration(milliseconds: 100));
+<<<<<<< HEAD
             context.read<ThemeCubit>().toggleTheme();
             context.read<NavigationCubit>().changeTab(AppTab.home);
+=======
+
+            context.read<ThemeCubit>().toggleTheme();
+
+            context.read<NavigationCubit>().changeTab(AppTab.home);
+
+>>>>>>> dena/esra_branch
             navigatorKey.currentState!.pushNamedAndRemoveUntil(
               '/',
               (route) => false,
@@ -229,7 +237,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     BuildContext context,
     AppThemeExtension themeExtension,
   ) {
+<<<<<<< HEAD
     final brightness = Theme.of(context).brightness;
+=======
+    final brightness =
+        Theme.of(
+          context,
+        ).brightness;
+>>>>>>> dena/esra_branch
 
     return Padding(
       padding: EdgeInsets.all(12.0),
@@ -284,6 +299,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     final themeExtension = Theme.of(context).extension<AppThemeExtension>();
+<<<<<<< HEAD
+=======
+
+>>>>>>> dena/esra_branch
     final theme = themeExtension ?? AppThemeExtension.light;
 
     return Padding(
@@ -313,7 +332,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     VoidCallback? onTap,
   }) {
     final theme = Theme.of(context);
+<<<<<<< HEAD
     final themeExtension = theme.extension<AppThemeExtension>();
+=======
+    final themeExtension =
+        theme.extension<AppThemeExtension>();
+
+>>>>>>> dena/esra_branch
     return ListTile(
       dense: true,
       visualDensity: VisualDensity.compact,
@@ -343,7 +368,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required bool value,
   }) {
     final theme = Theme.of(context);
+<<<<<<< HEAD
     final themeExtension = theme.extension<AppThemeExtension>();
+=======
+    final themeExtension =
+        theme.extension<AppThemeExtension>();
+>>>>>>> dena/esra_branch
 
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 12),
@@ -357,7 +387,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         style: GoogleFonts.inter(
           fontSize: 14,
           fontWeight: FontWeight.w500,
+<<<<<<< HEAD
           color: themeExtension?.titleColor ?? Colors.black,
+=======
+          color:
+              themeExtension?.titleColor ??
+              Colors.black,
+>>>>>>> dena/esra_branch
         ),
       ),
       trailing: Transform.scale(

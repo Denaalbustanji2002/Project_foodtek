@@ -155,13 +155,13 @@ class _NotificationsBottomSheetState extends State<NotificationsBottomSheet> {
               buildTab(
                 AppLocalizations.of(context)!.tabUnread,
                 isSelected:
-                    selectedTab == AppLocalizations.of(context)!.tabUnread,
+                selectedTab == AppLocalizations.of(context)!.tabUnread,
               ),
               SizedBox(width: 20),
               buildTab(
                 AppLocalizations.of(context)!.tabRead,
                 isSelected:
-                    selectedTab == AppLocalizations.of(context)!.tabRead,
+                selectedTab == AppLocalizations.of(context)!.tabRead,
               ),
             ],
           ),
@@ -314,29 +314,29 @@ void showNotificationsSheet(BuildContext context) {
     backgroundColor: Colors.transparent,
     builder:
         (context) => DraggableScrollableSheet(
-          initialChildSize: 0.9,
-          minChildSize: 0.5,
-          maxChildSize: 1.0,
-          builder:
-              (context, scrollController) => Container(
-                width: responsiveWidth(context, 430),
-                height: responsiveHeight(context, 700),
-                margin: EdgeInsets.only(top: 230),
-                decoration: BoxDecoration(
-                  color: theme.containerColor,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: theme.shadowColor.withOpacity(0.3),
-                      offset: Offset(0, -8),
-                      blurRadius: 17.1,
-                    ),
-                  ],
-                ),
-                child: NotificationsBottomSheet(
-                  scrollController: scrollController,
-                ),
-              ),
+      initialChildSize: 0.9,
+      minChildSize: 0.5,
+      maxChildSize: 1.0,
+      builder:
+          (context, scrollController) => Container(
+        width: responsiveWidth(context, 430),
+        height: responsiveHeight(context, 700),
+        margin: EdgeInsets.only(top: 230),
+        decoration: BoxDecoration(
+          color: theme.containerColor,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          boxShadow: [
+            BoxShadow(
+              color: theme.shadowColor.withOpacity(0.3),
+              offset: Offset(0, -8),
+              blurRadius: 17.1,
+            ),
+          ],
         ),
+        child: NotificationsBottomSheet(
+          scrollController: scrollController,
+        ),
+      ),
+    ),
   );
 }

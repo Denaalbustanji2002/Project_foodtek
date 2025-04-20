@@ -104,7 +104,12 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                 color: theme.iconColor,
                 size: responsiveHeight(context, 24),
               ),
+<<<<<<< HEAD
               onPressed: () {},
+=======
+              onPressed: () {
+              },
+>>>>>>> dena/esra_branch
             ),
           ),
           Positioned(
@@ -337,7 +342,12 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                       Row(
                         children: [
                           GestureDetector(
+<<<<<<< HEAD
                             onTap: () {},
+=======
+                            onTap: () {
+                            },
+>>>>>>> dena/esra_branch
                             child: Container(
                               padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(

@@ -84,9 +84,9 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 themeMode:
-                    themeState == ThemeState.dark
-                        ? ThemeMode.dark
-                        : ThemeMode.light,
+                themeState == ThemeState.dark
+                    ? ThemeMode.dark
+                    : ThemeMode.light,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
