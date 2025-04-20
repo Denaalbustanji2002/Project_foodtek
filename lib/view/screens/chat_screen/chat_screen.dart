@@ -86,21 +86,27 @@ class _ChatScreenState extends State<ChatScreen> {
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return Align(
-      alignment: message.isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+      alignment:
+          message.isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: message.isUserMessage ? theme.primaryColor : theme.chatReceivedMessageColor,
+          color:
+              message.isUserMessage
+                  ? theme.primaryColor
+                  : theme.chatReceivedMessageColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25),
             topRight: Radius.circular(25),
-            bottomLeft: message.isUserMessage
-                ? Radius.circular(25)
-                : Radius.circular(0),
-            bottomRight: message.isUserMessage
-                ? Radius.circular(0)
-                : Radius.circular(25),
+            bottomLeft:
+                message.isUserMessage
+                    ? Radius.circular(25)
+                    : Radius.circular(0),
+            bottomRight:
+                message.isUserMessage
+                    ? Radius.circular(0)
+                    : Radius.circular(25),
           ),
         ),
         child: Text(
@@ -110,14 +116,17 @@ class _ChatScreenState extends State<ChatScreen> {
             fontWeight: FontWeight.w700,
             height: 1.3,
             letterSpacing: 0.0,
-            color: message.isUserMessage
-                ? theme.buttonTextColor
-                : theme.textColorPrimary,
+            color:
+                message.isUserMessage
+                    ? theme.buttonTextColor
+                    : theme.textColorPrimary,
           ),
         ),
       ),
     );
-  }  Widget _buildMessageInputArea() {
+  }
+
+  Widget _buildMessageInputArea() {
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return Container(
@@ -166,7 +175,8 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
-  }}
+  }
+}
 
 class ChatMessage {
   final String text;

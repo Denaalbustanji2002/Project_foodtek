@@ -19,7 +19,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  AppBar _buildAppBar(BuildContext context,  AppThemeExtension colors) {
+  AppBar _buildAppBar(BuildContext context, AppThemeExtension colors) {
     return AppBar(
       leading: SizedBox(
         width: 30,
@@ -46,7 +46,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildBody(BuildContext context,  AppThemeExtension colors) {
+  Widget _buildBody(BuildContext context, AppThemeExtension colors) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -66,7 +66,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildOrderInfo( AppThemeExtension colors) {
+  Widget _buildOrderInfo(AppThemeExtension colors) {
     return Row(
       children: [
         _buildIconContainer("assets/icons/takeaway_icon.png"),
@@ -88,7 +88,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildOrderDetails( AppThemeExtension colors) {
+  Widget _buildOrderDetails(AppThemeExtension colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -123,19 +123,49 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildTrackingSteps( AppThemeExtension colors) {
+  Widget _buildTrackingSteps(AppThemeExtension colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTrackingStep(AppLocalizations.of(context)!.orderReceived, Icons.check, true, false, colors),
-        _buildTrackingStep(AppLocalizations.of(context)!.cookingYourOrder, Icons.kitchen_outlined, true, false, colors),
-        _buildTrackingStep(AppLocalizations.of(context)!.courierIsPickingUp, Icons.person, true, false, colors),
-        _buildTrackingStep(AppLocalizations.of(context)!.orderDelivered, Icons.home, false, true, colors),
+        _buildTrackingStep(
+          AppLocalizations.of(context)!.orderReceived,
+          Icons.check,
+          true,
+          false,
+          colors,
+        ),
+        _buildTrackingStep(
+          AppLocalizations.of(context)!.cookingYourOrder,
+          Icons.kitchen_outlined,
+          true,
+          false,
+          colors,
+        ),
+        _buildTrackingStep(
+          AppLocalizations.of(context)!.courierIsPickingUp,
+          Icons.person,
+          true,
+          false,
+          colors,
+        ),
+        _buildTrackingStep(
+          AppLocalizations.of(context)!.orderDelivered,
+          Icons.home,
+          false,
+          true,
+          colors,
+        ),
       ],
     );
   }
 
-  Widget _buildTrackingStep(String text, IconData icon, bool isCompleted, bool isLast,  AppThemeExtension colors) {
+  Widget _buildTrackingStep(
+    String text,
+    IconData icon,
+    bool isCompleted,
+    bool isLast,
+    AppThemeExtension colors,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -174,12 +204,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildDeliveryHeroCard(BuildContext context,  AppThemeExtension colors) {
+  Widget _buildDeliveryHeroCard(
+    BuildContext context,
+    AppThemeExtension colors,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: AssetImage('assets/images/delivery_hero_photo.png'), radius: 30),
+          CircleAvatar(
+            backgroundImage: AssetImage(
+              'assets/images/delivery_hero_photo.png',
+            ),
+            radius: 30,
+          ),
           SizedBox(width: 15),
           Expanded(
             child: Column(
@@ -233,7 +271,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildLocationDetails(BuildContext context,  AppThemeExtension colors) {
+  Widget _buildLocationDetails(BuildContext context, AppThemeExtension colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -268,7 +306,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
-  Widget _buildLiveTrackButton(BuildContext context,  AppThemeExtension colors) {
+  Widget _buildLiveTrackButton(BuildContext context, AppThemeExtension colors) {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
@@ -288,7 +326,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: colors.primaryColor.withOpacity(0.5), width: 1),
+                border: Border.all(
+                  color: colors.primaryColor.withOpacity(0.5),
+                  width: 1,
+                ),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,

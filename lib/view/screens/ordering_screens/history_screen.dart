@@ -14,7 +14,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
-
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
@@ -215,14 +214,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
         width: 65,
         height: 65,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => Container(
-          width: 65,
-          height: 65,
-          decoration: BoxDecoration(
-            color: theme.disabledColor,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
+        errorBuilder:
+            (context, error, stackTrace) => Container(
+              width: 65,
+              height: 65,
+              decoration: BoxDecoration(
+                color: theme.disabledColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
       ),
     );
   }
@@ -259,7 +259,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.confirmDeleteHistoryTitle),
           content: Text(
-              "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${AppLocalizations.of(context)!.getTranslation(item['title'])}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}",
+            "${AppLocalizations.of(context)!.confirmDeleteHistoryContent1} ${AppLocalizations.of(context)!.getTranslation(item['title'])}${AppLocalizations.of(context)!.confirmDeleteHistoryContent2}",
           ),
           actions: [
             TextButton(

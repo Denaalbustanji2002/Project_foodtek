@@ -6,10 +6,6 @@ import '../../../helper/responsive.dart';
 import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/notifications_bottom_sheet.dart';
 import '../location_screen/delivery_tracking_screen.dart';
-import '../ordering_screens/cart_history_screen.dart';
-import '../ordering_screens/favorites_screen.dart';
-import '../ordering_screens/home_screen.dart';
-import '../profile_screens/profile_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderDoneSuccessfullyScreen extends StatefulWidget {
@@ -20,11 +16,11 @@ class OrderDoneSuccessfullyScreen extends StatefulWidget {
 
 class _OrderDoneSuccessfullyScreenState
     extends State<OrderDoneSuccessfullyScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-    final themeExtension = Theme.of(context).extension<AppThemeExtension>() ?? AppThemeExtension.light;
+    final themeExtension =
+        Theme.of(context).extension<AppThemeExtension>() ??
+        AppThemeExtension.light;
 
     return Scaffold(
       backgroundColor: themeExtension.scaffoldBackgroundColor,
@@ -34,7 +30,10 @@ class _OrderDoneSuccessfullyScreenState
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications_outlined, color: themeExtension.iconColor),
+            icon: Icon(
+              Icons.notifications_outlined,
+              color: themeExtension.iconColor,
+            ),
             onPressed: () {
               showNotificationsSheet(context);
             },
@@ -139,4 +138,5 @@ class _OrderDoneSuccessfullyScreenState
         ),
       ),
     );
-  }}
+  }
+}

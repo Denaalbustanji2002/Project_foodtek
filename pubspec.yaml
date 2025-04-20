@@ -94,6 +94,7 @@ flutter:
     - assets/lottie/reset_password_animation.json
     - assets/icons/takeaway_icon.png
     - assets/images/profile_picture.png
+    - assets/map_style/dark_map_style.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

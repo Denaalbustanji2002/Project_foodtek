@@ -23,22 +23,23 @@ class RectSliderThumbShape extends SliderComponentShape {
 
   @override
   void paint(
-      PaintingContext context,
-      Offset center, {
-        required Animation<double> activationAnimation,
-        required Animation<double> enableAnimation,
-        required bool isDiscrete,
-        required TextPainter labelPainter,
-        required RenderBox parentBox,
-        required SliderThemeData sliderTheme,
-        required TextDirection textDirection,
-        required double value,
-        required double textScaleFactor,
-        required Size sizeWithOverflow,
-      }) {
-    final paint = Paint()
-      ..color = sliderTheme.thumbColor ?? Colors.red
-      ..style = PaintingStyle.fill;
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
+    final paint =
+        Paint()
+          ..color = sliderTheme.thumbColor ?? Colors.red
+          ..style = PaintingStyle.fill;
 
     final rect = Rect.fromCenter(
       center: center,
@@ -76,7 +77,6 @@ class FoodDetailScreen extends StatefulWidget {
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   int _quantity = 3;
   double _spicyValue = 0.3;
-
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +130,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: theme.shadowColor, // ظل خفيف
+                              color: theme.shadowColor,
                               offset: Offset.zero,
                               blurRadius: 0,
                               spreadRadius: 1,
@@ -145,10 +145,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [
-                              theme.primaryColor,
-                              theme.primaryColor,
-                            ],
+                            colors: [theme.primaryColor, theme.primaryColor],
                           ),
                         ),
                         child: TextButton(
@@ -164,13 +161,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('${item.title} ${AppLocalizations.of(context)!.hasBeenAddedToTheCart}'),
+                                content: Text(
+                                  '${item.title} ${AppLocalizations.of(context)!.hasBeenAddedToTheCart}',
+                                ),
                               ),
                             );
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => CartHistoryScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => CartHistoryScreen(),
+                              ),
                             );
                           },
                           style: TextButton.styleFrom(
@@ -258,7 +259,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       children: [
         ...List.generate(
           4,
-              (_) => Icon(Icons.star, color: theme.iconColor, size: 18),
+          (_) => Icon(Icons.star, color: theme.iconColor, size: 18),
         ),
         Icon(Icons.star_half, color: theme.iconColor, size: 18),
         SizedBox(width: responsiveWidth(context, 6)),
@@ -433,7 +434,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ],
             ),
           ],
-        )
+        ),
       ],
     );
   }

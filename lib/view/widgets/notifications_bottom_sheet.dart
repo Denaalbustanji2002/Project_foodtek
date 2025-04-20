@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../theme/app_theme_extensions.dart';
 
 class NotificationModel {
@@ -41,6 +40,7 @@ class _NotificationsBottomSheetState extends State<NotificationsBottomSheet> {
       });
     });
   }
+
   List<NotificationModel> notifications = [];
 
   List<NotificationModel> getFilteredNotifications() {
@@ -51,32 +51,32 @@ class _NotificationsBottomSheetState extends State<NotificationsBottomSheet> {
     }
     return notifications;
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     notifications = [
       NotificationModel(
         title: AppLocalizations.of(context)!.notifDelayedOrderTitle,
-        message:
-AppLocalizations.of(context)!.notifDelayedOrderMsg ,
+        message: AppLocalizations.of(context)!.notifDelayedOrderMsg,
         time: AppLocalizations.of(context)!.notifTime1,
         isRead: false,
       ),
       NotificationModel(
         title: AppLocalizations.of(context)!.notifPromoTitle,
-        message:
-AppLocalizations.of(context)!.notifPromoMsg ,
+        message: AppLocalizations.of(context)!.notifPromoMsg,
         time: AppLocalizations.of(context)!.notifTime1,
         isRead: true,
       ),
       NotificationModel(
-        title:AppLocalizations.of(context)!.notifOutForDeliveryTitle,
-        message: AppLocalizations.of(context)!.notifOutForDeliveryMsg ,time: AppLocalizations.of(context)!.notifTime1,
+        title: AppLocalizations.of(context)!.notifOutForDeliveryTitle,
+        message: AppLocalizations.of(context)!.notifOutForDeliveryMsg,
+        time: AppLocalizations.of(context)!.notifTime1,
         isRead: false,
       ),
       NotificationModel(
         title: AppLocalizations.of(context)!.notifConfirmedTitle,
-        message:AppLocalizations.of(context)!.notifConfirmedMsg ,
+        message: AppLocalizations.of(context)!.notifConfirmedMsg,
         time: AppLocalizations.of(context)!.notifTime1,
         isRead: true,
       ),
@@ -89,6 +89,7 @@ AppLocalizations.of(context)!.notifPromoMsg ,
     ];
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
@@ -123,17 +124,13 @@ AppLocalizations.of(context)!.notifPromoMsg ,
             children: [
               IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: Icon(
-                  Icons.arrow_back_outlined,
-                  color: theme.iconColor,
-                ),
+                icon: Icon(Icons.arrow_back_outlined, color: theme.iconColor),
               ),
               Text(
                 AppLocalizations.of(context)!.notifications,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
-                  // استخدام لون العنوان من الثيم
                   color: theme.titleColor,
                 ),
               ),
@@ -141,7 +138,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
                 onPressed: () {},
                 icon: Icon(
                   Icons.more_vert,
-                  // استخدام لون الأيقونة من الثيم
                   color: theme.iconColor,
                 ),
               ),
@@ -151,11 +147,22 @@ AppLocalizations.of(context)!.notifPromoMsg ,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildTab(AppLocalizations.of(context)!.tabAll, isSelected: selectedTab == AppLocalizations.of(context)!.tabAll),
+              buildTab(
+                AppLocalizations.of(context)!.tabAll,
+                isSelected: selectedTab == AppLocalizations.of(context)!.tabAll,
+              ),
               SizedBox(width: 20),
-              buildTab(AppLocalizations.of(context)!.tabUnread, isSelected: selectedTab == AppLocalizations.of(context)!.tabUnread),
+              buildTab(
+                AppLocalizations.of(context)!.tabUnread,
+                isSelected:
+                    selectedTab == AppLocalizations.of(context)!.tabUnread,
+              ),
               SizedBox(width: 20),
-              buildTab(AppLocalizations.of(context)!.tabRead, isSelected: selectedTab == AppLocalizations.of(context)!.tabRead),
+              buildTab(
+                AppLocalizations.of(context)!.tabRead,
+                isSelected:
+                    selectedTab == AppLocalizations.of(context)!.tabRead,
+              ),
             ],
           ),
           SizedBox(height: responsiveHeight(context, 16)),
@@ -185,8 +192,8 @@ AppLocalizations.of(context)!.notifPromoMsg ,
       ),
     );
   }
+
   Widget buildTab(String text, {required bool isSelected}) {
-    // استخراج كائن الثيم
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return GestureDetector(
@@ -200,7 +207,6 @@ AppLocalizations.of(context)!.notifPromoMsg ,
           Text(
             text,
             style: GoogleFonts.inter(
-              // استخدام primaryColor للنص المحدد وsecondaryTextColor للنص غير المحدد
               color: isSelected ? theme.primaryColor : theme.secondaryTextColor,
               fontWeight: FontWeight.w500,
               fontSize: 18,
@@ -215,7 +221,8 @@ AppLocalizations.of(context)!.notifPromoMsg ,
         ],
       ),
     );
-  }}
+  }
+}
 
 class NotificationItem extends StatelessWidget {
   final String title;
@@ -223,7 +230,8 @@ class NotificationItem extends StatelessWidget {
   final String time;
   final bool isRead;
 
-  const NotificationItem({super.key,
+  const NotificationItem({
+    super.key,
     required this.title,
     required this.message,
     required this.time,
@@ -295,7 +303,6 @@ class NotificationItem extends StatelessWidget {
 }
 
 void showNotificationsSheet(BuildContext context) {
-  // استخراج كائن الثيم
   final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
   showModalBottomSheet(
@@ -305,28 +312,31 @@ void showNotificationsSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     backgroundColor: Colors.transparent,
-    builder: (context) => DraggableScrollableSheet(
-      initialChildSize: 0.9,
-      minChildSize: 0.5,
-      maxChildSize: 1.0,
-      builder: (context, scrollController) => Container(
-        width: responsiveWidth(context, 430),
-        height: responsiveHeight(context, 700),
-        margin: EdgeInsets.only(top: 230),
-        decoration: BoxDecoration(
-          // استخدام لون أغمق مناسب للدارك مود
-          color: theme.containerColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-          boxShadow: [
-            BoxShadow(
-              color: theme.shadowColor.withOpacity(0.3),
-              offset: Offset(0, -8),
-              blurRadius: 17.1,
-            ),
-          ],
+    builder:
+        (context) => DraggableScrollableSheet(
+          initialChildSize: 0.9,
+          minChildSize: 0.5,
+          maxChildSize: 1.0,
+          builder:
+              (context, scrollController) => Container(
+                width: responsiveWidth(context, 430),
+                height: responsiveHeight(context, 700),
+                margin: EdgeInsets.only(top: 230),
+                decoration: BoxDecoration(
+                  color: theme.containerColor,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.shadowColor.withOpacity(0.3),
+                      offset: Offset(0, -8),
+                      blurRadius: 17.1,
+                    ),
+                  ],
+                ),
+                child: NotificationsBottomSheet(
+                  scrollController: scrollController,
+                ),
+              ),
         ),
-        child: NotificationsBottomSheet(scrollController: scrollController),
-      ),
-    ),
   );
 }

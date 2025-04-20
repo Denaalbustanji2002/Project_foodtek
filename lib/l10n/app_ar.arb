@@ -299,5 +299,7 @@
   "restaurantTokyoSushi": "طوكيو سوشي",
   "btnReorder": "إعادة الطلب",
   "darkMode": "الوضع الداكن",
-  "lightMode": "الوضع الفاتح"
+  "lightMode": "الوضع الفاتح",
+  "pushNotifications":"إرسال الإشعارات",
+  "promotionalNotifications":"تنبيهات العروض"
 }

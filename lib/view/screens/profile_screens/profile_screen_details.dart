@@ -128,7 +128,6 @@ class _ProfileScreenDetailsState extends State<ProfileScreenDetails> {
             SizedBox(height: responsiveHeight(context, 50)),
             ElevatedButton(
               onPressed: () {
-                // Function to update profile
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,

@@ -96,18 +96,25 @@ class BottomNavBar extends StatelessWidget {
   }
 
   Widget _buildIcon(
-      BuildContext context,
-      IconData icon,
-      String label,
-      AppTab tab,
-      String currentRoute,
-      AppThemeExtension appTheme,
-      ) {
-    final List<String> bottomRoutes = ['/', '/favorites', '/cartHistory', '/history', '/profile'];
+    BuildContext context,
+    IconData icon,
+    String label,
+    AppTab tab,
+    String currentRoute,
+    AppThemeExtension appTheme,
+  ) {
+    final List<String> bottomRoutes = [
+      '/',
+      '/favorites',
+      '/cartHistory',
+      '/history',
+      '/profile',
+    ];
     final bool isBottomScreen = bottomRoutes.contains(currentRoute);
     final bool isSelected = isBottomScreen && (currentTab == tab);
     final bool shouldShowTrack = trackingPages.contains(currentRoute);
-    final AppTab actualTab = (tab == AppTab.history && shouldShowTrack) ? AppTab.track : tab;
+    final AppTab actualTab =
+        (tab == AppTab.history && shouldShowTrack) ? AppTab.track : tab;
 
     return InkWell(
       onTap: () {
@@ -138,7 +145,7 @@ class BottomNavBar extends StatelessWidget {
           }
           navigatorKey.currentState!.pushNamedAndRemoveUntil(
             targetRoute,
-                (route) => false,
+            (route) => false,
           );
         } else {
           navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -154,9 +161,10 @@ class BottomNavBar extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected
-                    ? appTheme.bottomNavBarSelectedIconColor
-                    : appTheme.bottomNavBarUnselectedIconColor,
+                color:
+                    isSelected
+                        ? appTheme.bottomNavBarSelectedIconColor
+                        : appTheme.bottomNavBarUnselectedIconColor,
               ),
               SizedBox(height: responsiveHeight(context, 6)),
               Text(
@@ -165,9 +173,10 @@ class BottomNavBar extends StatelessWidget {
                   fontSize: responsiveHeight(context, 12),
                   fontWeight: FontWeight.w500,
                   height: 12 / 16,
-                  color: isSelected
-                      ? appTheme.bottomNavBarSelectedTextColor
-                      : appTheme.bottomNavBarUnselectedTextColor,
+                  color:
+                      isSelected
+                          ? appTheme.bottomNavBarSelectedTextColor
+                          : appTheme.bottomNavBarUnselectedTextColor,
                 ),
               ),
             ],

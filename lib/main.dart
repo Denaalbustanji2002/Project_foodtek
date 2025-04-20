@@ -4,7 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:foodtek_project/states/language_state.dart';
 import 'package:foodtek_project/states/theme_state.dart';
 import 'package:foodtek_project/theme/app_theme_extensions.dart';
-import 'package:foodtek_project/view/screens/authentication_screens/reset_password_screen.dart';
 import 'package:foodtek_project/view/screens/onboarding_screens/splash_screen.dart';
 import 'cubits/favorite_cubit.dart';
 import 'cubits/history_cubit.dart';
@@ -21,7 +20,6 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize SharedPreferences first
   await SharedPreferencesHelper.instance.init();
 
   Bloc.observer = MyBlocObserver();
@@ -57,10 +55,10 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Foodtek',
                 theme: ThemeData(
-                  extensions: [
-                    AppThemeExtension.light, // ← استخدم الامتداد هنا
-                  ],
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                  extensions: [AppThemeExtension.light],
+                  colorScheme: ColorScheme.fromSeed(
+                    seedColor: Colors.deepPurple,
+                  ),
                   brightness: Brightness.light,
                   scaffoldBackgroundColor: Colors.white,
                   cardColor: Colors.white,
@@ -71,10 +69,11 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 darkTheme: ThemeData(
-                  extensions: [
-                    AppThemeExtension.dark, // ← وهنا أيضاً
-                  ],
-                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
+                  extensions: [AppThemeExtension.dark],
+                  colorScheme: ColorScheme.fromSeed(
+                    seedColor: Colors.deepPurple,
+                    brightness: Brightness.dark,
+                  ),
                   brightness: Brightness.dark,
                   scaffoldBackgroundColor: const Color(0xFF121212),
                   cardColor: const Color(0xFF2D2D2D),
@@ -84,7 +83,10 @@ class MyApp extends StatelessWidget {
                     titleTextStyle: TextStyle(color: Colors.white),
                   ),
                 ),
-                themeMode: themeState == ThemeState.dark ? ThemeMode.dark : ThemeMode.light,
+                themeMode:
+                    themeState == ThemeState.dark
+                        ? ThemeMode.dark
+                        : ThemeMode.light,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,

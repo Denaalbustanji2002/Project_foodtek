@@ -30,10 +30,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final TextEditingController cvvTextEditingController =
       TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).extension<AppThemeExtension>() ?? AppThemeExtension.light;
+    final theme =
+        Theme.of(context).extension<AppThemeExtension>() ??
+        AppThemeExtension.light;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -89,10 +90,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 decoration: BoxDecoration(
                   color: theme.containerColor,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: theme.borderColor,
-                    width: 1,
-                  ),
+                  border: Border.all(color: theme.borderColor, width: 1),
                   boxShadow: [
                     BoxShadow(
                       color: theme.shadowColor,
@@ -145,10 +143,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 decoration: BoxDecoration(
                   color: theme.containerColor,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: theme.borderColor,
-                    width: 1,
-                  ),
+                  border: Border.all(color: theme.borderColor, width: 1),
                   boxShadow: [
                     BoxShadow(
                       color: theme.shadowColor,
@@ -395,4 +390,5 @@ class _AddCardScreenState extends State<AddCardScreen> {
         ),
       ),
     );
-  }}
+  }
+}

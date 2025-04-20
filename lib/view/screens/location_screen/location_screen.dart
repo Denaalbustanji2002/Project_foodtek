@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:foodtek_project/helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../cubits/theme_cubit.dart';
 import '../../../theme/app_theme_extensions.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -15,7 +17,13 @@ class _LocationScreenState extends State<LocationScreen> {
   GoogleMapController? _mapController;
   LatLng? selectedLocation;
   String selectedAddress = "Select a location";
+  String? _mapStyle;
   TextEditingController searchTextEditingController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _loadMapStyle();
+  }
   @override
   Widget build(BuildContext context) {
     final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
@@ -37,6 +45,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 ),
                 onMapCreated: (controller) {
                   _mapController = controller;
+                  if (_mapStyle != null) {
+                    _mapController!.setMapStyle(_mapStyle);
+                  }
                 },
                 onTap: (LatLng position) {
                   setState(() {
@@ -225,5 +236,12 @@ class _LocationScreenState extends State<LocationScreen> {
   }
   void _performLocationSearch(String searchQuery) {
     print('Searching for location: $searchQuery');
+  }
+  void _loadMapStyle() async {
+    if (context.read<ThemeCubit>().isDarkMode) {
+      _mapStyle = await DefaultAssetBundle.of(
+        context,
+      ).loadString('assets/map_style/dark_map_style.json');
+    }
   }
 }

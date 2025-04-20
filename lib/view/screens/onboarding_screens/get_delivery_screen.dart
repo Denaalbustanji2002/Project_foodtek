@@ -6,7 +6,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../theme/app_theme_extensions.dart';
 
-
 class GetDeliveryScreen extends StatelessWidget {
   final PageController pageController;
 
@@ -98,7 +97,7 @@ class GetDeliveryScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       theme.primaryColor ?? Color(0xFF25AE4B),
-                      Color(0xFF0F481F)
+                      Color(0xFF0F481F),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(69),
@@ -136,4 +135,5 @@ class GetDeliveryScreen extends StatelessWidget {
         ),
       ),
     );
-  }}
+  }
+}

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../../cubits/theme_cubit.dart';
 import '../../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../../theme/app_theme_extensions.dart';
 
 class DeliveryTrackingScreen extends StatefulWidget {
@@ -18,16 +19,18 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
       TextEditingController();
   GoogleMapController? _mapController;
 
-
   Set<Marker> _markers = {};
 
   Set<Polyline> _polylines = {};
+
+  String? _mapStyle;
 
   @override
   void initState() {
     super.initState();
     _setMarkers();
     _setPolyline();
+    _loadMapStyle();
   }
 
   void _setMarkers() {
@@ -68,7 +71,9 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).extension<AppThemeExtension>() ?? AppThemeExtension.light;
+    final theme =
+        Theme.of(context).extension<AppThemeExtension>() ??
+        AppThemeExtension.light;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -83,6 +88,9 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
             polylines: _polylines,
             onMapCreated: (controller) {
               _mapController = controller;
+              if (_mapStyle != null) {
+                _mapController!.setMapStyle(_mapStyle);
+              }
             },
           ),
           Positioned(
@@ -96,9 +104,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                 color: theme.iconColor,
                 size: responsiveHeight(context, 24),
               ),
-              onPressed: () {
-                // Navigation logic here
-              },
+              onPressed: () {},
             ),
           ),
           Positioned(
@@ -114,9 +120,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
               ),
               child: TextField(
                 controller: searchTextEditingController,
-                style: GoogleFonts.inter(
-                  color: theme.textFieldTextColor,
-                ),
+                style: GoogleFonts.inter(color: theme.textFieldTextColor),
                 decoration: InputDecoration(
                   hintText: AppLocalizations.of(context)!.findYourLocation,
                   hintStyle: GoogleFonts.inter(
@@ -276,7 +280,10 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                     children: [
                       CircleAvatar(
                         backgroundColor: theme.disabledColor,
-                        child: Icon(Icons.person, color: theme.textColorPrimary),
+                        child: Icon(
+                          Icons.person,
+                          color: theme.textColorPrimary,
+                        ),
                       ),
                       SizedBox(width: responsiveWidth(context, 12)),
                       Column(
@@ -330,9 +337,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              // Call action
-                            },
+                            onTap: () {},
                             child: Container(
                               padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
@@ -363,7 +368,7 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(height: responsiveHeight(context, 16)),
@@ -405,7 +410,16 @@ class _DeliveryTrackingScreenState extends State<DeliveryTrackingScreen> {
       ),
     );
   }
+
   void _performLocationSearch(String searchQuery) {
     print('Searching for location: $searchQuery');
+  }
+
+  void _loadMapStyle() async {
+    if (context.read<ThemeCubit>().isDarkMode) {
+      _mapStyle = await DefaultAssetBundle.of(
+        context,
+      ).loadString('assets/map_style/dark_map_style.json');
+    }
   }
 }

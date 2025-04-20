@@ -73,7 +73,7 @@ class _FilterScreenState extends State<FilterScreen> {
       style: GoogleFonts.inter(
         fontSize: responsiveHeight(context, 20),
         fontWeight: FontWeight.w600,
-        color: theme.textColorPrimary, // استخدم اللون من الـ AppThemeExtension
+        color: theme.textColorPrimary,
         letterSpacing: 0.0,
         height: 1.0,
       ),
@@ -89,7 +89,7 @@ class _FilterScreenState extends State<FilterScreen> {
         title,
         style: GoogleFonts.inter(
           fontSize: responsiveHeight(context, 14),
-          color: theme.secondaryTextColor, // استخدم اللون من الـ AppThemeExtension
+          color: theme.secondaryTextColor,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.0,
           height: 14 / 17,
@@ -113,7 +113,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -121,7 +121,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -136,7 +136,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -144,7 +144,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -168,7 +168,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$0',
                       style: GoogleFonts.inter(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -177,7 +177,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$10B',
                       style: TextStyle(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
@@ -192,10 +192,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
-                    activeTrackColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2), // استخدم اللون من الـ AppThemeExtension
-                    thumbColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    overlayColor: theme.primaryColor.withOpacity(0.1), // استخدم اللون من الـ AppThemeExtension
+                    activeTrackColor: theme.primaryColor,
+                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2),
+                    thumbColor: theme.primaryColor,
+                    overlayColor: theme.primaryColor.withOpacity(0.1),
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 6,
                     ),
@@ -235,7 +235,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -243,7 +243,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.min,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -258,7 +258,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 width: responsiveWidth(context, 181),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: theme.borderColor), // استخدم اللون من الـ AppThemeExtension
+                  border: Border.all(color: theme.borderColor),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.centerLeft,
@@ -266,7 +266,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   AppLocalizations.of(context)!.max,
                   style: GoogleFonts.inter(
                     fontSize: responsiveHeight(context, 14),
-                    color: theme.minMaxColor, // استخدم اللون من الـ AppThemeExtension
+                    color: theme.minMaxColor,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.0,
                     height: 1.0,
@@ -290,7 +290,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$0',
                       style: GoogleFonts.inter(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -299,7 +299,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Text(
                       '\$50',
                       style: GoogleFonts.inter(
-                        color: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
+                        color: theme.primaryColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                         height: 1.4,
@@ -313,10 +313,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: SliderTheme(
                   data: SliderThemeData(
                     trackHeight: 6,
-                    activeTrackColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2), // استخدم اللون من الـ AppThemeExtension
-                    thumbColor: theme.primaryColor, // استخدم اللون من الـ AppThemeExtension
-                    overlayColor: theme.primaryColor.withOpacity(0.1), // استخدم اللون من الـ AppThemeExtension
+                    activeTrackColor: theme.primaryColor,
+                    inactiveTrackColor: theme.primaryColor.withOpacity(0.2),
+                    thumbColor: theme.primaryColor,
+                    overlayColor: theme.primaryColor.withOpacity(0.1),
                     thumbShape: const RoundSliderThumbShape(
                       enabledThumbRadius: 3,
                     ),
@@ -348,11 +348,20 @@ class _FilterScreenState extends State<FilterScreen> {
         _buildSectionHeading(AppLocalizations.of(context)!.category),
         Row(
           children: [
-            _buildCategoryChip(AppLocalizations.of(context)!.fastFood, 'Fast Food' == _selectedCategory),
+            _buildCategoryChip(
+              AppLocalizations.of(context)!.fastFood,
+              'Fast Food' == _selectedCategory,
+            ),
             const SizedBox(width: 10),
-            _buildCategoryChip(AppLocalizations.of(context)!.seafood, 'Sea Food' == _selectedCategory),
+            _buildCategoryChip(
+              AppLocalizations.of(context)!.seafood,
+              'Sea Food' == _selectedCategory,
+            ),
             const SizedBox(width: 10),
-            _buildCategoryChip(AppLocalizations.of(context)!.dessert, 'Dessert' == _selectedCategory),
+            _buildCategoryChip(
+              AppLocalizations.of(context)!.dessert,
+              'Dessert' == _selectedCategory,
+            ),
           ],
         ),
       ],
@@ -371,25 +380,26 @@ class _FilterScreenState extends State<FilterScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? theme.filterCategorySelectedContainerColor
-              : theme.filterCategoryUnSelectedContainerColor,
+          color:
+              isSelected
+                  ? theme.filterCategorySelectedContainerColor
+                  : theme.filterCategoryUnSelectedContainerColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 12),
-            color: isSelected
-                ? theme.filterCategoryTextSelectedColor
-                : theme.filterCategoryTextUnSelectedColor,
+            color:
+                isSelected
+                    ? theme.filterCategoryTextSelectedColor
+                    : theme.filterCategoryTextUnSelectedColor,
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
     );
   }
-
 
   Widget _buildLocation() {
     return Column(
@@ -398,11 +408,20 @@ class _FilterScreenState extends State<FilterScreen> {
         _buildSectionHeading('Location'),
         Row(
           children: [
-            _buildDistanceChip(AppLocalizations.of(context)!.km, '1 KM' == _selectedDistance),
+            _buildDistanceChip(
+              AppLocalizations.of(context)!.km,
+              '1 KM' == _selectedDistance,
+            ),
             const SizedBox(width: 10),
-            _buildDistanceChip(AppLocalizations.of(context)!.km5, '5 KM' == _selectedDistance),
+            _buildDistanceChip(
+              AppLocalizations.of(context)!.km5,
+              '5 KM' == _selectedDistance,
+            ),
             const SizedBox(width: 10),
-            _buildDistanceChip(AppLocalizations.of(context)!.km10, '10 KM' == _selectedDistance),
+            _buildDistanceChip(
+              AppLocalizations.of(context)!.km10,
+              '10 KM' == _selectedDistance,
+            ),
           ],
         ),
       ],
@@ -421,18 +440,20 @@ class _FilterScreenState extends State<FilterScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? theme?.filterCategorySelectedContainerColor
-              : theme?.filterCategoryUnSelectedContainerColor,
+          color:
+              isSelected
+                  ? theme?.filterCategorySelectedContainerColor
+                  : theme?.filterCategoryUnSelectedContainerColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 12),
-            color: isSelected
-                ? theme?.filterCategoryTextSelectedColor
-                : theme?.filterCategoryTextUnSelectedColor,
+            color:
+                isSelected
+                    ? theme?.filterCategoryTextSelectedColor
+                    : theme?.filterCategoryTextUnSelectedColor,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -451,27 +472,39 @@ class _FilterScreenState extends State<FilterScreen> {
           children: [
             _buildDishChip(
               AppLocalizations.of(context)!.tunaTartare,
-              _selectedDishes.contains(AppLocalizations.of(context)!.tunaTartare),
+              _selectedDishes.contains(
+                AppLocalizations.of(context)!.tunaTartare,
+              ),
             ),
             _buildDishChip(
               AppLocalizations.of(context)!.spicyCrabCakes,
-              _selectedDishes.contains( AppLocalizations.of(context)!.spicyCrabCakes),
+              _selectedDishes.contains(
+                AppLocalizations.of(context)!.spicyCrabCakes,
+              ),
             ),
             _buildDishChip(
               AppLocalizations.of(context)!.seaFoodPaella,
-              _selectedDishes.contains(AppLocalizations.of(context)!.seaFoodPaella),
+              _selectedDishes.contains(
+                AppLocalizations.of(context)!.seaFoodPaella,
+              ),
             ),
             _buildDishChip(
               AppLocalizations.of(context)!.clamChowder,
-              _selectedDishes.contains(AppLocalizations.of(context)!.clamChowder),
+              _selectedDishes.contains(
+                AppLocalizations.of(context)!.clamChowder,
+              ),
             ),
             _buildDishChip(
               AppLocalizations.of(context)!.misoGlazedCod,
-              _selectedDishes.contains(AppLocalizations.of(context)!.misoGlazedCod),
+              _selectedDishes.contains(
+                AppLocalizations.of(context)!.misoGlazedCod,
+              ),
             ),
             _buildDishChip(
               AppLocalizations.of(context)!.lobsterThermidor,
-              _selectedDishes.contains(AppLocalizations.of(context)!.lobsterThermidor),
+              _selectedDishes.contains(
+                AppLocalizations.of(context)!.lobsterThermidor,
+              ),
             ),
           ],
         ),
@@ -494,18 +527,20 @@ class _FilterScreenState extends State<FilterScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? theme?.filterCategorySelectedContainerColor
-              : theme?.filterCategoryUnSelectedContainerColor,
+          color:
+              isSelected
+                  ? theme?.filterCategorySelectedContainerColor
+                  : theme?.filterCategoryUnSelectedContainerColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           label,
           style: GoogleFonts.inter(
             fontSize: responsiveHeight(context, 12),
-            color: isSelected
-                ? theme?.filterCategoryTextSelectedColor
-                : theme?.filterCategoryTextUnSelectedColor,
+            color:
+                isSelected
+                    ? theme?.filterCategoryTextSelectedColor
+                    : theme?.filterCategoryTextUnSelectedColor,
             fontWeight: FontWeight.w500,
           ),
         ),

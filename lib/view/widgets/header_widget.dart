@@ -10,17 +10,13 @@ class HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).extension<AppThemeExtension>()!; // جلب التيم الحالي
+    final theme = Theme.of(context).extension<AppThemeExtension>()!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Row(
         children: [
-          Icon(
-            Icons.pin_drop_outlined,
-            color: theme.primaryColor, // استخدام اللون من التيم
-            size: 20,
-          ),
+          Icon(Icons.pin_drop_outlined, color: theme.primaryColor, size: 20),
           const SizedBox(width: 10),
           Expanded(
             child: InkWell(
@@ -38,7 +34,7 @@ class HeaderWidget extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: theme.secondaryTextColor, // استخدام اللون من التيم
+                      color: theme.secondaryTextColor,
                     ),
                   ),
                   Text(
@@ -46,7 +42,7 @@ class HeaderWidget extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color: theme.textColorPrimary, // استخدام اللون من التيم
+                      color: theme.textColorPrimary,
                     ),
                   ),
                 ],
@@ -57,21 +53,22 @@ class HeaderWidget extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: theme.backgroundColor, // استخدام اللون من التيم
+              color: theme.backgroundColor,
               borderRadius: BorderRadius.circular(4),
             ),
             child: IconButton(
               icon: Icon(
                 Icons.notifications_outlined,
-                color: theme.iconColor, // استخدام اللون من التيم
+                color: theme.iconColor,
                 size: 18,
               ),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
-                  builder: (context) => NotificationsBottomSheet(
-                    scrollController: ScrollController(),
-                  ),
+                  builder:
+                      (context) => NotificationsBottomSheet(
+                        scrollController: ScrollController(),
+                      ),
                 );
               },
             ),

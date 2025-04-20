@@ -5,7 +5,6 @@ import '../../../theme/app_theme_extensions.dart';
 import '../../widgets/notifications_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
 
@@ -18,7 +17,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool isCashSelected = false;
   bool isMastercardSelected = false;
   bool isVisaSelected = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -186,15 +184,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       height: responsiveHeight(context, 42),
                       decoration: BoxDecoration(
                         border: Border.all(color: theme.borderColor),
-                        borderRadius: Directionality.of(context) == TextDirection.rtl
-                            ? BorderRadius.only(
-                          topRight: Radius.circular(responsiveWidth(context, 10)),
-                          bottomRight: Radius.circular(responsiveWidth(context, 10)),
-                        )
-                            : BorderRadius.only(
-                          topLeft: Radius.circular(responsiveWidth(context, 10)),
-                          bottomLeft: Radius.circular(responsiveWidth(context, 10)),
-                        ),
+                        borderRadius:
+                            Directionality.of(context) == TextDirection.rtl
+                                ? BorderRadius.only(
+                                  topRight: Radius.circular(
+                                    responsiveWidth(context, 10),
+                                  ),
+                                  bottomRight: Radius.circular(
+                                    responsiveWidth(context, 10),
+                                  ),
+                                )
+                                : BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                    responsiveWidth(context, 10),
+                                  ),
+                                  bottomLeft: Radius.circular(
+                                    responsiveWidth(context, 10),
+                                  ),
+                                ),
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -203,7 +210,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             horizontal: responsiveWidth(context, 12),
                             vertical: responsiveHeight(context, 16),
                           ),
-                          hintText: AppLocalizations.of(context)!.enterYourPromo,
+                          hintText:
+                              AppLocalizations.of(context)!.enterYourPromo,
                           hintStyle: GoogleFonts.inter(
                             color: theme.hintTextColor,
                             fontSize: responsiveHeight(context, 12),
@@ -222,19 +230,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     width: responsiveWidth(context, 90),
                     decoration: BoxDecoration(
                       color: theme.primaryColor,
-                      borderRadius: Directionality.of(context) == TextDirection.rtl
-                          ? BorderRadius.only(
-                        topLeft: Radius.circular(responsiveWidth(context, 10)),
-                        bottomLeft: Radius.circular(responsiveWidth(context, 10)),
-                      )
-                          : BorderRadius.only(
-                        topRight: Radius.circular(responsiveWidth(context, 10)),
-                        bottomRight: Radius.circular(responsiveWidth(context, 10)),
-                      ),
+                      borderRadius:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? BorderRadius.only(
+                                topLeft: Radius.circular(
+                                  responsiveWidth(context, 10),
+                                ),
+                                bottomLeft: Radius.circular(
+                                  responsiveWidth(context, 10),
+                                ),
+                              )
+                              : BorderRadius.only(
+                                topRight: Radius.circular(
+                                  responsiveWidth(context, 10),
+                                ),
+                                bottomRight: Radius.circular(
+                                  responsiveWidth(context, 10),
+                                ),
+                              ),
                     ),
                     child: TextButton(
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       child: Text(
                         AppLocalizations.of(context)!.add,
                         style: GoogleFonts.inter(
@@ -278,24 +294,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isCardSelected ? theme.primaryColor : theme.secondaryTextColor,
+                              color:
+                                  isCardSelected
+                                      ? theme.primaryColor
+                                      : theme.secondaryTextColor,
                               width: responsiveWidth(context, 2),
                             ),
                             color: theme.backgroundColor,
                           ),
-                          child: isCardSelected
-                              ? Center(
-                            child: Container(
-                              width: responsiveWidth(context, 9),
-                              height: responsiveHeight(context, 9),
-                              margin: const EdgeInsets.all(1),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: theme.primaryColor,
-                              ),
-                            ),
-                          )
-                              : null,
+                          child:
+                              isCardSelected
+                                  ? Center(
+                                    child: Container(
+                                      width: responsiveWidth(context, 9),
+                                      height: responsiveHeight(context, 9),
+                                      margin: const EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: theme.primaryColor,
+                                      ),
+                                    ),
+                                  )
+                                  : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Text(
@@ -325,24 +345,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isCashSelected ? theme.primaryColor : theme.secondaryTextColor,
+                              color:
+                                  isCashSelected
+                                      ? theme.primaryColor
+                                      : theme.secondaryTextColor,
                               width: responsiveWidth(context, 2),
                             ),
                             color: theme.backgroundColor,
                           ),
-                          child: isCashSelected
-                              ? Center(
-                            child: Container(
-                              width: responsiveWidth(context, 9),
-                              height: responsiveHeight(context, 9),
-                              margin: const EdgeInsets.all(1),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: theme.primaryColor,
-                              ),
-                            ),
-                          )
-                              : null,
+                          child:
+                              isCashSelected
+                                  ? Center(
+                                    child: Container(
+                                      width: responsiveWidth(context, 9),
+                                      height: responsiveHeight(context, 9),
+                                      margin: const EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: theme.primaryColor,
+                                      ),
+                                    ),
+                                  )
+                                  : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Text(
@@ -387,23 +411,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isMastercardSelected ? theme.primaryColor : theme.secondaryTextColor,
+                              color:
+                                  isMastercardSelected
+                                      ? theme.primaryColor
+                                      : theme.secondaryTextColor,
                               width: 2,
                             ),
                             color: theme.backgroundColor,
                           ),
-                          child: isMastercardSelected
-                              ? Center(
-                            child: Container(
-                              width: responsiveWidth(context, 9),
-                              height: responsiveHeight(context, 9),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: theme.primaryColor,
-                              ),
-                            ),
-                          )
-                              : null,
+                          child:
+                              isMastercardSelected
+                                  ? Center(
+                                    child: Container(
+                                      width: responsiveWidth(context, 9),
+                                      height: responsiveHeight(context, 9),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: theme.primaryColor,
+                                      ),
+                                    ),
+                                  )
+                                  : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Container(
@@ -433,23 +461,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isVisaSelected ? theme.primaryColor : theme.secondaryTextColor,
+                              color:
+                                  isVisaSelected
+                                      ? theme.primaryColor
+                                      : theme.secondaryTextColor,
                               width: 2,
                             ),
                             color: theme.backgroundColor,
                           ),
-                          child: isVisaSelected
-                              ? Center(
-                            child: Container(
-                              width: responsiveWidth(context, 9),
-                              height: responsiveHeight(context, 9),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: theme.primaryColor,
-                              ),
-                            ),
-                          )
-                              : null,
+                          child:
+                              isVisaSelected
+                                  ? Center(
+                                    child: Container(
+                                      width: responsiveWidth(context, 9),
+                                      height: responsiveHeight(context, 9),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: theme.primaryColor,
+                                      ),
+                                    ),
+                                  )
+                                  : null,
                         ),
                         SizedBox(width: responsiveWidth(context, 8)),
                         Container(
@@ -614,4 +646,5 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       ),
     );
-  }}
+  }
+}

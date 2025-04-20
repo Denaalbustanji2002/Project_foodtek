@@ -98,8 +98,9 @@ class ChooseYourFoodScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       theme.primaryColor ?? Color(0xFF25AE4B),
-                      Color(0xFF0F481F)
-                    ],),
+                      Color(0xFF0F481F),
+                    ],
+                  ),
                   borderRadius: BorderRadius.circular(69),
                 ),
                 child: ElevatedButton(

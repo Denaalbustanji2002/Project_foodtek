@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../theme/app_theme_extensions.dart';
 
 class ResetPasswordSuccessfulAnimation extends StatefulWidget {

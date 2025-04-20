@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../helper/responsive.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../../theme/app_theme_extensions.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -85,7 +84,8 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: responsiveHeight(context, 16),
                         height: 1.0,
                         letterSpacing: -0.01,
-                        color: appTheme?.secondaryTextColor ?? Color(0xFF455A64),
+                        color:
+                            appTheme?.secondaryTextColor ?? Color(0xFF455A64),
                       ),
                     ),
                   ),
@@ -102,7 +102,7 @@ class WelcomeScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       appTheme?.primaryColor ?? Color(0xFF25AE4B),
-                      Color(0xFF0F481F)
+                      Color(0xFF0F481F),
                     ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -110,7 +110,9 @@ class WelcomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(69),
                   boxShadow: [
                     BoxShadow(
-                      color: appTheme?.shadowColor ?? Colors.black.withOpacity(0.1),
+                      color:
+                          appTheme?.shadowColor ??
+                          Colors.black.withOpacity(0.1),
                       offset: Offset(0, 2),
                       blurRadius: 4,
                     ),
@@ -133,14 +135,14 @@ class WelcomeScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                   ),
                   child: Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.continueText,
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: appTheme?.buttonTextColor ?? Colors.white,
-                        ),
-                      )
+                    child: Text(
+                      AppLocalizations.of(context)!.continueText,
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: appTheme?.buttonTextColor ?? Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -149,4 +151,5 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }}
+  }
+}

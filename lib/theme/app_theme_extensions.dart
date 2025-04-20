@@ -37,7 +37,6 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   final Color bottomNavBarSelectedTextColor;
   final Color bottomNavBarUnselectedTextColor;
   final Color splashScreenColor;
-  // ألوان المضافة لشاشة إعادة تعيين كلمة المرور
   final Color resetPasswordSuccessTextColor;
   final Color resetPasswordSuccessSubtitleTextColor;
 
@@ -135,7 +134,8 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
       shadowColor: shadowColor ?? this.shadowColor,
       labelTextColor: labelTextColor ?? this.labelTextColor,
       textFieldTextColor: textFieldTextColor ?? this.textFieldTextColor,
-      scaffoldBackgroundColor: scaffoldBackgroundColor ?? this.scaffoldBackgroundColor,
+      scaffoldBackgroundColor:
+          scaffoldBackgroundColor ?? this.scaffoldBackgroundColor,
       buttonTextColor: buttonTextColor ?? this.buttonTextColor,
       hintTextColor: hintTextColor ?? this.hintTextColor,
       surfaceColor: surfaceColor ?? this.surfaceColor,
@@ -144,20 +144,41 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
       mildGreenColor: mildGreenColor ?? this.mildGreenColor,
       minMaxColor: minMaxColor ?? this.minMaxColor,
       inactiveTrackColor: inactiveTrackColor ?? this.inactiveTrackColor,
-      filterCategoryContainerColor: filterCategoryContainerColor ?? this.filterCategoryContainerColor,
-      filterCategoryTextSelectedColor: filterCategoryTextSelectedColor ?? this.filterCategoryTextSelectedColor,
-      filterCategoryTextUnSelectedColor: filterCategoryTextUnSelectedColor ?? this.filterCategoryTextUnSelectedColor,
-      filterCategorySelectedContainerColor: filterCategorySelectedContainerColor ?? this.filterCategorySelectedContainerColor,
-      filterCategoryUnSelectedContainerColor: filterCategoryUnSelectedContainerColor ?? this.filterCategoryUnSelectedContainerColor,
-      chatReceivedMessageColor: chatReceivedMessageColor ?? this.chatReceivedMessageColor,
-      bottomNavBarBackgroundColor: bottomNavBarBackgroundColor ?? this.bottomNavBarBackgroundColor,
-      bottomNavBarShadowColor: bottomNavBarShadowColor ?? this.bottomNavBarShadowColor,
-      bottomNavBarSelectedIconColor: bottomNavBarSelectedIconColor ?? this.bottomNavBarSelectedIconColor,
-      bottomNavBarUnselectedIconColor: bottomNavBarUnselectedIconColor ?? this.bottomNavBarUnselectedIconColor,
-      bottomNavBarSelectedTextColor: bottomNavBarSelectedTextColor ?? this.bottomNavBarSelectedTextColor,
-      bottomNavBarUnselectedTextColor: bottomNavBarUnselectedTextColor ?? this.bottomNavBarUnselectedTextColor,
-      resetPasswordSuccessTextColor: resetPasswordSuccessTextColor ?? this.resetPasswordSuccessTextColor,
-      resetPasswordSuccessSubtitleTextColor: resetPasswordSuccessSubtitleTextColor ?? this.resetPasswordSuccessSubtitleTextColor,
+      filterCategoryContainerColor:
+          filterCategoryContainerColor ?? this.filterCategoryContainerColor,
+      filterCategoryTextSelectedColor:
+          filterCategoryTextSelectedColor ??
+          this.filterCategoryTextSelectedColor,
+      filterCategoryTextUnSelectedColor:
+          filterCategoryTextUnSelectedColor ??
+          this.filterCategoryTextUnSelectedColor,
+      filterCategorySelectedContainerColor:
+          filterCategorySelectedContainerColor ??
+          this.filterCategorySelectedContainerColor,
+      filterCategoryUnSelectedContainerColor:
+          filterCategoryUnSelectedContainerColor ??
+          this.filterCategoryUnSelectedContainerColor,
+      chatReceivedMessageColor:
+          chatReceivedMessageColor ?? this.chatReceivedMessageColor,
+      bottomNavBarBackgroundColor:
+          bottomNavBarBackgroundColor ?? this.bottomNavBarBackgroundColor,
+      bottomNavBarShadowColor:
+          bottomNavBarShadowColor ?? this.bottomNavBarShadowColor,
+      bottomNavBarSelectedIconColor:
+          bottomNavBarSelectedIconColor ?? this.bottomNavBarSelectedIconColor,
+      bottomNavBarUnselectedIconColor:
+          bottomNavBarUnselectedIconColor ??
+          this.bottomNavBarUnselectedIconColor,
+      bottomNavBarSelectedTextColor:
+          bottomNavBarSelectedTextColor ?? this.bottomNavBarSelectedTextColor,
+      bottomNavBarUnselectedTextColor:
+          bottomNavBarUnselectedTextColor ??
+          this.bottomNavBarUnselectedTextColor,
+      resetPasswordSuccessTextColor:
+          resetPasswordSuccessTextColor ?? this.resetPasswordSuccessTextColor,
+      resetPasswordSuccessSubtitleTextColor:
+          resetPasswordSuccessSubtitleTextColor ??
+          this.resetPasswordSuccessSubtitleTextColor,
       splashScreenColor: splashScreenColor ?? this.splashScreenColor,
     );
   }
@@ -167,8 +188,10 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     if (other is! AppThemeExtension) return this;
     return AppThemeExtension(
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
-      textColorPrimary: Color.lerp(textColorPrimary, other.textColorPrimary, t)!,
-      secondaryTextColor: Color.lerp(secondaryTextColor, other.secondaryTextColor, t)!,
+      textColorPrimary:
+          Color.lerp(textColorPrimary, other.textColorPrimary, t)!,
+      secondaryTextColor:
+          Color.lerp(secondaryTextColor, other.secondaryTextColor, t)!,
       disabledColor: Color.lerp(disabledColor, other.disabledColor, t)!,
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t)!,
       appBarColor: Color.lerp(appBarColor, other.appBarColor, t)!,
@@ -178,32 +201,110 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
       borderColor: Color.lerp(borderColor, other.borderColor, t)!,
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t)!,
       labelTextColor: Color.lerp(labelTextColor, other.labelTextColor, t)!,
-      textFieldTextColor: Color.lerp(textFieldTextColor, other.textFieldTextColor, t)!,
-      scaffoldBackgroundColor: Color.lerp(scaffoldBackgroundColor, other.scaffoldBackgroundColor, t)!,
+      textFieldTextColor:
+          Color.lerp(textFieldTextColor, other.textFieldTextColor, t)!,
+      scaffoldBackgroundColor:
+          Color.lerp(
+            scaffoldBackgroundColor,
+            other.scaffoldBackgroundColor,
+            t,
+          )!,
       buttonTextColor: Color.lerp(buttonTextColor, other.buttonTextColor, t)!,
       hintTextColor: Color.lerp(hintTextColor, other.hintTextColor, t)!,
       surfaceColor: Color.lerp(surfaceColor, other.surfaceColor, t)!,
-      deleteButtonColor: Color.lerp(deleteButtonColor, other.deleteButtonColor, t)!,
+      deleteButtonColor:
+          Color.lerp(deleteButtonColor, other.deleteButtonColor, t)!,
       spicyRedColor: Color.lerp(spicyRedColor, other.spicyRedColor, t)!,
       mildGreenColor: Color.lerp(mildGreenColor, other.mildGreenColor, t)!,
       minMaxColor: Color.lerp(minMaxColor, other.minMaxColor, t)!,
-      inactiveTrackColor: Color.lerp(inactiveTrackColor, other.inactiveTrackColor, t)!,
-      filterCategoryContainerColor: Color.lerp(filterCategoryContainerColor, other.filterCategoryContainerColor, t)!,
-      filterCategoryTextSelectedColor: Color.lerp(filterCategoryTextSelectedColor, other.filterCategoryTextSelectedColor, t)!,
-      filterCategoryTextUnSelectedColor: Color.lerp(filterCategoryTextUnSelectedColor, other.filterCategoryTextUnSelectedColor, t)!,
-      filterCategorySelectedContainerColor: Color.lerp(filterCategorySelectedContainerColor, other.filterCategorySelectedContainerColor, t)!,
-      filterCategoryUnSelectedContainerColor: Color.lerp(filterCategoryUnSelectedContainerColor, other.filterCategoryUnSelectedContainerColor, t)!,
-      chatReceivedMessageColor: Color.lerp(chatReceivedMessageColor, other.chatReceivedMessageColor, t)!,
-      bottomNavBarBackgroundColor: Color.lerp(bottomNavBarBackgroundColor, other.bottomNavBarBackgroundColor, t)!,
-      bottomNavBarShadowColor: Color.lerp(bottomNavBarShadowColor, other.bottomNavBarShadowColor, t)!,
-      bottomNavBarSelectedIconColor: Color.lerp(bottomNavBarSelectedIconColor, other.bottomNavBarSelectedIconColor, t)!,
-      bottomNavBarUnselectedIconColor: Color.lerp(bottomNavBarUnselectedIconColor, other.bottomNavBarUnselectedIconColor, t)!,
-      bottomNavBarSelectedTextColor: Color.lerp(bottomNavBarSelectedTextColor, other.bottomNavBarSelectedTextColor, t)!,
-      bottomNavBarUnselectedTextColor: Color.lerp(bottomNavBarUnselectedTextColor, other.bottomNavBarUnselectedTextColor, t)!,
-      resetPasswordSuccessTextColor: Color.lerp(resetPasswordSuccessTextColor, other.resetPasswordSuccessTextColor, t)!,
-      resetPasswordSuccessSubtitleTextColor: Color.lerp(resetPasswordSuccessSubtitleTextColor, other.resetPasswordSuccessSubtitleTextColor, t)!,
-      splashScreenColor: Color.lerp(splashScreenColor, other.splashScreenColor, t)!,
-
+      inactiveTrackColor:
+          Color.lerp(inactiveTrackColor, other.inactiveTrackColor, t)!,
+      filterCategoryContainerColor:
+          Color.lerp(
+            filterCategoryContainerColor,
+            other.filterCategoryContainerColor,
+            t,
+          )!,
+      filterCategoryTextSelectedColor:
+          Color.lerp(
+            filterCategoryTextSelectedColor,
+            other.filterCategoryTextSelectedColor,
+            t,
+          )!,
+      filterCategoryTextUnSelectedColor:
+          Color.lerp(
+            filterCategoryTextUnSelectedColor,
+            other.filterCategoryTextUnSelectedColor,
+            t,
+          )!,
+      filterCategorySelectedContainerColor:
+          Color.lerp(
+            filterCategorySelectedContainerColor,
+            other.filterCategorySelectedContainerColor,
+            t,
+          )!,
+      filterCategoryUnSelectedContainerColor:
+          Color.lerp(
+            filterCategoryUnSelectedContainerColor,
+            other.filterCategoryUnSelectedContainerColor,
+            t,
+          )!,
+      chatReceivedMessageColor:
+          Color.lerp(
+            chatReceivedMessageColor,
+            other.chatReceivedMessageColor,
+            t,
+          )!,
+      bottomNavBarBackgroundColor:
+          Color.lerp(
+            bottomNavBarBackgroundColor,
+            other.bottomNavBarBackgroundColor,
+            t,
+          )!,
+      bottomNavBarShadowColor:
+          Color.lerp(
+            bottomNavBarShadowColor,
+            other.bottomNavBarShadowColor,
+            t,
+          )!,
+      bottomNavBarSelectedIconColor:
+          Color.lerp(
+            bottomNavBarSelectedIconColor,
+            other.bottomNavBarSelectedIconColor,
+            t,
+          )!,
+      bottomNavBarUnselectedIconColor:
+          Color.lerp(
+            bottomNavBarUnselectedIconColor,
+            other.bottomNavBarUnselectedIconColor,
+            t,
+          )!,
+      bottomNavBarSelectedTextColor:
+          Color.lerp(
+            bottomNavBarSelectedTextColor,
+            other.bottomNavBarSelectedTextColor,
+            t,
+          )!,
+      bottomNavBarUnselectedTextColor:
+          Color.lerp(
+            bottomNavBarUnselectedTextColor,
+            other.bottomNavBarUnselectedTextColor,
+            t,
+          )!,
+      resetPasswordSuccessTextColor:
+          Color.lerp(
+            resetPasswordSuccessTextColor,
+            other.resetPasswordSuccessTextColor,
+            t,
+          )!,
+      resetPasswordSuccessSubtitleTextColor:
+          Color.lerp(
+            resetPasswordSuccessSubtitleTextColor,
+            other.resetPasswordSuccessSubtitleTextColor,
+            t,
+          )!,
+      splashScreenColor:
+          Color.lerp(splashScreenColor, other.splashScreenColor, t)!,
     );
   }
 
@@ -242,7 +343,6 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     bottomNavBarUnselectedIconColor: Color(0xFF484C52),
     bottomNavBarSelectedTextColor: Color(0xFF25AE4B),
     bottomNavBarUnselectedTextColor: Color(0xFF484C52),
-    // إضافة ألوان شاشة إعادة تعيين كلمة المرور للوضع الفاتح
     resetPasswordSuccessTextColor: Color(0xFFFFFFFF),
     resetPasswordSuccessSubtitleTextColor: Color(0xFFFFFFFF),
     splashScreenColor: Color(0xFF25AE4B),
@@ -285,6 +385,5 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     resetPasswordSuccessTextColor: Color(0xFFFFFFFF),
     resetPasswordSuccessSubtitleTextColor: Color(0xFFEEEEEE),
     splashScreenColor: Colors.black38,
-
   );
 }

@@ -39,7 +39,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
               children: [
                 WelcomeScreen(pageController: pageController),
                 GetDeliveryScreen(pageController: pageController),
-                ChooseYourFoodScreen( pageController: pageController),
+                ChooseYourFoodScreen(pageController: pageController),
               ],
             ),
           ),
@@ -49,8 +49,10 @@ class _PageViewScreenState extends State<PageViewScreen> {
     );
   }
 
-  Widget buildBottomControls(BuildContext context,
-      PageController pageController) {
+  Widget buildBottomControls(
+    BuildContext context,
+    PageController pageController,
+  ) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -102,7 +104,11 @@ class _PageViewScreenState extends State<PageViewScreen> {
       ),
     );
   }
-  Widget buildPageIndicator(BuildContext context, PageController pageController) {
+
+  Widget buildPageIndicator(
+    BuildContext context,
+    PageController pageController,
+  ) {
     final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
 
     return SizedBox(
@@ -126,16 +132,16 @@ class _PageViewScreenState extends State<PageViewScreen> {
     );
   }
 
-  Widget buildForwardButton(BuildContext context, PageController pageController) {
+  Widget buildForwardButton(
+    BuildContext context,
+    PageController pageController,
+  ) {
     final themeExtension = Theme.of(context).extension<AppThemeExtension>()!;
 
     return SizedBox(
       width: responsiveWidth(context, 107),
       child: IconButton(
-        icon: Icon(
-          Icons.arrow_forward,
-          color: themeExtension.iconColor,
-        ),
+        icon: Icon(Icons.arrow_forward, color: themeExtension.iconColor),
         onPressed: () {
           if (pageController.page == 2) {
             Navigator.pushReplacement(

@@ -240,8 +240,6 @@
   "sushiRoll": "Sushi Roll",
   "tokyoSushi": "Tokyo Sushi",
   "notifications": "Notifications",
-  "pushNotifications": "Push Notifications",
-  "promotionalNotifications": "Promotional Notifications",
   "more": "More",
   "youDontHaveAddAnyHistoryAtThisTime": "You don't have any history at this time",
   "helpCenter": "Help Center",
@@ -287,5 +285,7 @@
   "restaurantTokyoSushi": "Tokyo Sushi",
   "btnReorder": "Reorder",
   "darkMode": "Dark Mode",
-  "lightMode": "Light Mode"
+  "lightMode": "Light Mode",
+  "pushNotifications": "Push Notifications",
+  "promotionalNotifications": "Promotional Notifications"
 }

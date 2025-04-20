@@ -1,14 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:foodtek_project/view/screens/onboarding_screens/page_view_screen.dart';
-import 'package:foodtek_project/view/screens/onboarding_screens/welcome_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../helper/responsive.dart';
 import '../../../theme/app_theme_extensions.dart';
-import '../authentication_screens/language_screen.dart';
-import '../authentication_screens/send_reset_link_forgot_password_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) =>PageViewScreen()),
+        MaterialPageRoute(builder: (_) => PageViewScreen()),
       );
     });
   }
@@ -33,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).extension<AppThemeExtension>()!;
     return Scaffold(
-      backgroundColor:theme.splashScreenColor,
+      backgroundColor: theme.splashScreenColor,
       body: Container(
         width: responsiveWidth(context, 430),
         height: responsiveHeight(context, 932),
